@@ -1,0 +1,243 @@
+{
+  "contractName": "ITokenController",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "getMaxMintAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.8+commit.dddeac2f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getMaxMintAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/interfaces/ITokenController.sol\":\"ITokenController\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/interfaces/ITokenController.sol\":{\"keccak256\":\"0x2e4206aa318b3dffc608162256b340f8dbdb0c98629d21094b8309614b0f381b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ce324201b7713714539eb0656ca4662894d11e850e9f6fdbd96c3130af812f80\",\"dweb:/ipfs/QmY5xCQRhJUvr3rVmL5SLbePiF2kQr4DqgxdeQHP1aDR6W\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.8;\n\ninterface ITokenController {\n    function getMaxMintAmount() external returns(uint256);\n}\n",
+  "sourcePath": "/Users/guqianfeng/web/my_dapps/chainline/contracts/contracts/interfaces/ITokenController.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/interfaces/ITokenController.sol",
+    "exportedSymbols": {
+      "ITokenController": [
+        5299
+      ]
+    },
+    "id": 5300,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5293,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".8"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:16"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 5299,
+        "linearizedBaseContracts": [
+          5299
+        ],
+        "name": "ITokenController",
+        "nameLocation": "67:16:16",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "d6e7b8e4",
+            "id": 5298,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getMaxMintAmount",
+            "nameLocation": "99:16:16",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5294,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "115:2:16"
+            },
+            "returnParameters": {
+              "id": 5297,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5296,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5298,
+                  "src": "135:7:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5295,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "135:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "134:9:16"
+            },
+            "scope": 5299,
+            "src": "90:54:16",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 5300,
+        "src": "57:89:16",
+        "usedErrors": []
+      }
+    ],
+    "src": "32:115:16"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/interfaces/ITokenController.sol",
+    "exportedSymbols": {
+      "ITokenController": [
+        5299
+      ]
+    },
+    "id": 5300,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5293,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".8"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:16"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 5299,
+        "linearizedBaseContracts": [
+          5299
+        ],
+        "name": "ITokenController",
+        "nameLocation": "67:16:16",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "d6e7b8e4",
+            "id": 5298,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getMaxMintAmount",
+            "nameLocation": "99:16:16",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5294,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "115:2:16"
+            },
+            "returnParameters": {
+              "id": 5297,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5296,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5298,
+                  "src": "135:7:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5295,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "135:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "134:9:16"
+            },
+            "scope": 5299,
+            "src": "90:54:16",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 5300,
+        "src": "57:89:16",
+        "usedErrors": []
+      }
+    ],
+    "src": "32:115:16"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.8+commit.dddeac2f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-02-01T14:05:17.770Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

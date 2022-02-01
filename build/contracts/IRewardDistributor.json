@@ -1,0 +1,320 @@
+{
+  "contractName": "IRewardDistributor",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "distributeReward",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.8+commit.dddeac2f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"distributeReward\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"distributeReward(address,uint256)\":{\"notice\":\"Distribute reward earned from Staking Pool\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/interfaces/IRewardDistributor.sol\":\"IRewardDistributor\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/interfaces/IRewardDistributor.sol\":{\"keccak256\":\"0xf4b1f59e8c97807fcd603c61aa9d3bea28256644eabab1b004cb914b7f89c694\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c6e263b0eb496942518c45199f32051052182c0446f3ae6cd4c48775a849d5b4\",\"dweb:/ipfs/QmNgbwF5d8PfQMGaCEZFpiKoi9rnZHj9cQFirQQFZAgaek\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "//SPDX-License-Identifier: MIT\npragma solidity ^0.8.8;\n\ninterface IRewardDistributor {\n    /**\n     * @notice Distribute reward earned from Staking Pool\n     */\n    function distributeReward(address account, uint amount) external;\n}",
+  "sourcePath": "/Users/guqianfeng/web/my_dapps/chainline/contracts/contracts/interfaces/IRewardDistributor.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/interfaces/IRewardDistributor.sol",
+    "exportedSymbols": {
+      "IRewardDistributor": [
+        5189
+      ]
+    },
+    "id": 5190,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5180,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".8"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "31:23:14"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 5189,
+        "linearizedBaseContracts": [
+          5189
+        ],
+        "name": "IRewardDistributor",
+        "nameLocation": "66:18:14",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "documentation": {
+              "id": 5181,
+              "nodeType": "StructuredDocumentation",
+              "src": "91:69:14",
+              "text": " @notice Distribute reward earned from Staking Pool"
+            },
+            "functionSelector": "1ec8bb8c",
+            "id": 5188,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "distributeReward",
+            "nameLocation": "174:16:14",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5186,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5183,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "199:7:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5188,
+                  "src": "191:15:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5182,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "191:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5185,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "213:6:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5188,
+                  "src": "208:11:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5184,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "208:4:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "190:30:14"
+            },
+            "returnParameters": {
+              "id": 5187,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "229:0:14"
+            },
+            "scope": 5189,
+            "src": "165:65:14",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 5190,
+        "src": "56:176:14",
+        "usedErrors": []
+      }
+    ],
+    "src": "31:201:14"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/interfaces/IRewardDistributor.sol",
+    "exportedSymbols": {
+      "IRewardDistributor": [
+        5189
+      ]
+    },
+    "id": 5190,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5180,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".8"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "31:23:14"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 5189,
+        "linearizedBaseContracts": [
+          5189
+        ],
+        "name": "IRewardDistributor",
+        "nameLocation": "66:18:14",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "documentation": {
+              "id": 5181,
+              "nodeType": "StructuredDocumentation",
+              "src": "91:69:14",
+              "text": " @notice Distribute reward earned from Staking Pool"
+            },
+            "functionSelector": "1ec8bb8c",
+            "id": 5188,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "distributeReward",
+            "nameLocation": "174:16:14",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5186,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5183,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "199:7:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5188,
+                  "src": "191:15:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5182,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "191:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5185,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "213:6:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5188,
+                  "src": "208:11:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5184,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "208:4:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "190:30:14"
+            },
+            "returnParameters": {
+              "id": 5187,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "229:0:14"
+            },
+            "scope": 5189,
+            "src": "165:65:14",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 5190,
+        "src": "56:176:14",
+        "usedErrors": []
+      }
+    ],
+    "src": "31:201:14"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.8+commit.dddeac2f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-02-01T14:05:17.769Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "distributeReward(address,uint256)": {
+        "notice": "Distribute reward earned from Staking Pool"
+      }
+    },
+    "version": 1
+  }
+}

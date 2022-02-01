@@ -1,0 +1,4724 @@
+{
+  "contractName": "ITokensVesting",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "beneficiary",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "TokensReleased",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "total",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "privateSale",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "publicSale",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "team",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "advisor",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "liquidity",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "incentives",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "marketing",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "reserve",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "releasable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "privateSaleReleasable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "publicSaleReleasable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "teamReleasable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "advisorReleasable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "liquidityReleasable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "incentivesReleasable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "marketingReleasable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "reserveReleasable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "released",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "privateSaleReleased",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "publicSaleReleased",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "teamReleased",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "advisorReleased",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "liquidityReleased",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "incentivesReleased",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "marketingReleased",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "reserveReleased",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "releaseAll",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "releasePrivateSale",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "releasePublicSale",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "releaseTeam",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "releaseAdvisor",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "releaseLiquidity",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "releaseIncentives",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "releaseMarketing",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "releaseReserve",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.8+commit.dddeac2f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"beneficiary\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"TokensReleased\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"advisor\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"advisorReleasable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"advisorReleased\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"incentives\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"incentivesReleasable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"incentivesReleased\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"liquidity\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"liquidityReleasable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"liquidityReleased\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"marketing\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"marketingReleasable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"marketingReleased\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"privateSale\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"privateSaleReleasable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"privateSaleReleased\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"publicSale\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"publicSaleReleasable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"publicSaleReleased\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"releasable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"releaseAdvisor\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"releaseAll\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"releaseIncentives\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"releaseLiquidity\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"releaseMarketing\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"releasePrivateSale\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"releasePublicSale\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"releaseReserve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"releaseTeam\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"released\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"reserve\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"reserveReleasable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"reserveReleased\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"team\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"teamReleasable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"teamReleased\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"total\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Interface of the TokensVesting contract.\",\"events\":{\"TokensReleased(address,uint256)\":{\"details\":\"Emitted when having amount of tokens are released.\"}},\"kind\":\"dev\",\"methods\":{\"advisor()\":{\"details\":\"Returns the total amount of advisor tokens in vesting plan.\"},\"advisorReleasable()\":{\"details\":\"Returns the total releasable amount of advisor tokens.\"},\"advisorReleased()\":{\"details\":\"Returns the total released amount of advisor tokens.\"},\"incentives()\":{\"details\":\"Returns the total amount of incentives tokens in vesting plan.\"},\"incentivesReleasable()\":{\"details\":\"Returns the total releasable amount of incentives tokens.\"},\"incentivesReleased()\":{\"details\":\"Returns the total released amount of incentives tokens.\"},\"liquidity()\":{\"details\":\"Returns the total amount of liquidity tokens in vesting plan.\"},\"liquidityReleasable()\":{\"details\":\"Returns the total releasable amount of liquidity tokens.\"},\"liquidityReleased()\":{\"details\":\"Returns the total released amount of liquidity tokens.\"},\"marketing()\":{\"details\":\"Returns the total amount of marketing tokens in vesting plan.\"},\"marketingReleasable()\":{\"details\":\"Returns the total releasable amount of marketing tokens.\"},\"marketingReleased()\":{\"details\":\"Returns the total released amount of marketing tokens.\"},\"privateSale()\":{\"details\":\"Returns the total amount of private sale tokens in vesting plan.\"},\"privateSaleReleasable()\":{\"details\":\"Returns the total releasable amount of private sale tokens.\"},\"privateSaleReleased()\":{\"details\":\"Returns the total released amount of private sale tokens.\"},\"publicSale()\":{\"details\":\"Returns the total amount of public sale tokens in vesting plan.\"},\"publicSaleReleasable()\":{\"details\":\"Returns the total releasable amount of public sale tokens.\"},\"publicSaleReleased()\":{\"details\":\"Returns the total released amount of public sale tokens.\"},\"releasable()\":{\"details\":\"Returns the total releasable amount of tokens.\"},\"releaseAdvisor()\":{\"details\":\"Unlocks all releasable amount of advisor tokens. Emits a {TokensReleased} event.\"},\"releaseAll()\":{\"details\":\"Unlocks all releasable amount of tokens. Emits a {TokensReleased} event.\"},\"releaseIncentives()\":{\"details\":\"Unlocks all releasable amount of incentives tokens. Emits a {TokensReleased} event.\"},\"releaseLiquidity()\":{\"details\":\"Unlocks all releasable amount of liquidity tokens. Emits a {TokensReleased} event.\"},\"releaseMarketing()\":{\"details\":\"Unlocks all releasable amount of marketing tokens. Emits a {TokensReleased} event.\"},\"releasePrivateSale()\":{\"details\":\"Unlocks all releasable amount of private sale tokens. Emits a {TokensReleased} event.\"},\"releasePublicSale()\":{\"details\":\"Unlocks all releasable amount of public sale tokens. Emits a {TokensReleased} event.\"},\"releaseReserve()\":{\"details\":\"Unlocks all releasable amount of reserve tokens. Emits a {TokensReleased} event.\"},\"releaseTeam()\":{\"details\":\"Unlocks all releasable amount of team tokens. Emits a {TokensReleased} event.\"},\"released()\":{\"details\":\"Returns the total released amount of tokens.\"},\"reserve()\":{\"details\":\"Returns the total amount of reserve tokens in vesting plan.\"},\"reserveReleasable()\":{\"details\":\"Returns the total releasable amount of reserve tokens.\"},\"reserveReleased()\":{\"details\":\"Returns the total released amount of reserve tokens.\"},\"team()\":{\"details\":\"Returns the total amount of team tokens in vesting plan.\"},\"teamReleasable()\":{\"details\":\"Returns the total releasable amount of team tokens.\"},\"teamReleased()\":{\"details\":\"Returns the total released amount of team tokens\"},\"total()\":{\"details\":\"Returns the total amount of tokens in vesting plan.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/interfaces/ITokensVesting.sol\":\"ITokensVesting\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/interfaces/ITokensVesting.sol\":{\"keccak256\":\"0x0b1735ee5beb005173fbad2fb95e97485a1e6a9d54a85aab8848ea4b0a8a85e8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://58850c49618d42f97e6da25c40086cc892326871bb519ec1b801e2ea2d1e103a\",\"dweb:/ipfs/QmT7KfZRj62FBmSSnmZMB6tQyCpAmM6qymGGARfsXJxQ1J\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.8;\n\n/**\n * @dev Interface of the TokensVesting contract.\n */\ninterface ITokensVesting {\n    /**\n     * @dev Returns the total amount of tokens in vesting plan.\n     */\n    function total() external view returns (uint256);\n\n    /**\n     * @dev Returns the total amount of private sale tokens in vesting plan.\n     */\n    function privateSale() external view returns (uint256);\n\n    /**\n     * @dev Returns the total amount of public sale tokens in vesting plan.\n     */\n    function publicSale() external view returns (uint256);\n\n    /**\n     * @dev Returns the total amount of team tokens in vesting plan.\n     */\n    function team() external view returns (uint256);\n\n    /**\n     * @dev Returns the total amount of advisor tokens in vesting plan.\n     */\n    function advisor() external view returns (uint256);\n\n    /**\n     * @dev Returns the total amount of liquidity tokens in vesting plan.\n     */\n    function liquidity() external view returns (uint256);\n\n    /**\n     * @dev Returns the total amount of incentives tokens in vesting plan.\n     */\n    function incentives() external view returns (uint256);\n\n    /**\n     * @dev Returns the total amount of marketing tokens in vesting plan.\n     */\n    function marketing() external view returns (uint256);\n\n    /**\n     * @dev Returns the total amount of reserve tokens in vesting plan.\n     */\n    function reserve() external view returns (uint256);\n\n    /**\n     * @dev Returns the total releasable amount of tokens.\n     */\n    function releasable() external view returns (uint256);\n\n    /**\n     * @dev Returns the total releasable amount of private sale tokens.\n     */\n    function privateSaleReleasable() external view returns (uint256);\n\n    /**\n     * @dev Returns the total releasable amount of public sale tokens.\n     */\n    function publicSaleReleasable() external view returns (uint256);\n\n    /**\n     * @dev Returns the total releasable amount of team tokens.\n     */\n    function teamReleasable() external view returns (uint256);\n\n    /**\n     * @dev Returns the total releasable amount of advisor tokens.\n     */\n    function advisorReleasable() external view returns (uint256);\n\n    /**\n     * @dev Returns the total releasable amount of liquidity tokens.\n     */\n    function liquidityReleasable() external view returns (uint256);\n\n    /**\n     * @dev Returns the total releasable amount of incentives tokens.\n     */\n    function incentivesReleasable() external view returns (uint256);\n\n    /**\n     * @dev Returns the total releasable amount of marketing tokens.\n     */\n    function marketingReleasable() external view returns (uint256);\n\n    /**\n     * @dev Returns the total releasable amount of reserve tokens.\n     */\n    function reserveReleasable() external view returns (uint256);\n\n    /**\n     * @dev Returns the total released amount of tokens.\n     */\n    function released() external view returns (uint256);\n\n    /**\n     * @dev Returns the total released amount of private sale tokens.\n     */\n    function privateSaleReleased() external view returns (uint256);\n\n    /**\n     * @dev Returns the total released amount of public sale tokens.\n     */\n    function publicSaleReleased() external view returns (uint256);\n\n    /**\n     * @dev Returns the total released amount of team tokens\n     */\n    function teamReleased() external view returns (uint256);\n\n    /**\n     * @dev Returns the total released amount of advisor tokens.\n     */\n    function advisorReleased() external view returns (uint256);\n\n    /**\n     * @dev Returns the total released amount of liquidity tokens.\n     */\n    function liquidityReleased() external view returns (uint256);\n\n    /**\n     * @dev Returns the total released amount of incentives tokens.\n     */\n    function incentivesReleased() external view returns (uint256);\n\n    /**\n     * @dev Returns the total released amount of marketing tokens.\n     */\n    function marketingReleased() external view returns (uint256);\n\n    /**\n     * @dev Returns the total released amount of reserve tokens.\n     */\n    function reserveReleased() external view returns (uint256);\n\n    /**\n     * @dev Unlocks all releasable amount of tokens.\n     *\n     * Emits a {TokensReleased} event.\n     */\n    function releaseAll() external;\n\n    /**\n     * @dev Unlocks all releasable amount of private sale tokens.\n     *\n     * Emits a {TokensReleased} event.\n     */\n    function releasePrivateSale() external;\n\n    /**\n     * @dev Unlocks all releasable amount of public sale tokens.\n     *\n     * Emits a {TokensReleased} event.\n     */\n    function releasePublicSale() external;\n\n    /**\n     * @dev Unlocks all releasable amount of team tokens.\n     *\n     * Emits a {TokensReleased} event.\n     */\n    function releaseTeam() external;\n\n    /**\n     * @dev Unlocks all releasable amount of advisor tokens.\n     *\n     * Emits a {TokensReleased} event.\n     */\n    function releaseAdvisor() external;\n\n    /**\n     * @dev Unlocks all releasable amount of liquidity tokens.\n     *\n     * Emits a {TokensReleased} event.\n     */\n    function releaseLiquidity() external;\n\n    /**\n     * @dev Unlocks all releasable amount of incentives tokens.\n     *\n     * Emits a {TokensReleased} event.\n     */\n    function releaseIncentives() external;\n\n    /**\n     * @dev Unlocks all releasable amount of marketing tokens.\n     *\n     * Emits a {TokensReleased} event.\n     */\n    function releaseMarketing() external;\n\n    /**\n     * @dev Unlocks all releasable amount of reserve tokens.\n     *\n     * Emits a {TokensReleased} event.\n     */\n    function releaseReserve() external;\n\n    /**\n     * @dev Emitted when having amount of tokens are released.\n     */\n    event TokensReleased(address indexed beneficiary, uint256 amount);\n}\n",
+  "sourcePath": "/Users/guqianfeng/web/my_dapps/chainline/contracts/contracts/interfaces/ITokensVesting.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/interfaces/ITokensVesting.sol",
+    "exportedSymbols": {
+      "ITokensVesting": [
+        5508
+      ]
+    },
+    "id": 5509,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5301,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".8"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:17"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": {
+          "id": 5302,
+          "nodeType": "StructuredDocumentation",
+          "src": "57:56:17",
+          "text": " @dev Interface of the TokensVesting contract."
+        },
+        "fullyImplemented": false,
+        "id": 5508,
+        "linearizedBaseContracts": [
+          5508
+        ],
+        "name": "ITokensVesting",
+        "nameLocation": "124:14:17",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "documentation": {
+              "id": 5303,
+              "nodeType": "StructuredDocumentation",
+              "src": "145:75:17",
+              "text": " @dev Returns the total amount of tokens in vesting plan."
+            },
+            "functionSelector": "2ddbd13a",
+            "id": 5308,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "total",
+            "nameLocation": "234:5:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5304,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "239:2:17"
+            },
+            "returnParameters": {
+              "id": 5307,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5306,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5308,
+                  "src": "265:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5305,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "265:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "264:9:17"
+            },
+            "scope": 5508,
+            "src": "225:49:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5309,
+              "nodeType": "StructuredDocumentation",
+              "src": "280:88:17",
+              "text": " @dev Returns the total amount of private sale tokens in vesting plan."
+            },
+            "functionSelector": "ba1f879f",
+            "id": 5314,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "privateSale",
+            "nameLocation": "382:11:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5310,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "393:2:17"
+            },
+            "returnParameters": {
+              "id": 5313,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5312,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5314,
+                  "src": "419:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5311,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "419:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "418:9:17"
+            },
+            "scope": 5508,
+            "src": "373:55:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5315,
+              "nodeType": "StructuredDocumentation",
+              "src": "434:87:17",
+              "text": " @dev Returns the total amount of public sale tokens in vesting plan."
+            },
+            "functionSelector": "33bc1c5c",
+            "id": 5320,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "publicSale",
+            "nameLocation": "535:10:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5316,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "545:2:17"
+            },
+            "returnParameters": {
+              "id": 5319,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5318,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5320,
+                  "src": "571:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5317,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "571:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "570:9:17"
+            },
+            "scope": 5508,
+            "src": "526:54:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5321,
+              "nodeType": "StructuredDocumentation",
+              "src": "586:80:17",
+              "text": " @dev Returns the total amount of team tokens in vesting plan."
+            },
+            "functionSelector": "85f2aef2",
+            "id": 5326,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "team",
+            "nameLocation": "680:4:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5322,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "684:2:17"
+            },
+            "returnParameters": {
+              "id": 5325,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5324,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5326,
+                  "src": "710:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5323,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "710:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "709:9:17"
+            },
+            "scope": 5508,
+            "src": "671:48:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5327,
+              "nodeType": "StructuredDocumentation",
+              "src": "725:83:17",
+              "text": " @dev Returns the total amount of advisor tokens in vesting plan."
+            },
+            "functionSelector": "1936e4be",
+            "id": 5332,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "advisor",
+            "nameLocation": "822:7:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5328,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "829:2:17"
+            },
+            "returnParameters": {
+              "id": 5331,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5330,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5332,
+                  "src": "855:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5329,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "855:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "854:9:17"
+            },
+            "scope": 5508,
+            "src": "813:51:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5333,
+              "nodeType": "StructuredDocumentation",
+              "src": "870:85:17",
+              "text": " @dev Returns the total amount of liquidity tokens in vesting plan."
+            },
+            "functionSelector": "1a686502",
+            "id": 5338,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "liquidity",
+            "nameLocation": "969:9:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5334,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "978:2:17"
+            },
+            "returnParameters": {
+              "id": 5337,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5336,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5338,
+                  "src": "1004:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5335,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1004:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1003:9:17"
+            },
+            "scope": 5508,
+            "src": "960:53:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5339,
+              "nodeType": "StructuredDocumentation",
+              "src": "1019:86:17",
+              "text": " @dev Returns the total amount of incentives tokens in vesting plan."
+            },
+            "functionSelector": "0d5df7ba",
+            "id": 5344,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "incentives",
+            "nameLocation": "1119:10:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5340,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1129:2:17"
+            },
+            "returnParameters": {
+              "id": 5343,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5342,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5344,
+                  "src": "1155:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5341,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1155:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1154:9:17"
+            },
+            "scope": 5508,
+            "src": "1110:54:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5345,
+              "nodeType": "StructuredDocumentation",
+              "src": "1170:85:17",
+              "text": " @dev Returns the total amount of marketing tokens in vesting plan."
+            },
+            "functionSelector": "2d3e474a",
+            "id": 5350,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "marketing",
+            "nameLocation": "1269:9:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5346,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1278:2:17"
+            },
+            "returnParameters": {
+              "id": 5349,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5348,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5350,
+                  "src": "1304:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5347,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1304:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1303:9:17"
+            },
+            "scope": 5508,
+            "src": "1260:53:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5351,
+              "nodeType": "StructuredDocumentation",
+              "src": "1319:83:17",
+              "text": " @dev Returns the total amount of reserve tokens in vesting plan."
+            },
+            "functionSelector": "cd3293de",
+            "id": 5356,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reserve",
+            "nameLocation": "1416:7:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5352,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1423:2:17"
+            },
+            "returnParameters": {
+              "id": 5355,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5354,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5356,
+                  "src": "1449:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5353,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1449:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1448:9:17"
+            },
+            "scope": 5508,
+            "src": "1407:51:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5357,
+              "nodeType": "StructuredDocumentation",
+              "src": "1464:70:17",
+              "text": " @dev Returns the total releasable amount of tokens."
+            },
+            "functionSelector": "fbccedae",
+            "id": 5362,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releasable",
+            "nameLocation": "1548:10:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5358,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1558:2:17"
+            },
+            "returnParameters": {
+              "id": 5361,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5360,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5362,
+                  "src": "1584:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5359,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1584:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1583:9:17"
+            },
+            "scope": 5508,
+            "src": "1539:54:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5363,
+              "nodeType": "StructuredDocumentation",
+              "src": "1599:83:17",
+              "text": " @dev Returns the total releasable amount of private sale tokens."
+            },
+            "functionSelector": "df0c724b",
+            "id": 5368,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "privateSaleReleasable",
+            "nameLocation": "1696:21:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5364,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1717:2:17"
+            },
+            "returnParameters": {
+              "id": 5367,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5366,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5368,
+                  "src": "1743:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5365,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1743:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1742:9:17"
+            },
+            "scope": 5508,
+            "src": "1687:65:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5369,
+              "nodeType": "StructuredDocumentation",
+              "src": "1758:82:17",
+              "text": " @dev Returns the total releasable amount of public sale tokens."
+            },
+            "functionSelector": "ff1aea43",
+            "id": 5374,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "publicSaleReleasable",
+            "nameLocation": "1854:20:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5370,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1874:2:17"
+            },
+            "returnParameters": {
+              "id": 5373,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5372,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5374,
+                  "src": "1900:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5371,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1900:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1899:9:17"
+            },
+            "scope": 5508,
+            "src": "1845:64:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5375,
+              "nodeType": "StructuredDocumentation",
+              "src": "1915:75:17",
+              "text": " @dev Returns the total releasable amount of team tokens."
+            },
+            "functionSelector": "483d936a",
+            "id": 5380,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "teamReleasable",
+            "nameLocation": "2004:14:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5376,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2018:2:17"
+            },
+            "returnParameters": {
+              "id": 5379,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5378,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5380,
+                  "src": "2044:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5377,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2044:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2043:9:17"
+            },
+            "scope": 5508,
+            "src": "1995:58:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5381,
+              "nodeType": "StructuredDocumentation",
+              "src": "2059:78:17",
+              "text": " @dev Returns the total releasable amount of advisor tokens."
+            },
+            "functionSelector": "7057cd17",
+            "id": 5386,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "advisorReleasable",
+            "nameLocation": "2151:17:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5382,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2168:2:17"
+            },
+            "returnParameters": {
+              "id": 5385,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5384,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5386,
+                  "src": "2194:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5383,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2194:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2193:9:17"
+            },
+            "scope": 5508,
+            "src": "2142:61:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5387,
+              "nodeType": "StructuredDocumentation",
+              "src": "2209:80:17",
+              "text": " @dev Returns the total releasable amount of liquidity tokens."
+            },
+            "functionSelector": "b3a560c4",
+            "id": 5392,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "liquidityReleasable",
+            "nameLocation": "2303:19:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5388,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2322:2:17"
+            },
+            "returnParameters": {
+              "id": 5391,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5390,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5392,
+                  "src": "2348:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5389,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2348:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2347:9:17"
+            },
+            "scope": 5508,
+            "src": "2294:63:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5393,
+              "nodeType": "StructuredDocumentation",
+              "src": "2363:81:17",
+              "text": " @dev Returns the total releasable amount of incentives tokens."
+            },
+            "functionSelector": "541b56ac",
+            "id": 5398,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "incentivesReleasable",
+            "nameLocation": "2458:20:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5394,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2478:2:17"
+            },
+            "returnParameters": {
+              "id": 5397,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5396,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5398,
+                  "src": "2504:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5395,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2504:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2503:9:17"
+            },
+            "scope": 5508,
+            "src": "2449:64:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5399,
+              "nodeType": "StructuredDocumentation",
+              "src": "2519:80:17",
+              "text": " @dev Returns the total releasable amount of marketing tokens."
+            },
+            "functionSelector": "c909e88e",
+            "id": 5404,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "marketingReleasable",
+            "nameLocation": "2613:19:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5400,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2632:2:17"
+            },
+            "returnParameters": {
+              "id": 5403,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5402,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5404,
+                  "src": "2658:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5401,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2658:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2657:9:17"
+            },
+            "scope": 5508,
+            "src": "2604:63:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5405,
+              "nodeType": "StructuredDocumentation",
+              "src": "2673:78:17",
+              "text": " @dev Returns the total releasable amount of reserve tokens."
+            },
+            "functionSelector": "bad7737e",
+            "id": 5410,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reserveReleasable",
+            "nameLocation": "2765:17:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5406,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2782:2:17"
+            },
+            "returnParameters": {
+              "id": 5409,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5408,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5410,
+                  "src": "2808:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5407,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2808:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2807:9:17"
+            },
+            "scope": 5508,
+            "src": "2756:61:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5411,
+              "nodeType": "StructuredDocumentation",
+              "src": "2823:68:17",
+              "text": " @dev Returns the total released amount of tokens."
+            },
+            "functionSelector": "96132521",
+            "id": 5416,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "released",
+            "nameLocation": "2905:8:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5412,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2913:2:17"
+            },
+            "returnParameters": {
+              "id": 5415,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5414,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5416,
+                  "src": "2939:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5413,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2939:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2938:9:17"
+            },
+            "scope": 5508,
+            "src": "2896:52:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5417,
+              "nodeType": "StructuredDocumentation",
+              "src": "2954:81:17",
+              "text": " @dev Returns the total released amount of private sale tokens."
+            },
+            "functionSelector": "7fd56254",
+            "id": 5422,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "privateSaleReleased",
+            "nameLocation": "3049:19:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5418,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3068:2:17"
+            },
+            "returnParameters": {
+              "id": 5421,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5420,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5422,
+                  "src": "3094:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5419,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3094:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3093:9:17"
+            },
+            "scope": 5508,
+            "src": "3040:63:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5423,
+              "nodeType": "StructuredDocumentation",
+              "src": "3109:80:17",
+              "text": " @dev Returns the total released amount of public sale tokens."
+            },
+            "functionSelector": "0a4efca4",
+            "id": 5428,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "publicSaleReleased",
+            "nameLocation": "3203:18:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5424,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3221:2:17"
+            },
+            "returnParameters": {
+              "id": 5427,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5426,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5428,
+                  "src": "3247:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5425,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3247:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3246:9:17"
+            },
+            "scope": 5508,
+            "src": "3194:62:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5429,
+              "nodeType": "StructuredDocumentation",
+              "src": "3262:72:17",
+              "text": " @dev Returns the total released amount of team tokens"
+            },
+            "functionSelector": "f6f0fa8d",
+            "id": 5434,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "teamReleased",
+            "nameLocation": "3348:12:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5430,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3360:2:17"
+            },
+            "returnParameters": {
+              "id": 5433,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5432,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5434,
+                  "src": "3386:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5431,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3386:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3385:9:17"
+            },
+            "scope": 5508,
+            "src": "3339:56:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5435,
+              "nodeType": "StructuredDocumentation",
+              "src": "3401:76:17",
+              "text": " @dev Returns the total released amount of advisor tokens."
+            },
+            "functionSelector": "d5777162",
+            "id": 5440,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "advisorReleased",
+            "nameLocation": "3491:15:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5436,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3506:2:17"
+            },
+            "returnParameters": {
+              "id": 5439,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5438,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5440,
+                  "src": "3532:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5437,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3532:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3531:9:17"
+            },
+            "scope": 5508,
+            "src": "3482:59:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5441,
+              "nodeType": "StructuredDocumentation",
+              "src": "3547:78:17",
+              "text": " @dev Returns the total released amount of liquidity tokens."
+            },
+            "functionSelector": "4566b318",
+            "id": 5446,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "liquidityReleased",
+            "nameLocation": "3639:17:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5442,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3656:2:17"
+            },
+            "returnParameters": {
+              "id": 5445,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5444,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5446,
+                  "src": "3682:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5443,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3682:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3681:9:17"
+            },
+            "scope": 5508,
+            "src": "3630:61:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5447,
+              "nodeType": "StructuredDocumentation",
+              "src": "3697:79:17",
+              "text": " @dev Returns the total released amount of incentives tokens."
+            },
+            "functionSelector": "26fc6810",
+            "id": 5452,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "incentivesReleased",
+            "nameLocation": "3790:18:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5448,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3808:2:17"
+            },
+            "returnParameters": {
+              "id": 5451,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5450,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5452,
+                  "src": "3834:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5449,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3834:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3833:9:17"
+            },
+            "scope": 5508,
+            "src": "3781:62:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5453,
+              "nodeType": "StructuredDocumentation",
+              "src": "3849:78:17",
+              "text": " @dev Returns the total released amount of marketing tokens."
+            },
+            "functionSelector": "ecbf601b",
+            "id": 5458,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "marketingReleased",
+            "nameLocation": "3941:17:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5454,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3958:2:17"
+            },
+            "returnParameters": {
+              "id": 5457,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5456,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5458,
+                  "src": "3984:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5455,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3984:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3983:9:17"
+            },
+            "scope": 5508,
+            "src": "3932:61:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5459,
+              "nodeType": "StructuredDocumentation",
+              "src": "3999:76:17",
+              "text": " @dev Returns the total released amount of reserve tokens."
+            },
+            "functionSelector": "e99db8d8",
+            "id": 5464,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reserveReleased",
+            "nameLocation": "4089:15:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5460,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4104:2:17"
+            },
+            "returnParameters": {
+              "id": 5463,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5462,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5464,
+                  "src": "4130:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5461,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4130:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4129:9:17"
+            },
+            "scope": 5508,
+            "src": "4080:59:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5465,
+              "nodeType": "StructuredDocumentation",
+              "src": "4145:110:17",
+              "text": " @dev Unlocks all releasable amount of tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "5be7fde8",
+            "id": 5468,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseAll",
+            "nameLocation": "4269:10:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5466,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4279:2:17"
+            },
+            "returnParameters": {
+              "id": 5467,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4290:0:17"
+            },
+            "scope": 5508,
+            "src": "4260:31:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5469,
+              "nodeType": "StructuredDocumentation",
+              "src": "4297:123:17",
+              "text": " @dev Unlocks all releasable amount of private sale tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "c94297e6",
+            "id": 5472,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releasePrivateSale",
+            "nameLocation": "4434:18:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5470,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4452:2:17"
+            },
+            "returnParameters": {
+              "id": 5471,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4463:0:17"
+            },
+            "scope": 5508,
+            "src": "4425:39:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5473,
+              "nodeType": "StructuredDocumentation",
+              "src": "4470:122:17",
+              "text": " @dev Unlocks all releasable amount of public sale tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "814296bc",
+            "id": 5476,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releasePublicSale",
+            "nameLocation": "4606:17:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5474,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4623:2:17"
+            },
+            "returnParameters": {
+              "id": 5475,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4634:0:17"
+            },
+            "scope": 5508,
+            "src": "4597:38:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5477,
+              "nodeType": "StructuredDocumentation",
+              "src": "4641:115:17",
+              "text": " @dev Unlocks all releasable amount of team tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "4dbc355a",
+            "id": 5480,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseTeam",
+            "nameLocation": "4770:11:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5478,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4781:2:17"
+            },
+            "returnParameters": {
+              "id": 5479,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4792:0:17"
+            },
+            "scope": 5508,
+            "src": "4761:32:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5481,
+              "nodeType": "StructuredDocumentation",
+              "src": "4799:118:17",
+              "text": " @dev Unlocks all releasable amount of advisor tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "fc353ef1",
+            "id": 5484,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseAdvisor",
+            "nameLocation": "4931:14:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5482,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4945:2:17"
+            },
+            "returnParameters": {
+              "id": 5483,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4956:0:17"
+            },
+            "scope": 5508,
+            "src": "4922:35:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5485,
+              "nodeType": "StructuredDocumentation",
+              "src": "4963:120:17",
+              "text": " @dev Unlocks all releasable amount of liquidity tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "72015efc",
+            "id": 5488,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseLiquidity",
+            "nameLocation": "5097:16:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5486,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5113:2:17"
+            },
+            "returnParameters": {
+              "id": 5487,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5124:0:17"
+            },
+            "scope": 5508,
+            "src": "5088:37:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5489,
+              "nodeType": "StructuredDocumentation",
+              "src": "5131:121:17",
+              "text": " @dev Unlocks all releasable amount of incentives tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "9ef7909c",
+            "id": 5492,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseIncentives",
+            "nameLocation": "5266:17:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5490,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5283:2:17"
+            },
+            "returnParameters": {
+              "id": 5491,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5294:0:17"
+            },
+            "scope": 5508,
+            "src": "5257:38:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5493,
+              "nodeType": "StructuredDocumentation",
+              "src": "5301:120:17",
+              "text": " @dev Unlocks all releasable amount of marketing tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "cf95833e",
+            "id": 5496,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseMarketing",
+            "nameLocation": "5435:16:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5494,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5451:2:17"
+            },
+            "returnParameters": {
+              "id": 5495,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5462:0:17"
+            },
+            "scope": 5508,
+            "src": "5426:37:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5497,
+              "nodeType": "StructuredDocumentation",
+              "src": "5469:118:17",
+              "text": " @dev Unlocks all releasable amount of reserve tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "d3933ada",
+            "id": 5500,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseReserve",
+            "nameLocation": "5601:14:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5498,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5615:2:17"
+            },
+            "returnParameters": {
+              "id": 5499,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5626:0:17"
+            },
+            "scope": 5508,
+            "src": "5592:35:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 5501,
+              "nodeType": "StructuredDocumentation",
+              "src": "5633:74:17",
+              "text": " @dev Emitted when having amount of tokens are released."
+            },
+            "id": 5507,
+            "name": "TokensReleased",
+            "nameLocation": "5718:14:17",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5506,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5503,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "beneficiary",
+                  "nameLocation": "5749:11:17",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5507,
+                  "src": "5733:27:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5502,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5733:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5505,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "5770:6:17",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5507,
+                  "src": "5762:14:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5504,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5762:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5732:45:17"
+            },
+            "src": "5712:66:17"
+          }
+        ],
+        "scope": 5509,
+        "src": "114:5666:17",
+        "usedErrors": []
+      }
+    ],
+    "src": "32:5749:17"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/interfaces/ITokensVesting.sol",
+    "exportedSymbols": {
+      "ITokensVesting": [
+        5508
+      ]
+    },
+    "id": 5509,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5301,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".8"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:17"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": {
+          "id": 5302,
+          "nodeType": "StructuredDocumentation",
+          "src": "57:56:17",
+          "text": " @dev Interface of the TokensVesting contract."
+        },
+        "fullyImplemented": false,
+        "id": 5508,
+        "linearizedBaseContracts": [
+          5508
+        ],
+        "name": "ITokensVesting",
+        "nameLocation": "124:14:17",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "documentation": {
+              "id": 5303,
+              "nodeType": "StructuredDocumentation",
+              "src": "145:75:17",
+              "text": " @dev Returns the total amount of tokens in vesting plan."
+            },
+            "functionSelector": "2ddbd13a",
+            "id": 5308,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "total",
+            "nameLocation": "234:5:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5304,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "239:2:17"
+            },
+            "returnParameters": {
+              "id": 5307,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5306,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5308,
+                  "src": "265:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5305,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "265:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "264:9:17"
+            },
+            "scope": 5508,
+            "src": "225:49:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5309,
+              "nodeType": "StructuredDocumentation",
+              "src": "280:88:17",
+              "text": " @dev Returns the total amount of private sale tokens in vesting plan."
+            },
+            "functionSelector": "ba1f879f",
+            "id": 5314,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "privateSale",
+            "nameLocation": "382:11:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5310,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "393:2:17"
+            },
+            "returnParameters": {
+              "id": 5313,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5312,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5314,
+                  "src": "419:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5311,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "419:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "418:9:17"
+            },
+            "scope": 5508,
+            "src": "373:55:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5315,
+              "nodeType": "StructuredDocumentation",
+              "src": "434:87:17",
+              "text": " @dev Returns the total amount of public sale tokens in vesting plan."
+            },
+            "functionSelector": "33bc1c5c",
+            "id": 5320,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "publicSale",
+            "nameLocation": "535:10:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5316,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "545:2:17"
+            },
+            "returnParameters": {
+              "id": 5319,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5318,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5320,
+                  "src": "571:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5317,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "571:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "570:9:17"
+            },
+            "scope": 5508,
+            "src": "526:54:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5321,
+              "nodeType": "StructuredDocumentation",
+              "src": "586:80:17",
+              "text": " @dev Returns the total amount of team tokens in vesting plan."
+            },
+            "functionSelector": "85f2aef2",
+            "id": 5326,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "team",
+            "nameLocation": "680:4:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5322,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "684:2:17"
+            },
+            "returnParameters": {
+              "id": 5325,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5324,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5326,
+                  "src": "710:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5323,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "710:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "709:9:17"
+            },
+            "scope": 5508,
+            "src": "671:48:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5327,
+              "nodeType": "StructuredDocumentation",
+              "src": "725:83:17",
+              "text": " @dev Returns the total amount of advisor tokens in vesting plan."
+            },
+            "functionSelector": "1936e4be",
+            "id": 5332,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "advisor",
+            "nameLocation": "822:7:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5328,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "829:2:17"
+            },
+            "returnParameters": {
+              "id": 5331,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5330,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5332,
+                  "src": "855:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5329,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "855:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "854:9:17"
+            },
+            "scope": 5508,
+            "src": "813:51:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5333,
+              "nodeType": "StructuredDocumentation",
+              "src": "870:85:17",
+              "text": " @dev Returns the total amount of liquidity tokens in vesting plan."
+            },
+            "functionSelector": "1a686502",
+            "id": 5338,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "liquidity",
+            "nameLocation": "969:9:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5334,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "978:2:17"
+            },
+            "returnParameters": {
+              "id": 5337,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5336,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5338,
+                  "src": "1004:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5335,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1004:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1003:9:17"
+            },
+            "scope": 5508,
+            "src": "960:53:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5339,
+              "nodeType": "StructuredDocumentation",
+              "src": "1019:86:17",
+              "text": " @dev Returns the total amount of incentives tokens in vesting plan."
+            },
+            "functionSelector": "0d5df7ba",
+            "id": 5344,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "incentives",
+            "nameLocation": "1119:10:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5340,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1129:2:17"
+            },
+            "returnParameters": {
+              "id": 5343,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5342,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5344,
+                  "src": "1155:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5341,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1155:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1154:9:17"
+            },
+            "scope": 5508,
+            "src": "1110:54:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5345,
+              "nodeType": "StructuredDocumentation",
+              "src": "1170:85:17",
+              "text": " @dev Returns the total amount of marketing tokens in vesting plan."
+            },
+            "functionSelector": "2d3e474a",
+            "id": 5350,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "marketing",
+            "nameLocation": "1269:9:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5346,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1278:2:17"
+            },
+            "returnParameters": {
+              "id": 5349,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5348,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5350,
+                  "src": "1304:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5347,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1304:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1303:9:17"
+            },
+            "scope": 5508,
+            "src": "1260:53:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5351,
+              "nodeType": "StructuredDocumentation",
+              "src": "1319:83:17",
+              "text": " @dev Returns the total amount of reserve tokens in vesting plan."
+            },
+            "functionSelector": "cd3293de",
+            "id": 5356,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reserve",
+            "nameLocation": "1416:7:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5352,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1423:2:17"
+            },
+            "returnParameters": {
+              "id": 5355,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5354,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5356,
+                  "src": "1449:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5353,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1449:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1448:9:17"
+            },
+            "scope": 5508,
+            "src": "1407:51:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5357,
+              "nodeType": "StructuredDocumentation",
+              "src": "1464:70:17",
+              "text": " @dev Returns the total releasable amount of tokens."
+            },
+            "functionSelector": "fbccedae",
+            "id": 5362,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releasable",
+            "nameLocation": "1548:10:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5358,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1558:2:17"
+            },
+            "returnParameters": {
+              "id": 5361,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5360,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5362,
+                  "src": "1584:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5359,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1584:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1583:9:17"
+            },
+            "scope": 5508,
+            "src": "1539:54:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5363,
+              "nodeType": "StructuredDocumentation",
+              "src": "1599:83:17",
+              "text": " @dev Returns the total releasable amount of private sale tokens."
+            },
+            "functionSelector": "df0c724b",
+            "id": 5368,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "privateSaleReleasable",
+            "nameLocation": "1696:21:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5364,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1717:2:17"
+            },
+            "returnParameters": {
+              "id": 5367,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5366,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5368,
+                  "src": "1743:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5365,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1743:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1742:9:17"
+            },
+            "scope": 5508,
+            "src": "1687:65:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5369,
+              "nodeType": "StructuredDocumentation",
+              "src": "1758:82:17",
+              "text": " @dev Returns the total releasable amount of public sale tokens."
+            },
+            "functionSelector": "ff1aea43",
+            "id": 5374,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "publicSaleReleasable",
+            "nameLocation": "1854:20:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5370,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1874:2:17"
+            },
+            "returnParameters": {
+              "id": 5373,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5372,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5374,
+                  "src": "1900:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5371,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1900:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1899:9:17"
+            },
+            "scope": 5508,
+            "src": "1845:64:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5375,
+              "nodeType": "StructuredDocumentation",
+              "src": "1915:75:17",
+              "text": " @dev Returns the total releasable amount of team tokens."
+            },
+            "functionSelector": "483d936a",
+            "id": 5380,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "teamReleasable",
+            "nameLocation": "2004:14:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5376,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2018:2:17"
+            },
+            "returnParameters": {
+              "id": 5379,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5378,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5380,
+                  "src": "2044:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5377,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2044:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2043:9:17"
+            },
+            "scope": 5508,
+            "src": "1995:58:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5381,
+              "nodeType": "StructuredDocumentation",
+              "src": "2059:78:17",
+              "text": " @dev Returns the total releasable amount of advisor tokens."
+            },
+            "functionSelector": "7057cd17",
+            "id": 5386,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "advisorReleasable",
+            "nameLocation": "2151:17:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5382,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2168:2:17"
+            },
+            "returnParameters": {
+              "id": 5385,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5384,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5386,
+                  "src": "2194:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5383,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2194:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2193:9:17"
+            },
+            "scope": 5508,
+            "src": "2142:61:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5387,
+              "nodeType": "StructuredDocumentation",
+              "src": "2209:80:17",
+              "text": " @dev Returns the total releasable amount of liquidity tokens."
+            },
+            "functionSelector": "b3a560c4",
+            "id": 5392,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "liquidityReleasable",
+            "nameLocation": "2303:19:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5388,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2322:2:17"
+            },
+            "returnParameters": {
+              "id": 5391,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5390,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5392,
+                  "src": "2348:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5389,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2348:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2347:9:17"
+            },
+            "scope": 5508,
+            "src": "2294:63:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5393,
+              "nodeType": "StructuredDocumentation",
+              "src": "2363:81:17",
+              "text": " @dev Returns the total releasable amount of incentives tokens."
+            },
+            "functionSelector": "541b56ac",
+            "id": 5398,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "incentivesReleasable",
+            "nameLocation": "2458:20:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5394,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2478:2:17"
+            },
+            "returnParameters": {
+              "id": 5397,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5396,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5398,
+                  "src": "2504:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5395,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2504:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2503:9:17"
+            },
+            "scope": 5508,
+            "src": "2449:64:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5399,
+              "nodeType": "StructuredDocumentation",
+              "src": "2519:80:17",
+              "text": " @dev Returns the total releasable amount of marketing tokens."
+            },
+            "functionSelector": "c909e88e",
+            "id": 5404,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "marketingReleasable",
+            "nameLocation": "2613:19:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5400,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2632:2:17"
+            },
+            "returnParameters": {
+              "id": 5403,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5402,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5404,
+                  "src": "2658:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5401,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2658:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2657:9:17"
+            },
+            "scope": 5508,
+            "src": "2604:63:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5405,
+              "nodeType": "StructuredDocumentation",
+              "src": "2673:78:17",
+              "text": " @dev Returns the total releasable amount of reserve tokens."
+            },
+            "functionSelector": "bad7737e",
+            "id": 5410,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reserveReleasable",
+            "nameLocation": "2765:17:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5406,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2782:2:17"
+            },
+            "returnParameters": {
+              "id": 5409,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5408,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5410,
+                  "src": "2808:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5407,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2808:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2807:9:17"
+            },
+            "scope": 5508,
+            "src": "2756:61:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5411,
+              "nodeType": "StructuredDocumentation",
+              "src": "2823:68:17",
+              "text": " @dev Returns the total released amount of tokens."
+            },
+            "functionSelector": "96132521",
+            "id": 5416,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "released",
+            "nameLocation": "2905:8:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5412,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2913:2:17"
+            },
+            "returnParameters": {
+              "id": 5415,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5414,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5416,
+                  "src": "2939:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5413,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2939:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2938:9:17"
+            },
+            "scope": 5508,
+            "src": "2896:52:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5417,
+              "nodeType": "StructuredDocumentation",
+              "src": "2954:81:17",
+              "text": " @dev Returns the total released amount of private sale tokens."
+            },
+            "functionSelector": "7fd56254",
+            "id": 5422,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "privateSaleReleased",
+            "nameLocation": "3049:19:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5418,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3068:2:17"
+            },
+            "returnParameters": {
+              "id": 5421,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5420,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5422,
+                  "src": "3094:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5419,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3094:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3093:9:17"
+            },
+            "scope": 5508,
+            "src": "3040:63:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5423,
+              "nodeType": "StructuredDocumentation",
+              "src": "3109:80:17",
+              "text": " @dev Returns the total released amount of public sale tokens."
+            },
+            "functionSelector": "0a4efca4",
+            "id": 5428,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "publicSaleReleased",
+            "nameLocation": "3203:18:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5424,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3221:2:17"
+            },
+            "returnParameters": {
+              "id": 5427,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5426,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5428,
+                  "src": "3247:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5425,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3247:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3246:9:17"
+            },
+            "scope": 5508,
+            "src": "3194:62:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5429,
+              "nodeType": "StructuredDocumentation",
+              "src": "3262:72:17",
+              "text": " @dev Returns the total released amount of team tokens"
+            },
+            "functionSelector": "f6f0fa8d",
+            "id": 5434,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "teamReleased",
+            "nameLocation": "3348:12:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5430,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3360:2:17"
+            },
+            "returnParameters": {
+              "id": 5433,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5432,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5434,
+                  "src": "3386:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5431,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3386:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3385:9:17"
+            },
+            "scope": 5508,
+            "src": "3339:56:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5435,
+              "nodeType": "StructuredDocumentation",
+              "src": "3401:76:17",
+              "text": " @dev Returns the total released amount of advisor tokens."
+            },
+            "functionSelector": "d5777162",
+            "id": 5440,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "advisorReleased",
+            "nameLocation": "3491:15:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5436,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3506:2:17"
+            },
+            "returnParameters": {
+              "id": 5439,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5438,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5440,
+                  "src": "3532:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5437,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3532:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3531:9:17"
+            },
+            "scope": 5508,
+            "src": "3482:59:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5441,
+              "nodeType": "StructuredDocumentation",
+              "src": "3547:78:17",
+              "text": " @dev Returns the total released amount of liquidity tokens."
+            },
+            "functionSelector": "4566b318",
+            "id": 5446,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "liquidityReleased",
+            "nameLocation": "3639:17:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5442,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3656:2:17"
+            },
+            "returnParameters": {
+              "id": 5445,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5444,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5446,
+                  "src": "3682:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5443,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3682:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3681:9:17"
+            },
+            "scope": 5508,
+            "src": "3630:61:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5447,
+              "nodeType": "StructuredDocumentation",
+              "src": "3697:79:17",
+              "text": " @dev Returns the total released amount of incentives tokens."
+            },
+            "functionSelector": "26fc6810",
+            "id": 5452,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "incentivesReleased",
+            "nameLocation": "3790:18:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5448,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3808:2:17"
+            },
+            "returnParameters": {
+              "id": 5451,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5450,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5452,
+                  "src": "3834:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5449,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3834:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3833:9:17"
+            },
+            "scope": 5508,
+            "src": "3781:62:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5453,
+              "nodeType": "StructuredDocumentation",
+              "src": "3849:78:17",
+              "text": " @dev Returns the total released amount of marketing tokens."
+            },
+            "functionSelector": "ecbf601b",
+            "id": 5458,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "marketingReleased",
+            "nameLocation": "3941:17:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5454,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3958:2:17"
+            },
+            "returnParameters": {
+              "id": 5457,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5456,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5458,
+                  "src": "3984:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5455,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3984:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3983:9:17"
+            },
+            "scope": 5508,
+            "src": "3932:61:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5459,
+              "nodeType": "StructuredDocumentation",
+              "src": "3999:76:17",
+              "text": " @dev Returns the total released amount of reserve tokens."
+            },
+            "functionSelector": "e99db8d8",
+            "id": 5464,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reserveReleased",
+            "nameLocation": "4089:15:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5460,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4104:2:17"
+            },
+            "returnParameters": {
+              "id": 5463,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5462,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5464,
+                  "src": "4130:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5461,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4130:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4129:9:17"
+            },
+            "scope": 5508,
+            "src": "4080:59:17",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5465,
+              "nodeType": "StructuredDocumentation",
+              "src": "4145:110:17",
+              "text": " @dev Unlocks all releasable amount of tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "5be7fde8",
+            "id": 5468,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseAll",
+            "nameLocation": "4269:10:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5466,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4279:2:17"
+            },
+            "returnParameters": {
+              "id": 5467,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4290:0:17"
+            },
+            "scope": 5508,
+            "src": "4260:31:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5469,
+              "nodeType": "StructuredDocumentation",
+              "src": "4297:123:17",
+              "text": " @dev Unlocks all releasable amount of private sale tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "c94297e6",
+            "id": 5472,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releasePrivateSale",
+            "nameLocation": "4434:18:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5470,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4452:2:17"
+            },
+            "returnParameters": {
+              "id": 5471,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4463:0:17"
+            },
+            "scope": 5508,
+            "src": "4425:39:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5473,
+              "nodeType": "StructuredDocumentation",
+              "src": "4470:122:17",
+              "text": " @dev Unlocks all releasable amount of public sale tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "814296bc",
+            "id": 5476,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releasePublicSale",
+            "nameLocation": "4606:17:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5474,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4623:2:17"
+            },
+            "returnParameters": {
+              "id": 5475,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4634:0:17"
+            },
+            "scope": 5508,
+            "src": "4597:38:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5477,
+              "nodeType": "StructuredDocumentation",
+              "src": "4641:115:17",
+              "text": " @dev Unlocks all releasable amount of team tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "4dbc355a",
+            "id": 5480,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseTeam",
+            "nameLocation": "4770:11:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5478,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4781:2:17"
+            },
+            "returnParameters": {
+              "id": 5479,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4792:0:17"
+            },
+            "scope": 5508,
+            "src": "4761:32:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5481,
+              "nodeType": "StructuredDocumentation",
+              "src": "4799:118:17",
+              "text": " @dev Unlocks all releasable amount of advisor tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "fc353ef1",
+            "id": 5484,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseAdvisor",
+            "nameLocation": "4931:14:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5482,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4945:2:17"
+            },
+            "returnParameters": {
+              "id": 5483,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4956:0:17"
+            },
+            "scope": 5508,
+            "src": "4922:35:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5485,
+              "nodeType": "StructuredDocumentation",
+              "src": "4963:120:17",
+              "text": " @dev Unlocks all releasable amount of liquidity tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "72015efc",
+            "id": 5488,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseLiquidity",
+            "nameLocation": "5097:16:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5486,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5113:2:17"
+            },
+            "returnParameters": {
+              "id": 5487,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5124:0:17"
+            },
+            "scope": 5508,
+            "src": "5088:37:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5489,
+              "nodeType": "StructuredDocumentation",
+              "src": "5131:121:17",
+              "text": " @dev Unlocks all releasable amount of incentives tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "9ef7909c",
+            "id": 5492,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseIncentives",
+            "nameLocation": "5266:17:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5490,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5283:2:17"
+            },
+            "returnParameters": {
+              "id": 5491,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5294:0:17"
+            },
+            "scope": 5508,
+            "src": "5257:38:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5493,
+              "nodeType": "StructuredDocumentation",
+              "src": "5301:120:17",
+              "text": " @dev Unlocks all releasable amount of marketing tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "cf95833e",
+            "id": 5496,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseMarketing",
+            "nameLocation": "5435:16:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5494,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5451:2:17"
+            },
+            "returnParameters": {
+              "id": 5495,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5462:0:17"
+            },
+            "scope": 5508,
+            "src": "5426:37:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5497,
+              "nodeType": "StructuredDocumentation",
+              "src": "5469:118:17",
+              "text": " @dev Unlocks all releasable amount of reserve tokens.\n Emits a {TokensReleased} event."
+            },
+            "functionSelector": "d3933ada",
+            "id": 5500,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseReserve",
+            "nameLocation": "5601:14:17",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5498,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5615:2:17"
+            },
+            "returnParameters": {
+              "id": 5499,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5626:0:17"
+            },
+            "scope": 5508,
+            "src": "5592:35:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 5501,
+              "nodeType": "StructuredDocumentation",
+              "src": "5633:74:17",
+              "text": " @dev Emitted when having amount of tokens are released."
+            },
+            "id": 5507,
+            "name": "TokensReleased",
+            "nameLocation": "5718:14:17",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5506,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5503,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "beneficiary",
+                  "nameLocation": "5749:11:17",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5507,
+                  "src": "5733:27:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5502,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5733:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5505,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "5770:6:17",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5507,
+                  "src": "5762:14:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5504,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5762:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5732:45:17"
+            },
+            "src": "5712:66:17"
+          }
+        ],
+        "scope": 5509,
+        "src": "114:5666:17",
+        "usedErrors": []
+      }
+    ],
+    "src": "32:5749:17"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.8+commit.dddeac2f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-02-01T14:05:17.770Z",
+  "devdoc": {
+    "details": "Interface of the TokensVesting contract.",
+    "events": {
+      "TokensReleased(address,uint256)": {
+        "details": "Emitted when having amount of tokens are released."
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "advisor()": {
+        "details": "Returns the total amount of advisor tokens in vesting plan."
+      },
+      "advisorReleasable()": {
+        "details": "Returns the total releasable amount of advisor tokens."
+      },
+      "advisorReleased()": {
+        "details": "Returns the total released amount of advisor tokens."
+      },
+      "incentives()": {
+        "details": "Returns the total amount of incentives tokens in vesting plan."
+      },
+      "incentivesReleasable()": {
+        "details": "Returns the total releasable amount of incentives tokens."
+      },
+      "incentivesReleased()": {
+        "details": "Returns the total released amount of incentives tokens."
+      },
+      "liquidity()": {
+        "details": "Returns the total amount of liquidity tokens in vesting plan."
+      },
+      "liquidityReleasable()": {
+        "details": "Returns the total releasable amount of liquidity tokens."
+      },
+      "liquidityReleased()": {
+        "details": "Returns the total released amount of liquidity tokens."
+      },
+      "marketing()": {
+        "details": "Returns the total amount of marketing tokens in vesting plan."
+      },
+      "marketingReleasable()": {
+        "details": "Returns the total releasable amount of marketing tokens."
+      },
+      "marketingReleased()": {
+        "details": "Returns the total released amount of marketing tokens."
+      },
+      "privateSale()": {
+        "details": "Returns the total amount of private sale tokens in vesting plan."
+      },
+      "privateSaleReleasable()": {
+        "details": "Returns the total releasable amount of private sale tokens."
+      },
+      "privateSaleReleased()": {
+        "details": "Returns the total released amount of private sale tokens."
+      },
+      "publicSale()": {
+        "details": "Returns the total amount of public sale tokens in vesting plan."
+      },
+      "publicSaleReleasable()": {
+        "details": "Returns the total releasable amount of public sale tokens."
+      },
+      "publicSaleReleased()": {
+        "details": "Returns the total released amount of public sale tokens."
+      },
+      "releasable()": {
+        "details": "Returns the total releasable amount of tokens."
+      },
+      "releaseAdvisor()": {
+        "details": "Unlocks all releasable amount of advisor tokens. Emits a {TokensReleased} event."
+      },
+      "releaseAll()": {
+        "details": "Unlocks all releasable amount of tokens. Emits a {TokensReleased} event."
+      },
+      "releaseIncentives()": {
+        "details": "Unlocks all releasable amount of incentives tokens. Emits a {TokensReleased} event."
+      },
+      "releaseLiquidity()": {
+        "details": "Unlocks all releasable amount of liquidity tokens. Emits a {TokensReleased} event."
+      },
+      "releaseMarketing()": {
+        "details": "Unlocks all releasable amount of marketing tokens. Emits a {TokensReleased} event."
+      },
+      "releasePrivateSale()": {
+        "details": "Unlocks all releasable amount of private sale tokens. Emits a {TokensReleased} event."
+      },
+      "releasePublicSale()": {
+        "details": "Unlocks all releasable amount of public sale tokens. Emits a {TokensReleased} event."
+      },
+      "releaseReserve()": {
+        "details": "Unlocks all releasable amount of reserve tokens. Emits a {TokensReleased} event."
+      },
+      "releaseTeam()": {
+        "details": "Unlocks all releasable amount of team tokens. Emits a {TokensReleased} event."
+      },
+      "released()": {
+        "details": "Returns the total released amount of tokens."
+      },
+      "reserve()": {
+        "details": "Returns the total amount of reserve tokens in vesting plan."
+      },
+      "reserveReleasable()": {
+        "details": "Returns the total releasable amount of reserve tokens."
+      },
+      "reserveReleased()": {
+        "details": "Returns the total released amount of reserve tokens."
+      },
+      "team()": {
+        "details": "Returns the total amount of team tokens in vesting plan."
+      },
+      "teamReleasable()": {
+        "details": "Returns the total releasable amount of team tokens."
+      },
+      "teamReleased()": {
+        "details": "Returns the total released amount of team tokens"
+      },
+      "total()": {
+        "details": "Returns the total amount of tokens in vesting plan."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

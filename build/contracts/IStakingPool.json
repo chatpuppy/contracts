@@ -1,0 +1,2738 @@
+{
+  "contractName": "IStakingPool",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "knightId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "reward",
+          "type": "uint256"
+        }
+      ],
+      "name": "Claimed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "totalBalance",
+          "type": "uint256"
+        }
+      ],
+      "name": "Exited",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "knightId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "lockedMonths",
+          "type": "uint256"
+        }
+      ],
+      "name": "Staked",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "knightId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Unstaked",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "knightId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "lockedMonths",
+          "type": "uint256"
+        }
+      ],
+      "name": "stake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "knightId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "unstake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "knightId",
+          "type": "uint256"
+        }
+      ],
+      "name": "claim",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "knightId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "levelUpAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "convertExpToLevels",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "knightId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "earned",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "expEarned",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokenEarned",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "knightId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.8+commit.dddeac2f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"knightId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"reward\",\"type\":\"uint256\"}],\"name\":\"Claimed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"totalBalance\",\"type\":\"uint256\"}],\"name\":\"Exited\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"knightId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"lockedMonths\",\"type\":\"uint256\"}],\"name\":\"Staked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"knightId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Unstaked\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"knightId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"knightId\",\"type\":\"uint256\"}],\"name\":\"claim\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"knightId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"levelUpAmount\",\"type\":\"uint256\"}],\"name\":\"convertExpToLevels\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"knightId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"earned\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"expEarned\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"tokenEarned\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"knightId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lockedMonths\",\"type\":\"uint256\"}],\"name\":\"stake\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"knightId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"unstake\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"balanceOf(uint256,address)\":{\"notice\":\"Gets total FARA staked of a Knight.\"},\"claim(uint256)\":{\"notice\":\"Harvest all EXP and reward earned from a Knight.\"},\"convertExpToLevels(uint256,uint256)\":{\"notice\":\"Convert all accumulated exp from staking to knight's levels.\"},\"earned(uint256,address)\":{\"notice\":\"Gets EXP and FARA earned by a knight so far.\"},\"stake(uint256,uint256,uint256)\":{\"notice\":\"Stake FARA crystals for farming knight EXP & FARA token.\"},\"unstake(uint256,uint256)\":{\"notice\":\"Unstake FARA crystals from a knight.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/interfaces/IStakingPool.sol\":\"IStakingPool\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/interfaces/IStakingPool.sol\":{\"keccak256\":\"0x88b3ee797d183690f57c1909fd3e4f0a9b6135065a8103a89bf602a8c06e9e43\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://075f66c286d55b0eca159ca4f76b72e41f015b55e2296f036cc51d7c6e3be60d\",\"dweb:/ipfs/QmbCpkZYEGaTuqSDcY4vNvwCabmzBRmA3gwCLUYuPjyaGt\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "//SPDX-License-Identifier: MIT\npragma solidity ^0.8.8;\n\ninterface IStakingPool {\n    event Staked(uint indexed knightId, address indexed account, uint amount, uint lockedMonths);\n    event Unstaked(uint indexed knightId, address indexed account, uint amount);\n    event Exited(address indexed account, uint totalBalance);\n    event Claimed(uint indexed knightId, address indexed account, uint reward);\n\n    struct StakingData {\n        uint balance;\n        uint APY;\n        uint lastUpdatedTime;\n        uint lockedTime;\n        uint lockedMonths;\n        uint reward;\n    }\n\n    /**\n     * @notice Stake FARA crystals for farming knight EXP & FARA token.\n     */\n    function stake(uint knightId, uint amount, uint lockedMonths) external;\n\n    /**\n     * @notice Unstake FARA crystals from a knight.\n     */\n    function unstake(uint knightId, uint amount) external;\n\n    /**\n     * @notice Harvest all EXP and reward earned from a Knight.\n     */\n    function claim(uint knightId) external;\n\n    /**\n     * @notice Convert all accumulated exp from staking to knight's levels.\n     */\n    function convertExpToLevels(uint knightId, uint levelUpAmount) external;\n\n    /**\n     * @notice Gets EXP and FARA earned by a knight so far.\n     */\n    function earned(uint knightId, address account) external view returns (uint expEarned, uint tokenEarned);\n\n    /**\n     * @notice Gets total FARA staked of a Knight.\n     */\n    function balanceOf(uint knightId, address account) external view returns (uint);\n}",
+  "sourcePath": "/Users/guqianfeng/web/my_dapps/chainline/contracts/contracts/interfaces/IStakingPool.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/interfaces/IStakingPool.sol",
+    "exportedSymbols": {
+      "IStakingPool": [
+        5291
+      ]
+    },
+    "id": 5292,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5191,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".8"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "31:23:15"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 5291,
+        "linearizedBaseContracts": [
+          5291
+        ],
+        "name": "IStakingPool",
+        "nameLocation": "66:12:15",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "id": 5201,
+            "name": "Staked",
+            "nameLocation": "91:6:15",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5200,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5193,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "111:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5201,
+                  "src": "98:21:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5192,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "98:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5195,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "137:7:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5201,
+                  "src": "121:23:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5194,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "121:7:15",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5197,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "151:6:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5201,
+                  "src": "146:11:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5196,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "146:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5199,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "lockedMonths",
+                  "nameLocation": "164:12:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5201,
+                  "src": "159:17:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5198,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "159:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "97:80:15"
+            },
+            "src": "85:93:15"
+          },
+          {
+            "anonymous": false,
+            "id": 5209,
+            "name": "Unstaked",
+            "nameLocation": "189:8:15",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5208,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5203,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "211:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5209,
+                  "src": "198:21:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5202,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "198:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5205,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "237:7:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5209,
+                  "src": "221:23:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5204,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "221:7:15",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5207,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "251:6:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5209,
+                  "src": "246:11:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5206,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "246:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "197:61:15"
+            },
+            "src": "183:76:15"
+          },
+          {
+            "anonymous": false,
+            "id": 5215,
+            "name": "Exited",
+            "nameLocation": "270:6:15",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5214,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5211,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "293:7:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5215,
+                  "src": "277:23:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5210,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "277:7:15",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5213,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "totalBalance",
+                  "nameLocation": "307:12:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5215,
+                  "src": "302:17:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5212,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "302:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "276:44:15"
+            },
+            "src": "264:57:15"
+          },
+          {
+            "anonymous": false,
+            "id": 5223,
+            "name": "Claimed",
+            "nameLocation": "332:7:15",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5222,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5217,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "353:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5223,
+                  "src": "340:21:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5216,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "340:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5219,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "379:7:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5223,
+                  "src": "363:23:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5218,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "363:7:15",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5221,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "reward",
+                  "nameLocation": "393:6:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5223,
+                  "src": "388:11:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5220,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "388:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "339:61:15"
+            },
+            "src": "326:75:15"
+          },
+          {
+            "canonicalName": "IStakingPool.StakingData",
+            "id": 5236,
+            "members": [
+              {
+                "constant": false,
+                "id": 5225,
+                "mutability": "mutable",
+                "name": "balance",
+                "nameLocation": "441:7:15",
+                "nodeType": "VariableDeclaration",
+                "scope": 5236,
+                "src": "436:12:15",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 5224,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "436:4:15",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5227,
+                "mutability": "mutable",
+                "name": "APY",
+                "nameLocation": "463:3:15",
+                "nodeType": "VariableDeclaration",
+                "scope": 5236,
+                "src": "458:8:15",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 5226,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "458:4:15",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5229,
+                "mutability": "mutable",
+                "name": "lastUpdatedTime",
+                "nameLocation": "481:15:15",
+                "nodeType": "VariableDeclaration",
+                "scope": 5236,
+                "src": "476:20:15",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 5228,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "476:4:15",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5231,
+                "mutability": "mutable",
+                "name": "lockedTime",
+                "nameLocation": "511:10:15",
+                "nodeType": "VariableDeclaration",
+                "scope": 5236,
+                "src": "506:15:15",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 5230,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "506:4:15",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5233,
+                "mutability": "mutable",
+                "name": "lockedMonths",
+                "nameLocation": "536:12:15",
+                "nodeType": "VariableDeclaration",
+                "scope": 5236,
+                "src": "531:17:15",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 5232,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "531:4:15",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5235,
+                "mutability": "mutable",
+                "name": "reward",
+                "nameLocation": "563:6:15",
+                "nodeType": "VariableDeclaration",
+                "scope": 5236,
+                "src": "558:11:15",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 5234,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "558:4:15",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "StakingData",
+            "nameLocation": "414:11:15",
+            "nodeType": "StructDefinition",
+            "scope": 5291,
+            "src": "407:169:15",
+            "visibility": "public"
+          },
+          {
+            "documentation": {
+              "id": 5237,
+              "nodeType": "StructuredDocumentation",
+              "src": "582:83:15",
+              "text": " @notice Stake FARA crystals for farming knight EXP & FARA token."
+            },
+            "functionSelector": "a638f2e2",
+            "id": 5246,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "stake",
+            "nameLocation": "679:5:15",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5244,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5239,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "690:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5246,
+                  "src": "685:13:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5238,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "685:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5241,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "705:6:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5246,
+                  "src": "700:11:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5240,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "700:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5243,
+                  "mutability": "mutable",
+                  "name": "lockedMonths",
+                  "nameLocation": "718:12:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5246,
+                  "src": "713:17:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5242,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "713:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "684:47:15"
+            },
+            "returnParameters": {
+              "id": 5245,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "740:0:15"
+            },
+            "scope": 5291,
+            "src": "670:71:15",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5247,
+              "nodeType": "StructuredDocumentation",
+              "src": "747:63:15",
+              "text": " @notice Unstake FARA crystals from a knight."
+            },
+            "functionSelector": "9e2c8a5b",
+            "id": 5254,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "unstake",
+            "nameLocation": "824:7:15",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5252,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5249,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "837:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5254,
+                  "src": "832:13:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5248,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "832:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5251,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "852:6:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5254,
+                  "src": "847:11:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5250,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "847:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "831:28:15"
+            },
+            "returnParameters": {
+              "id": 5253,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "868:0:15"
+            },
+            "scope": 5291,
+            "src": "815:54:15",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5255,
+              "nodeType": "StructuredDocumentation",
+              "src": "875:75:15",
+              "text": " @notice Harvest all EXP and reward earned from a Knight."
+            },
+            "functionSelector": "379607f5",
+            "id": 5260,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "claim",
+            "nameLocation": "964:5:15",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5258,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5257,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "975:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5260,
+                  "src": "970:13:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5256,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "970:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "969:15:15"
+            },
+            "returnParameters": {
+              "id": 5259,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "993:0:15"
+            },
+            "scope": 5291,
+            "src": "955:39:15",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5261,
+              "nodeType": "StructuredDocumentation",
+              "src": "1000:87:15",
+              "text": " @notice Convert all accumulated exp from staking to knight's levels."
+            },
+            "functionSelector": "c4c28872",
+            "id": 5268,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "convertExpToLevels",
+            "nameLocation": "1101:18:15",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5266,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5263,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "1125:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5268,
+                  "src": "1120:13:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5262,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1120:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5265,
+                  "mutability": "mutable",
+                  "name": "levelUpAmount",
+                  "nameLocation": "1140:13:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5268,
+                  "src": "1135:18:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5264,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1135:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1119:35:15"
+            },
+            "returnParameters": {
+              "id": 5267,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1163:0:15"
+            },
+            "scope": 5291,
+            "src": "1092:72:15",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5269,
+              "nodeType": "StructuredDocumentation",
+              "src": "1170:71:15",
+              "text": " @notice Gets EXP and FARA earned by a knight so far."
+            },
+            "functionSelector": "e39c08fc",
+            "id": 5280,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "earned",
+            "nameLocation": "1255:6:15",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5274,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5271,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "1267:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5280,
+                  "src": "1262:13:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5270,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1262:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5273,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "1285:7:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5280,
+                  "src": "1277:15:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5272,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1277:7:15",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1261:32:15"
+            },
+            "returnParameters": {
+              "id": 5279,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5276,
+                  "mutability": "mutable",
+                  "name": "expEarned",
+                  "nameLocation": "1322:9:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5280,
+                  "src": "1317:14:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5275,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1317:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5278,
+                  "mutability": "mutable",
+                  "name": "tokenEarned",
+                  "nameLocation": "1338:11:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5280,
+                  "src": "1333:16:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5277,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1333:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1316:34:15"
+            },
+            "scope": 5291,
+            "src": "1246:105:15",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5281,
+              "nodeType": "StructuredDocumentation",
+              "src": "1357:62:15",
+              "text": " @notice Gets total FARA staked of a Knight."
+            },
+            "functionSelector": "3656eec2",
+            "id": 5290,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "balanceOf",
+            "nameLocation": "1433:9:15",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5286,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5283,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "1448:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5290,
+                  "src": "1443:13:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5282,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1443:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5285,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "1466:7:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5290,
+                  "src": "1458:15:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5284,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1458:7:15",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1442:32:15"
+            },
+            "returnParameters": {
+              "id": 5289,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5288,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5290,
+                  "src": "1498:4:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5287,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1498:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1497:6:15"
+            },
+            "scope": 5291,
+            "src": "1424:80:15",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 5292,
+        "src": "56:1450:15",
+        "usedErrors": []
+      }
+    ],
+    "src": "31:1475:15"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/interfaces/IStakingPool.sol",
+    "exportedSymbols": {
+      "IStakingPool": [
+        5291
+      ]
+    },
+    "id": 5292,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5191,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".8"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "31:23:15"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 5291,
+        "linearizedBaseContracts": [
+          5291
+        ],
+        "name": "IStakingPool",
+        "nameLocation": "66:12:15",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "id": 5201,
+            "name": "Staked",
+            "nameLocation": "91:6:15",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5200,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5193,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "111:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5201,
+                  "src": "98:21:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5192,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "98:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5195,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "137:7:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5201,
+                  "src": "121:23:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5194,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "121:7:15",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5197,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "151:6:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5201,
+                  "src": "146:11:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5196,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "146:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5199,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "lockedMonths",
+                  "nameLocation": "164:12:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5201,
+                  "src": "159:17:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5198,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "159:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "97:80:15"
+            },
+            "src": "85:93:15"
+          },
+          {
+            "anonymous": false,
+            "id": 5209,
+            "name": "Unstaked",
+            "nameLocation": "189:8:15",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5208,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5203,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "211:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5209,
+                  "src": "198:21:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5202,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "198:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5205,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "237:7:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5209,
+                  "src": "221:23:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5204,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "221:7:15",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5207,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "251:6:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5209,
+                  "src": "246:11:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5206,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "246:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "197:61:15"
+            },
+            "src": "183:76:15"
+          },
+          {
+            "anonymous": false,
+            "id": 5215,
+            "name": "Exited",
+            "nameLocation": "270:6:15",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5214,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5211,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "293:7:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5215,
+                  "src": "277:23:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5210,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "277:7:15",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5213,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "totalBalance",
+                  "nameLocation": "307:12:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5215,
+                  "src": "302:17:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5212,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "302:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "276:44:15"
+            },
+            "src": "264:57:15"
+          },
+          {
+            "anonymous": false,
+            "id": 5223,
+            "name": "Claimed",
+            "nameLocation": "332:7:15",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5222,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5217,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "353:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5223,
+                  "src": "340:21:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5216,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "340:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5219,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "379:7:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5223,
+                  "src": "363:23:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5218,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "363:7:15",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5221,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "reward",
+                  "nameLocation": "393:6:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5223,
+                  "src": "388:11:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5220,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "388:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "339:61:15"
+            },
+            "src": "326:75:15"
+          },
+          {
+            "canonicalName": "IStakingPool.StakingData",
+            "id": 5236,
+            "members": [
+              {
+                "constant": false,
+                "id": 5225,
+                "mutability": "mutable",
+                "name": "balance",
+                "nameLocation": "441:7:15",
+                "nodeType": "VariableDeclaration",
+                "scope": 5236,
+                "src": "436:12:15",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 5224,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "436:4:15",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5227,
+                "mutability": "mutable",
+                "name": "APY",
+                "nameLocation": "463:3:15",
+                "nodeType": "VariableDeclaration",
+                "scope": 5236,
+                "src": "458:8:15",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 5226,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "458:4:15",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5229,
+                "mutability": "mutable",
+                "name": "lastUpdatedTime",
+                "nameLocation": "481:15:15",
+                "nodeType": "VariableDeclaration",
+                "scope": 5236,
+                "src": "476:20:15",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 5228,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "476:4:15",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5231,
+                "mutability": "mutable",
+                "name": "lockedTime",
+                "nameLocation": "511:10:15",
+                "nodeType": "VariableDeclaration",
+                "scope": 5236,
+                "src": "506:15:15",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 5230,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "506:4:15",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5233,
+                "mutability": "mutable",
+                "name": "lockedMonths",
+                "nameLocation": "536:12:15",
+                "nodeType": "VariableDeclaration",
+                "scope": 5236,
+                "src": "531:17:15",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 5232,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "531:4:15",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5235,
+                "mutability": "mutable",
+                "name": "reward",
+                "nameLocation": "563:6:15",
+                "nodeType": "VariableDeclaration",
+                "scope": 5236,
+                "src": "558:11:15",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 5234,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "558:4:15",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "StakingData",
+            "nameLocation": "414:11:15",
+            "nodeType": "StructDefinition",
+            "scope": 5291,
+            "src": "407:169:15",
+            "visibility": "public"
+          },
+          {
+            "documentation": {
+              "id": 5237,
+              "nodeType": "StructuredDocumentation",
+              "src": "582:83:15",
+              "text": " @notice Stake FARA crystals for farming knight EXP & FARA token."
+            },
+            "functionSelector": "a638f2e2",
+            "id": 5246,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "stake",
+            "nameLocation": "679:5:15",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5244,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5239,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "690:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5246,
+                  "src": "685:13:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5238,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "685:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5241,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "705:6:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5246,
+                  "src": "700:11:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5240,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "700:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5243,
+                  "mutability": "mutable",
+                  "name": "lockedMonths",
+                  "nameLocation": "718:12:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5246,
+                  "src": "713:17:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5242,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "713:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "684:47:15"
+            },
+            "returnParameters": {
+              "id": 5245,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "740:0:15"
+            },
+            "scope": 5291,
+            "src": "670:71:15",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5247,
+              "nodeType": "StructuredDocumentation",
+              "src": "747:63:15",
+              "text": " @notice Unstake FARA crystals from a knight."
+            },
+            "functionSelector": "9e2c8a5b",
+            "id": 5254,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "unstake",
+            "nameLocation": "824:7:15",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5252,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5249,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "837:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5254,
+                  "src": "832:13:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5248,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "832:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5251,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "852:6:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5254,
+                  "src": "847:11:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5250,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "847:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "831:28:15"
+            },
+            "returnParameters": {
+              "id": 5253,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "868:0:15"
+            },
+            "scope": 5291,
+            "src": "815:54:15",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5255,
+              "nodeType": "StructuredDocumentation",
+              "src": "875:75:15",
+              "text": " @notice Harvest all EXP and reward earned from a Knight."
+            },
+            "functionSelector": "379607f5",
+            "id": 5260,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "claim",
+            "nameLocation": "964:5:15",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5258,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5257,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "975:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5260,
+                  "src": "970:13:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5256,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "970:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "969:15:15"
+            },
+            "returnParameters": {
+              "id": 5259,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "993:0:15"
+            },
+            "scope": 5291,
+            "src": "955:39:15",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5261,
+              "nodeType": "StructuredDocumentation",
+              "src": "1000:87:15",
+              "text": " @notice Convert all accumulated exp from staking to knight's levels."
+            },
+            "functionSelector": "c4c28872",
+            "id": 5268,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "convertExpToLevels",
+            "nameLocation": "1101:18:15",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5266,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5263,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "1125:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5268,
+                  "src": "1120:13:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5262,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1120:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5265,
+                  "mutability": "mutable",
+                  "name": "levelUpAmount",
+                  "nameLocation": "1140:13:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5268,
+                  "src": "1135:18:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5264,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1135:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1119:35:15"
+            },
+            "returnParameters": {
+              "id": 5267,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1163:0:15"
+            },
+            "scope": 5291,
+            "src": "1092:72:15",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5269,
+              "nodeType": "StructuredDocumentation",
+              "src": "1170:71:15",
+              "text": " @notice Gets EXP and FARA earned by a knight so far."
+            },
+            "functionSelector": "e39c08fc",
+            "id": 5280,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "earned",
+            "nameLocation": "1255:6:15",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5274,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5271,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "1267:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5280,
+                  "src": "1262:13:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5270,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1262:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5273,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "1285:7:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5280,
+                  "src": "1277:15:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5272,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1277:7:15",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1261:32:15"
+            },
+            "returnParameters": {
+              "id": 5279,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5276,
+                  "mutability": "mutable",
+                  "name": "expEarned",
+                  "nameLocation": "1322:9:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5280,
+                  "src": "1317:14:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5275,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1317:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5278,
+                  "mutability": "mutable",
+                  "name": "tokenEarned",
+                  "nameLocation": "1338:11:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5280,
+                  "src": "1333:16:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5277,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1333:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1316:34:15"
+            },
+            "scope": 5291,
+            "src": "1246:105:15",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 5281,
+              "nodeType": "StructuredDocumentation",
+              "src": "1357:62:15",
+              "text": " @notice Gets total FARA staked of a Knight."
+            },
+            "functionSelector": "3656eec2",
+            "id": 5290,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "balanceOf",
+            "nameLocation": "1433:9:15",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5286,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5283,
+                  "mutability": "mutable",
+                  "name": "knightId",
+                  "nameLocation": "1448:8:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5290,
+                  "src": "1443:13:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5282,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1443:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5285,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "1466:7:15",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5290,
+                  "src": "1458:15:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5284,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1458:7:15",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1442:32:15"
+            },
+            "returnParameters": {
+              "id": 5289,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5288,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5290,
+                  "src": "1498:4:15",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5287,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1498:4:15",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1497:6:15"
+            },
+            "scope": 5291,
+            "src": "1424:80:15",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 5292,
+        "src": "56:1450:15",
+        "usedErrors": []
+      }
+    ],
+    "src": "31:1475:15"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.8+commit.dddeac2f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-02-01T14:05:17.769Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "balanceOf(uint256,address)": {
+        "notice": "Gets total FARA staked of a Knight."
+      },
+      "claim(uint256)": {
+        "notice": "Harvest all EXP and reward earned from a Knight."
+      },
+      "convertExpToLevels(uint256,uint256)": {
+        "notice": "Convert all accumulated exp from staking to knight's levels."
+      },
+      "earned(uint256,address)": {
+        "notice": "Gets EXP and FARA earned by a knight so far."
+      },
+      "stake(uint256,uint256,uint256)": {
+        "notice": "Stake FARA crystals for farming knight EXP & FARA token."
+      },
+      "unstake(uint256,uint256)": {
+        "notice": "Unstake FARA crystals from a knight."
+      }
+    },
+    "version": 1
+  }
+}

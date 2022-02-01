@@ -1,0 +1,302 @@
+{
+  "contractName": "IRandomConsumer",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId_",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "randomness_",
+          "type": "uint256"
+        }
+      ],
+      "name": "rawFulfillRandomness",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.8+commit.dddeac2f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId_\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"randomness_\",\"type\":\"uint256\"}],\"name\":\"rawFulfillRandomness\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/interfaces/IRandomConsumer.sol\":\"IRandomConsumer\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/interfaces/IRandomConsumer.sol\":{\"keccak256\":\"0x70385218534328b93e7cd4079ac039c5e2ab04972d210d7355f622b577eef540\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://05b679263c21dee0aa680bb9efb3df553c9b9adba60388ae85b66c32ddbf743d\",\"dweb:/ipfs/QmYPRfd2sD24YvN2jzkYB4NiG7yyJ3sq4m5JHg2BtzaDv8\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.8;\n\ninterface IRandomConsumer {\n    function rawFulfillRandomness(uint256 tokenId_, uint256 randomness_)\n        external;\n}",
+  "sourcePath": "/Users/guqianfeng/web/my_dapps/chainline/contracts/contracts/interfaces/IRandomConsumer.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/interfaces/IRandomConsumer.sol",
+    "exportedSymbols": {
+      "IRandomConsumer": [
+        5163
+      ]
+    },
+    "id": 5164,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5155,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".8"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:12"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 5163,
+        "linearizedBaseContracts": [
+          5163
+        ],
+        "name": "IRandomConsumer",
+        "nameLocation": "68:15:12",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "d5919d6e",
+            "id": 5162,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "rawFulfillRandomness",
+            "nameLocation": "99:20:12",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5160,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5157,
+                  "mutability": "mutable",
+                  "name": "tokenId_",
+                  "nameLocation": "128:8:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5162,
+                  "src": "120:16:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5156,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "120:7:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5159,
+                  "mutability": "mutable",
+                  "name": "randomness_",
+                  "nameLocation": "146:11:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5162,
+                  "src": "138:19:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5158,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "138:7:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "119:39:12"
+            },
+            "returnParameters": {
+              "id": 5161,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "175:0:12"
+            },
+            "scope": 5163,
+            "src": "90:86:12",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 5164,
+        "src": "58:120:12",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:145:12"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/interfaces/IRandomConsumer.sol",
+    "exportedSymbols": {
+      "IRandomConsumer": [
+        5163
+      ]
+    },
+    "id": 5164,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5155,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".8"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:12"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 5163,
+        "linearizedBaseContracts": [
+          5163
+        ],
+        "name": "IRandomConsumer",
+        "nameLocation": "68:15:12",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "d5919d6e",
+            "id": 5162,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "rawFulfillRandomness",
+            "nameLocation": "99:20:12",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5160,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5157,
+                  "mutability": "mutable",
+                  "name": "tokenId_",
+                  "nameLocation": "128:8:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5162,
+                  "src": "120:16:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5156,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "120:7:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5159,
+                  "mutability": "mutable",
+                  "name": "randomness_",
+                  "nameLocation": "146:11:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5162,
+                  "src": "138:19:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5158,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "138:7:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "119:39:12"
+            },
+            "returnParameters": {
+              "id": 5161,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "175:0:12"
+            },
+            "scope": 5163,
+            "src": "90:86:12",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 5164,
+        "src": "58:120:12",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:145:12"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.8+commit.dddeac2f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-02-01T14:05:17.768Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
