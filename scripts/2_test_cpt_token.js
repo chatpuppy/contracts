@@ -1,5 +1,5 @@
 /**
- * Testing DragonaireDAEToken
+ * Testing CPT Token
  */
 
 import {execContract} from './web3.js';
@@ -15,8 +15,8 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const daeContractAddress = '0x7F9C8F09310fe0F02e1E7E23f90219145724A229';
-const daeContractJson = require('../build/contracts/DAREToken.json');
+const daeContractAddress = '0x55129D3d4a7319df16e70c44c62D271b7a7f34b0';
+const daeContractJson = require('../build/contracts/CPTToken.json');
 
 const daeContract = new web3.eth.Contract(daeContractJson.abi, daeContractAddress);
 

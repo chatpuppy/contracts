@@ -40,7 +40,7 @@ module.exports = {
             provider: () =>
                 new HDWalletProvider(
                     Env.get("MNEMONIC"), 
-                    `https://data-seed-prebsc-1-s2.binance.org:8545`
+                    `https://data-seed-prebsc-1-s1.binance.org:8545`
                 ),
             network_id: 97, // bsc test net's id
             gas: 11500000, // Ropsten has a lower block limit than mainnet

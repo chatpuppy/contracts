@@ -66,9 +66,13 @@ export const execContract = (web3, chainId, priKey, sendEncodeABI, contractAddre
 }
 
 const sendRawTransaction = (web3, txData, priKey) => {
+	return web3.eth.sendSignedTransaction('0x' + sign(txData, priKey));
+}
+
+export const sign = (txData, priKey) => {
 	const transaction = new Tx(txData, {common: BSC_TEST});
 	const privateKey = new Buffer.from(priKey, "hex");
 	transaction.sign(privateKey);
 	const serializedTx = transaction.serialize().toString('hex');
-	return web3.eth.sendSignedTransaction('0x' + serializedTx);
+	return serializedTx;
 }
