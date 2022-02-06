@@ -91,8 +91,8 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	// let sendEncodeABI = nftManager.methods.mintBatch(user, 1, 3).encodeABI();
 	
 	// Unbox mystery box
-	let sendEncodeABI = nftManager.methods.unbox(1).encodeABI();
+	// let sendEncodeABI = nftManager.methods.unbox(1).encodeABI();
 
-	callContract(sendEncodeABI, nftManagerAddress);
+	// callContract(sendEncodeABI, nftManagerAddress);
 });
 

@@ -5,7 +5,7 @@
 ```
 // Mystery Box
 _supportedBoxTypes.add(1); // #1
-_supportedBoxTypes.add(2); // #2
+_supportedBoxTypes.add(2); // #2 TODO
 
 // ItemType
 _supportedItemTypes.add(1); // ItemType#1, ChatPuppy NFT group#1
@@ -48,27 +48,27 @@ let sendEncodeABI = itemFactory.methods.addItem(1, 1, 5, 682000).encodeABI();
 * 
 ## Mint mystery box
 ```
-let sendEncodeABI = nftManager.methods.mint(user, 1).encodeABI();
+nftManager.methods.mint(user, boxType).send();
 ```
 
 ## Batch mint mystery boxes
 ```
-let sendEncodeABI = nftManager.methods.mintBatch(user, 1, 2).encodeABI();
+nftManager.methods.mintBatch(user, boxType, amount).send();
+```
+
+## Unbox NFT
+```
+nftManager.methods.unbox(tokenId).send();
+```
+
+## Get Unboxed NFT details
+```
+nft.methods.tokenMetaData(tokenId).call();
 ```
 
 ## List NFT
 
 ## List mystery boxes
-
-## Unbox NFT
-```
-let sendEncodeABI = nftManager.methods.unbox(1).encodeABI();
-```
-
-## Get Unboxed NFT details
-```
-
-```
 
 ## Buy NFT by BNB
 
