@@ -33,6 +33,16 @@
     "deploy-marketplace-mainnet": "truffle migrate --network bscMainnet -f 7 --to 7",
     "deploy-price-consumer-mainnet": "truffle migrate --network bscMainnet -f 8 --to 8",
     
+    "deploy-cpt-kovan": "truffle migrate --network kovan -f 2 --to 2",
+    "deploy-nft-kovan": "truffle migrate --network kovan -f 3 --to 3",
+    "deploy-random-generator-kovan": "truffle migrate --network kovan -f 4 --to 4",
+    "deploy-item-factory-kovan": "truffle migrate --network kovan -f 5 --to 5",
+    "deploy-nft-manager-kovan": "truffle migrate --network kovan -f 6 --to 6",
+    "deploy-marketplace-kovan": "truffle migrate --network kovan -f 7 --to 7",
+    "deploy-price-consumer-kovan": "truffle migrate --network kovan -f 8 --to 8",
+    "deploy-token-vesting-kovan": "truffle migrate --network kovan -f 9 --to 9",
+    "deploy-random-test-kovan": "truffle migrate --network kovan -f 11 --to 11",
+
     "merge-cpt-contract": "sol-merger \"./contracts/CPTToken.sol\" merged-contracts",
 
     "test": "mocha --exit --recursive --timeout=300000"
