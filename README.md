@@ -12,21 +12,21 @@ _supportedItemTypes.add(1); // ItemType#1, ChatPuppy NFT group#1
 _supportedItemTypes.add(2); // ItemType#2, ChatPuppy NFT group#2, TODO
 
 /*
-		6 types of eyes, artifact#1
-		4 types of ear-ornament, artifact#2
-		6 types of mouths, artifact#3
-		6 types of caps, artifact#4
-		6 types of cloths, artifact#5
-		6 types of background colors, artifact#6
-		6 types of skin colors, artifact#7
+	6 types of eyes, artifact#1
+	4 types of ear-ornament, artifact#2
+	6 types of mouths, artifact#3
+	6 types of caps, artifact#4
+	6 types of cloths, artifact#5
+	6 types of background colors, artifact#6
+	6 types of skin colors, artifact#7
 */
 _addTypeArtifact(1, 1, 0, 5);  // ItemType#1，Artifact#1, 0-5
-_addTypeArtifact(1, 2, 0, 4); // ItemType#1, Artifact#2, 0-4
-_addTypeArtifact(1, 3, 0, 5); // ItemType#1, Artifact#3, 0-5
-_addTypeArtifact(1, 4, 0, 5); // ItemType#1, Artifact#4, 0-5
-_addTypeArtifact(1, 5, 0, 5); // ItemType#1, Artifact#5, 0-5
-_addTypeArtifact(1, 6, 0, 5); // ItemType#1, Artifact#6, 0-5
-_addTypeArtifact(1, 7, 0, 5); // ItemType#1, Artifact#7, 0-5
+_addTypeArtifact(1, 2, 6, 10); // ItemType#1, Artifact#2, 6-10
+_addTypeArtifact(1, 3, 11, 16); // ItemType#1, Artifact#3, 11-16
+_addTypeArtifact(1, 4, 17, 22); // ItemType#1, Artifact#4, 17-22
+_addTypeArtifact(1, 5, 23, 28); // ItemType#1, Artifact#5, 23-28
+_addTypeArtifact(1, 6, 29, 34); // ItemType#1, Artifact#6, 29-34
+_addTypeArtifact(1, 7, 35, 40); // ItemType#1, Artifact#7, 35-40
 ```
 
 * add item and rarity for each item
@@ -46,7 +46,7 @@ let sendEncodeABI = itemFactory.methods.addItem(1, 1, 4, 270000).encodeABI();
 let sendEncodeABI = itemFactory.methods.addItem(1, 1, 5, 682000).encodeABI();
 ```
 * 
-## Mint mystery box
+## Mint one mystery box
 ```
 nftManager.methods.mint(user, boxType).send();
 ```

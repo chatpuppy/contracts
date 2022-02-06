@@ -22,6 +22,7 @@ contract ChatPuppyNFTManager is
 
     ChatPuppyNFTCore public immutable nftCore;
     uint256 public projectId = 0;
+    uint256 public boxPrice = 0;
 
     // Mystery Box type
     EnumerableSet.UintSet private _supportedBoxTypes;
@@ -166,6 +167,15 @@ contract ChatPuppyNFTManager is
     function updateProjectId(uint256 projectId_) external onlyRole(MANAGER_ROLE) {
         projectId = projectId_;
     }
+
+    /**
+     * @dev update mystery box price
+     */
+    function updateBoxPrice(uint256 price_) external onlyRole(MANAGER_ROLE) {
+        require(price_ > 0, "ChatPuppyNFTManager: box price can not be zero");
+        boxPrice = price_;
+    }
+
     /**
      * @dev pause NFT transaction
      */
@@ -204,6 +214,20 @@ contract ChatPuppyNFTManager is
     }
 
     /**
+     * Buy and mint
+     */
+    function buyAndMint(uint256 boxType_) public payable onlySupportedBoxType(boxType_) {
+        require(msg.value >= boxPrice, "ChatPuppyNFTManager: payment is not enough");
+        _mint(_msgSender(), boxType_);
+    }
+
+    function buyMintAndUnbox(uint256 boxType_) public payable onlySupportedBoxType(boxType_) {
+        require(msg.value >= boxPrice, "ChatPuppyNFTManager: payment is not enough");
+        uint256 _tokenId = _mint(_msgSender(), boxType_);
+        unbox(_tokenId);
+    }
+
+    /**
      * @dev Mint NFT with boxType
      */
     function mint(address to_, uint256 boxType_) public onlyRole(MINTER_ROLE) onlySupportedBoxType(boxType_) {
@@ -222,7 +246,7 @@ contract ChatPuppyNFTManager is
         }
     }
 
-    function _mint(address to_, uint256 boxType_) private {
+    function _mint(address to_, uint256 boxType_) private returns(uint256) {
         uint256 _tokenId = nftCore.mint(to_);
         (, uint256 _artifacts) = nftCore.tokenMetaData(_tokenId);
 
@@ -233,6 +257,8 @@ contract ChatPuppyNFTManager is
         _artifacts = _addArtifactValue(_artifacts, 8, 8, uint256(1));
 
         nftCore.updateTokenMetaData(_tokenId, _artifacts);
+
+        return(_tokenId);
     }
 
     function canUnbox(uint256 tokenId_) external view returns(bool) {
