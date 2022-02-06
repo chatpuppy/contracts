@@ -1,5 +1,10 @@
 # Smart contracts
 
+## Addresses on BSC bscTestnet
+* NFT token: 
+* NFT Manager(mystery box):
+* Item Factory: 
+
 ## Config ItemFactory
 * Set Item scope and deploy
 ```
@@ -45,10 +50,20 @@ let sendEncodeABI = itemFactory.methods.addItem(1, 1, 3, 36000).encodeABI();
 let sendEncodeABI = itemFactory.methods.addItem(1, 1, 4, 270000).encodeABI();
 let sendEncodeABI = itemFactory.methods.addItem(1, 1, 5, 682000).encodeABI();
 ```
-* 
-## Mint one mystery box
+
+## Mint one mystery box(only contract manager can do)
 ```
 nftManager.methods.mint(user, boxType).send();
+```
+
+## Buy mystery box and don't unbox
+```
+nftManager.methods.buyAndMint(boxType).send();
+```
+
+## Buy mystery box and unbox immediately
+```
+nftManager.methods.buyMintAndUnbox(boxType).send();
 ```
 
 ## Batch mint mystery boxes
@@ -70,19 +85,15 @@ nft.methods.tokenMetaData(tokenId).call();
 
 ## List mystery boxes
 
-## Buy NFT by BNB
+## Buy NFT by BNB from marketplace
 
-## Buy mystery box by BNB
+## Buy mystery box by BNB from marketplace
 
-## Buy NFT by Token
+## Update NFT price(BNB) on marketplace
 
-## Buy mystery box by Token
+## Update NFT price(Token) on marketplace
 
-## Update NFT price(BNB)
+## Unlist NFT from marketplace
 
-## Update NFT price(Token)
-
-## Unlist NFT
-
-## Unlist mystery boxes
+## Unlist mystery boxes from marketplace
 
