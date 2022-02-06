@@ -30,7 +30,7 @@ const callContract = (encodeABI, contractAddress) => execContract(web3, chainId,
 
 // 必须将本合约地址授权给ChainLinkRandomGenerator合约的CONSUMER_ROLE角色
 // TokenId is insteatd of RequestId, it can not be duplicated.
-// let sendEncodeABI = randomTest.methods.requestRandomness(3).encodeABI();
+// let sendEncodeABI = randomTest.methods.requestRandomness(4).encodeABI();
 
 // let sendEncodeABI = randomTest.methods.updateRandomFee(0).encodeABI();
 // callContract(sendEncodeABI, randomTestAddress);

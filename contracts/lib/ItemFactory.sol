@@ -9,11 +9,9 @@ import "../interfaces/IItemFactory.sol";
 contract ItemFactory is Ownable, IItemFactory {
     using EnumerableSet for EnumerableSet.UintSet;
 
-    EnumerableSet.UintSet private _supportedBoxTypes; // 盲盒
-    EnumerableSet.UintSet private _supportedItemTypes; // 道具
-    
-    uint256 private immutable _rarityDecimal;
-    
+    EnumerableSet.UintSet private _supportedBoxTypes; // BoxType
+    EnumerableSet.UintSet private _supportedItemTypes; // ItemType
+
     struct RarityInfo {
         uint256 zeroIndex;
         uint256 rarity;
@@ -36,26 +34,32 @@ contract ItemFactory is Ownable, IItemFactory {
     mapping(uint256 => Range) private _artifactRanges;
     mapping(uint256 => uint256) private _itemTypes;
 
-    constructor(uint256 rarityDecimal_) {
-        require(rarityDecimal_ > uint256(0), "ItemFactory: rarityDecimal_ is 0");
-        _rarityDecimal = rarityDecimal_;
-        // Sample, can be deleted or leave it.
-        // 盲盒道具
-        _supportedBoxTypes.add(1); // 盲盒类型1
-        _supportedBoxTypes.add(2); // 盲盒类型2
+    constructor() {
+        // Mystery Box
+        _supportedBoxTypes.add(1); // #1
+        _supportedBoxTypes.add(2); // #2
 
-        // 道具类型
-        _supportedItemTypes.add(1); // 道具1
-        _supportedItemTypes.add(2); // 道具2
-        _supportedItemTypes.add(3); // 道具3
+        // ItemType
+        _supportedItemTypes.add(1); // ItemType#1, ChatPuppy NFT group#1
+        _supportedItemTypes.add(2); // ItemType#2, ChatPuppy NFT group#2, TODO
 
-        // 添加道具
-        _addTypeArtifact(1, 1, 0, 2);  // 道具1，属性1，取值范围0-2
-        _addTypeArtifact(1, 2, 0, 20); // 道具1，属性2，取值范围0-20
-        _addTypeArtifact(1, 3, 10, 20); // 道具1，属性3，取值范围10-20
-        _addTypeArtifact(1, 4, 5, 20); // 道具1，属性4，取值范围5-20
-        _addTypeArtifact(2, 5, 3, 10); // 道具2，属性5，取值范围3-10
-        _addTypeArtifact(2, 6, 5, 10); // 道具2，属性6，取值范围5-10
+        /*
+            6 types of eyes, artifact#1
+            4 types of ear-ornament, artifact#2
+            6 types of mouths, artifact#3
+            6 types of caps, artifact#4
+            6 types of cloths, artifact#5
+            6 types of background colors, artifact#6
+            6 types of skin colors, artifact#7
+        */
+        // ###### 如何有一个大的随机数生成各子随机数，并且足够离散
+        _addTypeArtifact(1, 1, 0, 5);  // ItemType#1，Artifact#1, 0-5
+        _addTypeArtifact(1, 2, 6, 10); // ItemType#1, Artifact#2, 6-10
+        _addTypeArtifact(1, 3, 11, 16); // ItemType#1, Artifact#3, 11-16
+        _addTypeArtifact(1, 4, 17, 22); // ItemType#1, Artifact#4, 17-22
+        _addTypeArtifact(1, 5, 23, 28); // ItemType#1, Artifact#5, 23-28
+        _addTypeArtifact(1, 6, 29, 34); // ItemType#1, Artifact#6, 29-34
+        _addTypeArtifact(1, 7, 35, 40); // ItemType#1, Artifact#7, 35-40
     }
 
     modifier onlySupportedBoxType(uint256 boxType_) {
@@ -84,10 +88,6 @@ contract ItemFactory is Ownable, IItemFactory {
         require(_artifactIds[itemType_].add(artifactId_), "ItemFactory: _artifactIds contains artifactId_");
         _artifactRanges[artifactId_].start = artifactStart_;
         _artifactRanges[artifactId_].end = artifactEnd_;
-    }
-    
-    function rarityDecimal() external view returns (uint256) {
-        return _rarityDecimal;
     }
 
     function supportedBoxTypes() external view returns (uint256[] memory) {
@@ -131,6 +131,14 @@ contract ItemFactory is Ownable, IItemFactory {
             "ItemFactory::addTypeArtifact artifactStart should smaller than artifactEnd"
         );
         _addTypeArtifact(itemType_, artifactId_, artifactStart_, artifactEnd_);
+    }
+
+    function getItemRarity(uint256 boxType_, uint256 itemId_) external view returns(uint256) {
+        return _items[boxType_].itemIdToRarity[itemId_].rarity;
+    }
+
+    function getItemTotalRarity(uint256 boxType_) external view returns(uint256) {
+        return _items[boxType_].totalRarity;
     }
 
     function addItem(uint256 boxType_, uint256 itemType_, uint256 itemId_, uint256 rarity_) external

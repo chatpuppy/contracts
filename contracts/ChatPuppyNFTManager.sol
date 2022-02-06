@@ -21,6 +21,7 @@ contract ChatPuppyNFTManager is
     bytes32 public constant NFT_UPGRADER = keccak256("NFT_UPGRADER");
 
     ChatPuppyNFTCore public immutable nftCore;
+    uint256 public projectId = 0;
 
     // Mystery Box type
     EnumerableSet.UintSet private _supportedBoxTypes;
@@ -29,8 +30,9 @@ contract ChatPuppyNFTManager is
 
     uint256 constant MAX_UNBOX_BLOCK_COUNT = 100;
     mapping(uint256 => uint256) private _tokenIdToUnboxBlockNumber;
+    mapping(uint256 => uint256) private _randomnesses;
 
-    event UnboxToken(uint256 indexed tokenId);
+    event UnboxToken(uint256 indexed tokenId, uint256 boxType);
     event TokenFulfilled(uint256 indexed tokenId);
 
     constructor(
@@ -40,7 +42,8 @@ contract ChatPuppyNFTManager is
         uint256 initialCap_,
         address itemFactory_,
         address randomGenerator_,
-        uint256 randomFee_
+        uint256 randomFee_,
+        uint256 projectId_
     )
         RandomConsumerBase(randomGenerator_, randomFee_)
         ItemFactoryManager(itemFactory_)
@@ -51,6 +54,8 @@ contract ChatPuppyNFTManager is
             baseTokenURI_,
             initialCap_
         );
+
+        projectId = projectId_;
 
         _supportedBoxTypes.add(1); // Mystery Box Type#1, Dragon
         _supportedBoxTypes.add(2); // Mystery Box Type#2, Weapon
@@ -155,6 +160,13 @@ contract ChatPuppyNFTManager is
     }
 
     /**
+     * @dev update project id, while fetching random data, the input will be `projectId + tokenId`
+     * to avoid same tokenId can not be duplicated in ChainlinkRandomGenerator contract
+     */
+    function updateProjectId(uint256 projectId_) external onlyRole(MANAGER_ROLE) {
+        projectId = projectId_;
+    }
+    /**
      * @dev pause NFT transaction
      */
     function pause() external onlyRole(PAUSER_ROLE) {
@@ -223,6 +235,10 @@ contract ChatPuppyNFTManager is
         nftCore.updateTokenMetaData(_tokenId, _artifacts);
     }
 
+    function canUnbox(uint256 tokenId_) external view returns(bool) {
+        return _randomnesses[tokenId_] == 0;
+    }
+
     /**
      * @dev Unbox mystery box
      * This is a payable function
@@ -250,8 +266,8 @@ contract ChatPuppyNFTManager is
             _tokenIdToUnboxBlockNumber[tokenId_] = block.number;
 
             _takeRandomFee();
-            randomGenerator.requestRandomNumber(tokenId_);
-            emit UnboxToken(tokenId_);
+            randomGenerator.requestRandomNumber(projectId + tokenId_);
+            emit UnboxToken(tokenId_, _boxType);
         }
     }
 
@@ -276,6 +292,7 @@ contract ChatPuppyNFTManager is
      * 
      */
     function fulfillRandomness(uint256 tokenId_, uint256 randomness_) internal override(RandomConsumerBase) {
+        tokenId_ = tokenId_ - projectId;
         (bytes32 _dna, uint256 _artifacts) = nftCore.tokenMetaData(tokenId_);
         _dna = bytes32(keccak256(abi.encodePacked(tokenId_, randomness_)));
 
@@ -284,6 +301,7 @@ contract ChatPuppyNFTManager is
             randomness_,
             _boxType
         );
+
         _artifacts = _addArtifactValue(_artifacts, 16, 8, _itemType); // add itemType
         _artifacts = _addArtifactValue(_artifacts, 24, 16, _itemId); // add itemId
 
@@ -292,6 +310,7 @@ contract ChatPuppyNFTManager is
         for (uint256 i = 0; i < _artifactsLength; i++) {
             // add artifact id
             uint256 _artifactId = itemFactory.artifactIdAt(_itemType, i);
+
             _artifacts = _addArtifactValue(
                 _artifacts,
                 40 + i * 24,
@@ -325,6 +344,7 @@ contract ChatPuppyNFTManager is
         }
 
         delete _tokenIdToUnboxBlockNumber[tokenId_];
+        _randomnesses[tokenId_] = randomness_;
 
         nftCore.updateTokenMetaData(tokenId_, _artifacts, _dna);
         emit TokenFulfilled(tokenId_);

@@ -1,9 +1,9 @@
-const DragonaireNFTManager = artifacts.require("DragonaireNFTManager");
+const ChatpuppyNFTManager = artifacts.require("ChatPuppyNFTManager");
 const Env = require('../env');
 
 module.exports = function (deployer) {
     deployer.deploy(
-        DragonaireNFTManager, 
+        ChatpuppyNFTManager, 
         Env.get('NFT_NAME'),
         Env.get('NFT_SYMBOL'),
         Env.get('BASE_TOKEN_URI'),
@@ -11,5 +11,6 @@ module.exports = function (deployer) {
         Env.get('ITEM_FACTORY'),
         Env.get('RANDOM_GENERATOR'),
         0, //Env.get('RANDOM_FEE')
+        Env.get("PROJECT_ID"),
     );
 };

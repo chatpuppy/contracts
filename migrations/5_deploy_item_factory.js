@@ -3,7 +3,6 @@ const Env = require('../env');
 
 module.exports = function (deployer) {
     deployer.deploy(
-        ItemFactory,
-        20
+        ItemFactory
     );
 };

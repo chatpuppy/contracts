@@ -39,5 +39,7 @@ const callContract = (encodeABI, contractAddress) => execContract(web3, chainId,
 
 // let sendEncodeABI = randomGenerator.methods.requestRandomNumber(1).encodeABI(); // 等待NFTManager合约部署完毕
 
-let sendEncodeABI = randomGenerator.methods.grantRole('0x9d56108290ea0bc9c5c59c3ad357dca9d1b29ed7f3ae1443bef2fa2159bdf5e8', '0x4cc463c78E09C7EC45276D911c29688579E32818').encodeABI();
+let sendEncodeABI = randomGenerator.methods.grantRole(
+	'0x9d56108290ea0bc9c5c59c3ad357dca9d1b29ed7f3ae1443bef2fa2159bdf5e8', 
+	'0xF8F55C08f7B771CF97EE90CE548EFdB1A95E0426').encodeABI();
 callContract(sendEncodeABI, randomGeneratorAddress);
