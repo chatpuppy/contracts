@@ -157,7 +157,7 @@ nftManager.methods.boxStatus(tokenId).call();
 
 ## Withdraw from NFT manager contract(only called by contract manager)
 ```
-nftManager.methods.withdraw(toAddress, amount).send()
+nftManager.methods.withdraw(toAddress, amount).send();
 ```
 
 ## Get NFT metadata
@@ -166,6 +166,18 @@ nft.methods.tokenMetaData(tokenId).call();
 ```
 
 ## List NFT
+First, you need to approve marketplace contract to use the NFT tokenId:
+```
+nft.methods.approve(marketplaceAddress, tokenId).send();
+```
+
+Then, `addOrder`
+```
+marketplace.methods.addOrder(tokenId, paymentToken, price).send();
+```
+* paymentToken: use `0x0000000000000000000000000000000000000000` if paid by Chain token: `ETH/BNB` etc.
+* price: `'100000000000000000'`
+
 
 ## List mystery boxes
 

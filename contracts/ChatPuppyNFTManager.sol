@@ -226,7 +226,6 @@ contract ChatPuppyNFTManager is
         require(amount_ > uint256(0), "ChatPuppyNFTManager: withdraw amount is zero");
         uint256 balance = address(this).balance;
         require(balance >= amount_, "ChatPuppyNFTManager: withdraw amount must smaller than balance");
-        // ######
         (bool sent, ) = to_.call{value: amount_}("");
         require(sent, "ChatPuppyNFTManager: Failed to send Ether");
     }
