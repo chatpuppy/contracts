@@ -50,7 +50,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
 	// let sendEncodeABI = nft.methods.increaseCap(1).encodeABI();
-	// let sendEncodeABI = nft.methods.updateBaseTokenURI("https://dragonaire.com/").encodeABI();
+	// let sendEncodeABI = nft.methods.updateBaseTokenURI("https://nft.chatpuppy.com/token/").encodeABI();
 	// let sendEncodeABI = nft.methods.mint(user).encodeABI();
 
 	// let sendEncodeABI = nft.methods.updateTokenMetaData(1, 256).encodeABI();
