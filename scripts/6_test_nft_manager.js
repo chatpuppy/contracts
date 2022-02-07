@@ -15,18 +15,18 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const nftManagerAddress = '0xd79142Bb9aa94055751FF14F299F6Aa5253AE2C7';
+const nftManagerAddress = '0x9c9BAe663Ddf1e3F469359F90099B3699F56C26c';
 const nftManagerJson = require('../build/contracts/ChatPuppyNFTManager.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 
 const nftManager = new web3.eth.Contract(nftManagerJson.abi, nftManagerAddress);
 const user = '0x615b80388E3D3CaC6AA3a904803acfE7939f0399';
 
-const tokenId = 1;
-nftManager.methods.boxStatus(tokenId).call().then((result) => console.log('canUnbox ' + result));
+const tokenId = 3;
+nftManager.methods.boxStatus(tokenId).call().then((result) => console.log('boxStatus ' + result));
 
 nftManager.methods.nftCore().call().then((nftAddress) => {
-	console.log('nft Address', nftAddress); // 0x91A568eF27D75db2faBe21e8ad8F947FB42F9bAa
+	console.log('nft Address', nftAddress);
 	const nft = new web3.eth.Contract(nftJson.abi, nftAddress);
 	nft.methods.name().call().then((response) => console.log('nft name', response));
 	nft.methods.totalSupply().call().then((response) => console.log('totalSupply', response / 1));
@@ -37,19 +37,10 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	nft.methods.tokenURI(tokenId).call().then((res) => console.log('tokenUri of ' + tokenId, res));
 	nft.methods.ownerOf(tokenId).call().then((owner) => console.log('owner of nft ' + tokenId, owner));
 	nft.methods.tokenMetaData(tokenId).call().then((metaData) => console.log('metadata of nft ' + tokenId, metaData));
-	// // token id: 8, artifacts: 31557149308712695702487117390359031863579641058793881665793
-	// hex: 5070003060002000000000000000000000000000000000000
-	// box type: 1
-	// item type: 1
-	// item id: 5(ChatPuppy)
-	// artifacts: 05070003060002 ? 
 
-	// token id: 9, artifacts: 19002945463794915018104391483800381860728843057866773430529
-	// hex: 3070002060002000000000000000000000000000000000000
-
-
-	// getTokensOfOwner(web3, '0xa4c65a9d0f892FBdA1EB04cC0634f1B94684F650', user).then((res) => console.log('getTokensOfOwner', res));
-
+	// TokenId 5: 0x26 07 001f 06 0017 05 0011 04 000f 03 0008 02 0000 01 000001 003c 0006 0005 01 01
+	// TokenId 4: 0x27 07 001e 06 0017 05 0011 04 000d 03 0009 02 0005 01 000002 003c 0006 0005 01 01
+	// 
 	/**
 	* ==== Following testing methods is Send Tx ====
 	*/
@@ -89,9 +80,8 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	// BUG: Can only batch mint 3 nfts one time.
 	// let sendEncodeABI = nftManager.methods.mintBatch(user, 1, 3).encodeABI();
 	
-	// Unbox mystery box
+	// // Unbox mystery box
 	// let sendEncodeABI = nftManager.methods.unbox(3).encodeABI();
-
 	// callContract(sendEncodeABI, nftManagerAddress);
 });
 

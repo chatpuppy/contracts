@@ -338,7 +338,7 @@ contract ChatPuppyNFTManager is
         _artifacts = _addArtifactValue(_artifacts, 16, 16, _itemId); // add itemId
         _artifacts = _addArtifactValue(_artifacts, 32, 16, itemFactory.getItemInitialLevel(_itemType, _itemId)); // add level
         _artifacts = _addArtifactValue(_artifacts, 48, 16, itemFactory.getItemInitialExperience(_itemType, _itemId)); // add exeperience
-        _artifacts = _addArtifactValue(_artifacts, 64, 24, _itemNextIds[tokenId_]); // add item NextId, this is for pic image id
+        _artifacts = _addArtifactValue(_artifacts, 64, 24, _itemNextIds[_itemId]); // add item NextId, this is for pic image id
 
         uint256 _artifactsLength = itemFactory.artifactsLength(_itemType);
 
