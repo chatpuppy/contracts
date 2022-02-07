@@ -15,14 +15,13 @@ import "../interfaces/IRandomGenerator.sol";
 import "../interfaces/IRandomConsumer.sol";
 import "../interfaces/LinkTokenInterface.sol";
 import "./VRFConsumerBase.sol";
-import "./BuyLink.sol";
+// import "./BuyLink.sol";
 // import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
 contract ChainLinkRandomGenerator is
     AccessControlEnumerable,
     IRandomGenerator,
-    VRFConsumerBase,
-    BuyLink
+    VRFConsumerBase
 {
     using SafeERC20 for IERC20;
 
@@ -47,14 +46,9 @@ contract ChainLinkRandomGenerator is
         address vrfCoordinator_,
         address link_,
         bytes32 keyHash_,
-        uint256 fee_,
-        address wrappedBnb_,
-        address pegLink_,
-        address pegSwapRouter_,
-        address pancakeRouter_
+        uint256 fee_
     )
         VRFConsumerBase(vrfCoordinator_, link_)
-        BuyLink(wrappedBnb_, pegLink_, link_, pancakeRouter_, pegSwapRouter_)
     {
         keyHash = keyHash_;
         fee = fee_;
@@ -141,14 +135,5 @@ contract ChainLinkRandomGenerator is
             new bytes(0)
         );
         require(success, "ChainLinkRandomGenerator: insufficient balance");
-    }
-
-    function buyLink() external {
-        require(
-            hasRole(OPERATOR_ROLE, _msgSender()),
-            "ChainLinkRandomGenerator: must have operator role to buy link"
-        );
-
-        _buyLink();
     }
 }
