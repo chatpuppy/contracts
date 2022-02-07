@@ -83,6 +83,8 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
 
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
         _setupRole(MAINTAINER_ROLE, _msgSender());
+
+        _supportedPaymentTokens.add(address(0)); // Default is chain token like ETH/BNB
     }
 
     modifier onlySupportedPaymentToken(address paymentToken_) {
@@ -214,10 +216,6 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
 
     function addPaymentToken(address paymentToken_) external onlyRole(MAINTAINER_ROLE) {
         require(
-            paymentToken_ != address(0),
-            "ChatPuppyNFTMarketplace: feeRecipient_ is zero address"
-        );
-        require(
             _supportedPaymentTokens.add(paymentToken_),
             "ChatPuppyNFTMarketplace: already supported"
         );
@@ -231,14 +229,14 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
         uint256 tokenId_,
         address paymentToken_,
         uint256 price_
-    ) public onlySupportedPaymentToken(paymentToken_) {
+    ) public onlySupportedPaymentToken(paymentToken_)
+    {
         require(
             nftCore.ownerOf(tokenId_) == _msgSender(),
             "ChatPuppyNFTMarketplace: sender is not owner of token"
         );
         require(
-            nftCore.getApproved(tokenId_) == address(this) ||
-                nftCore.isApprovedForAll(_msgSender(), address(this)),
+            nftCore.getApproved(tokenId_) == address(this) || nftCore.isApprovedForAll(_msgSender(), address(this)),
             "ChatPuppyNFTMarketplace: The contract is unauthorized to manage this token"
         );
         require(
@@ -296,6 +294,7 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
 
     function matchOrder(uint256 orderId_, uint256 price_)
         external
+        payable
         onlyOnSaleOrder(orderId_)
         canMatch(orderId_, _msgSender(), price_)
     {
@@ -306,17 +305,30 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
 
         uint256 _feeAmount = _calculateFee(orderId_);
         if (_feeAmount > 0) {
+            if(_order.paymentToken == address(0)) {
+                // Don't do anything cause the chain token has been in the contract,
+                // The fee will store in the contract untill the owner withdraw from contract
+            } else {
+                // paid by ERC20
+                IERC20(_order.paymentToken).safeTransferFrom(
+                    _msgSender(),
+                    feeRecipient,
+                    _feeAmount
+                );
+            }
+        }
+        if(_order.paymentToken == address(0)) {
+            // paid from contract to the seller by chain token
+            (bool sent, ) = _order.seller.call{value: _order.price - _feeAmount}("");
+            require(sent, "ChatPuppyNFTMarketplace: Failed to send to seller by Ether");
+        } else {
+            // paid by ERC20
             IERC20(_order.paymentToken).safeTransferFrom(
                 _msgSender(),
-                feeRecipient,
-                _feeAmount
+                _order.seller,
+                _order.price - _feeAmount
             );
         }
-        IERC20(_order.paymentToken).safeTransferFrom(
-            _msgSender(),
-            _order.seller,
-            _order.price - _feeAmount
-        );
 
         nftCore.transferFrom(address(this), _msgSender(), _order.tokenId);
 

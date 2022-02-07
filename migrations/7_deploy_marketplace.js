@@ -1,9 +1,9 @@
-const DragonaireNFTMarketplace = artifacts.require("DragonaireNFTMarketplace");
+const ChatPuppyNFTMarketplace = artifacts.require("ChatPuppyNFTMarketplace");
 const Env = require('../env');
 
 module.exports = function (deployer) {
     deployer.deploy(
-        DragonaireNFTMarketplace, 
+        ChatPuppyNFTMarketplace, 
         Env.get('MARKETPLACE_NFT_ADDRESS'),
         Env.get('MARKETPLACE_FEE_DECIMAL'),
         Env.get('MARKETPLACE_FEE_RATE'),
