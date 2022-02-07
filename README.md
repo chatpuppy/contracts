@@ -66,6 +66,8 @@ https://nft.chatpuppy.com/token/0x08/0x2607002106001705001604000c030009020001010
 	|232|8|07|artifactId=7|
 	|240|16|0026|artificatValue=0x0026|
 
+ * note: artifacts data generally is for `Game`, normal NFT Dapp can neglect artifacts and no need to setup `_addTypeArtifact` in `ItemFactory` contract.
+
 ## Config ItemFactory
 * Set Item scope and deploy
 ```
@@ -95,21 +97,21 @@ _addTypeArtifact(1, 6, 29, 34); // ItemType#1, Artifact#6, 29-34
 _addTypeArtifact(1, 7, 35, 40); // ItemType#1, Artifact#7, 35-40
 ```
 
-* add item and rarity for each item
+* Add item and set rarity for each item
 ```
 /**
  * Add box#1, ItemType#1
- * itemId#1: PunkPuppy, rarity=3000(0.3%)
- * itemId#2: MuskPuppy, rarity=9000(0.9%)
- * itemId#3: AlienPuppy, rarity=36000(3.6%)
- * itemId#4: DogePuppy, rarity=270000(27%)
- * itemId#5: ChatPuppy, rarity=682000(68.2%)
+ * item Id#1: name=PunkPuppy, rarity=30 (0.3%), level=10, experience=100
+ * item Id#2: name=MuskPuppy, rarity=9000 (0.9%), level=9, experience=90
+ * item Id#3: name=AlienPuppy, rarity=36000 (3.6%), level=8, experience=80
+ * item Id#4: name=DogePuppy, rarity=270000 (27%), level=7, experience=70
+ * item Id#5: name=ChatPuppy, rarity=682000 (68.2%), level=6, experience=60
  */
-let sendEncodeABI = itemFactory.methods.addItem(1, 1, 1, 3000).encodeABI();
-let sendEncodeABI = itemFactory.methods.addItem(1, 1, 2, 9000).encodeABI();
-let sendEncodeABI = itemFactory.methods.addItem(1, 1, 3, 36000).encodeABI();
-let sendEncodeABI = itemFactory.methods.addItem(1, 1, 4, 270000).encodeABI();
-let sendEncodeABI = itemFactory.methods.addItem(1, 1, 5, 682000).encodeABI();
+itemFactory.methods.addItem(1, 1, 1, 3000, 10, 100).send();
+itemFactory.methods.addItem(1, 1, 2, 9000, 9, 90).send();
+itemFactory.methods.addItem(1, 1, 3, 36000, 8, 80).send();
+itemFactory.methods.addItem(1, 1, 4, 270000, 7, 70).send();
+itemFactory.methods.addItem(1, 1, 5, 682000, 6, 60).send();
 ```
 
 ## Mint one mystery box(only contract manager can do)
