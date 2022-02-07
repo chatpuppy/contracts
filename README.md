@@ -119,12 +119,12 @@ itemFactory.methods.addItem(1, 1, 5, 682000, 6, 60).send();
 nftManager.methods.mint(userAddress, boxType).send();
 ```
 
-## Buy mystery box and don't unbox(anybody can do)
+## Buy one mystery box and don't unbox(anybody can do)
 ```
 nftManager.methods.buyAndMint(boxType).send();
 ```
 
-## Buy mystery box and unbox immediately(anybody can do)
+## Buy one mystery box and unbox immediately(anybody can do)
 ```
 nftManager.methods.buyMintAndUnbox(boxType).send();
 ```
@@ -133,6 +133,7 @@ nftManager.methods.buyMintAndUnbox(boxType).send();
 ```
 nftManager.methods.buyAndMintBatch(boxType, amount).send();
 ```
+* Suggest not more than 3 mystery boxes once.
 
 ## Batch mint mystery boxes (only contract manager can do)
 ```
@@ -143,13 +144,18 @@ nftManager.methods.mintBatch(userAddress, boxType, amount).send();
 ```
 nftManager.methods.unbox(tokenId).send();
 ```
+* This method will call `requestRandomNumber` of `ChainLinkRandomGenerator.sol`, after random number issue, callback function `fulfillRandomness` will be executed. This process need several blockchain confirmation.
 
 ## Get mystery box NFT status
 ```
 nftManager.methods.boxStatus(tokenId).call();
 ```
+* return:
+  * 2: still unboxing, that means the `fulfillRandomness` has not been executed.
+  * 1: unboxed
+  * 0: not boxed
 
-## Withdraw from contract(only called by contract manager)
+## Withdraw from NFT manager contract(only called by contract manager)
 ```
 nftManager.methods.withdraw(toAddress, amount).send()
 ```
