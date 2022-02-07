@@ -37,11 +37,11 @@ randomGenerator.methods.hasRole(
 /**
  * ==== Following testing methods is Send Tx ====
  */
-const callContract = (encodeABI, contractAddress) => execContract(web3, chainId, priKey, encodeABI, contractAddress, null, null, null, null);	
+const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
 // let sendEncodeABI = randomGenerator.methods.requestRandomNumber(1).encodeABI(); // 等待NFTManager合约部署完毕
 
 let sendEncodeABI = randomGenerator.methods.grantRole(
 	'0x9d56108290ea0bc9c5c59c3ad357dca9d1b29ed7f3ae1443bef2fa2159bdf5e8', 
-	'0x9c9BAe663Ddf1e3F469359F90099B3699F56C26c').encodeABI();
+	'0x0528E41841b8BEdD4293463FAa061DdFCC5E41bd').encodeABI();
 callContract(sendEncodeABI, randomGeneratorAddress);

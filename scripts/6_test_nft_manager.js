@@ -15,15 +15,16 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const nftManagerAddress = '0x9c9BAe663Ddf1e3F469359F90099B3699F56C26c';
+const nftManagerAddress = '0x0528E41841b8BEdD4293463FAa061DdFCC5E41bd';
 const nftManagerJson = require('../build/contracts/ChatPuppyNFTManager.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 
 const nftManager = new web3.eth.Contract(nftManagerJson.abi, nftManagerAddress);
 const user = '0x615b80388E3D3CaC6AA3a904803acfE7939f0399';
 
-const tokenId = 3;
+const tokenId = 8;
 nftManager.methods.boxStatus(tokenId).call().then((result) => console.log('boxStatus ' + result));
+nftManager.methods.boxPrice().call().then((result) => console.log('boxPrice ' + result));
 
 nftManager.methods.nftCore().call().then((nftAddress) => {
 	console.log('nft Address', nftAddress);
@@ -40,11 +41,13 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 
 	// TokenId 5: 0x26 07 001f 06 0017 05 0011 04 000f 03 0008 02 0000 01 000001 003c 0006 0005 01 01
 	// TokenId 4: 0x27 07 001e 06 0017 05 0011 04 000d 03 0009 02 0005 01 000002 003c 0006 0005 01 01
-	// 
+	// TokenId 7: 0x23 07 001f 06 0017 05 0014 04 0010 03 0009 02 0002 01 000003 003c 0006 0005 01 01
+	// TokenId 8: 0x25 07 001e 06 0018 05 0011 04 000d 03 000a 02 0003 01 000004 003c 0006 0005 01 01
+	// TokenId 9: 0x26 07 0021 06 0017 05 0016 04 000c 03 0009 02 0001 01 000002 0046 0007 0004 01 01
 	/**
 	* ==== Following testing methods is Send Tx ====
 	*/
-	const callContract = (encodeABI, contractAddress) => execContract(web3, chainId, priKey, encodeABI, contractAddress, null, null, null, null);	
+	const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
 	// let sendEncodeABI = nft.methods.increaseCap(1).encodeABI();
 	// let sendEncodeABI = nft.methods.updateBaseTokenURI("https://dragonaire.com/").encodeABI();
@@ -62,8 +65,9 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	*/
 
 	// let sendEncodeABI = nft.methods.safeTransferFrom('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '0xC4BFA07776D423711ead76CDfceDbE258e32474A', 2).encodeABI();
-	// callContract(sendEncodeABI, nftAddress)
+	// callContract(sendEncodeABI, nftAddress, 0)
 
+	// let sendEncodeABI = nftManager.methods.updateBoxPrice('10000000000000000').encodeABI();//set price 0.01ETH
 	/**
 	 * Transfer nft manager contract address to super account as owner to nft token, to manager the NFT
 	 * This step is very important and sencitive !!!
@@ -73,15 +77,35 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	 */
 	// let sendEncodeABI = nftManager.methods.upgradeContract('0x615b80388E3D3CaC6AA3a904803acfE7939f0399').encodeABI();
 
+	// Update projectId if meet: random number for token is already exist
+	// let sendEncodeABI = nftManager.methods.updateProjectId(120).encodeABI();
+
+	// Withdraw from contract
+	// const withdrawAmount = (0.008 * 1e18).toString();
+	// let sendEncodeABI = nftManager.methods.withdraw('0xC4BFA07776D423711ead76CDfceDbE258e32474A', withdrawAmount).encodeABI();
+
 	// Mint mystery box NFT
 	// let sendEncodeABI = nftManager.methods.mint(user, 1).encodeABI();
+
+	// Buy and mint mystery box NFT
+	// let sendEncodeABI = nftManager.methods.buyAndMint(1).encodeABI();
+	// callContract(sendEncodeABI, nftManagerAddress, '10000000000000000');
+
+	// Buy, mint and unbox mystery box NFT
+	// let sendEncodeABI = nftManager.methods.buyMintAndUnbox(1).encodeABI();
+	// callContract(sendEncodeABI, nftManagerAddress, '10000000000000000');
 
 	// Batch mint mystery box NFT
 	// BUG: Can only batch mint 3 nfts one time.
 	// let sendEncodeABI = nftManager.methods.mintBatch(user, 1, 3).encodeABI();
 	
-	// // Unbox mystery box
+	// Unbox mystery box
 	// let sendEncodeABI = nftManager.methods.unbox(3).encodeABI();
 	// callContract(sendEncodeABI, nftManagerAddress);
+
+	// Batch buy and mint mystery box NFT
+	// let sendEncodeABI = nftManager.methods.buyAndMintBatch(1, 3).encodeABI();
+	// callContract(sendEncodeABI, nftManagerAddress, '30000000000000000');
+
 });
 

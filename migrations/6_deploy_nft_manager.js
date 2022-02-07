@@ -12,5 +12,6 @@ module.exports = function (deployer) {
         Env.get('RANDOM_GENERATOR'),
         0, //Env.get('RANDOM_FEE')
         Env.get("PROJECT_ID"),
+        Env.get('MYSTERY_BOX_PRICE'),
     );
 };

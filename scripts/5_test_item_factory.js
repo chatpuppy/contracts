@@ -35,7 +35,7 @@ itemFactory.methods.getItemTotalRarity(1).call().then((response) => console.log(
 /**
  * ==== Following testing methods is Send Tx ====
  */
-const callContract = (encodeABI, contractAddress) => execContract(web3, chainId, priKey, encodeABI, contractAddress, null, null, null, null);	
+const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
 /**
  * Add box#1, ItemType#1

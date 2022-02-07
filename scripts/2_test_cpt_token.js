@@ -28,7 +28,7 @@ daeContract.methods.owner().call().then((owner) => console.log('owner', owner));
 /**
  * ==== Following testing methods is Send Tx ====
  */
-const callContract = (encodeABI, contractAddress) => execContract(web3, chainId, priKey, encodeABI, contractAddress, null, null, null, null);	
+const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
 // let sendEncodeABI = daeContract.methods.mint('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '100000000000000000000000').encodeABI(); 
 // let sendEncodeABI = dareContract.methods.transfer('0x3444E23231619b361c8350F4C83F82BCfAB36F65', '72000000000000000000').encodeABI();

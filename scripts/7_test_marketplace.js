@@ -38,7 +38,7 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 /**
  * ==== Following testing methods is Send Tx ====
  */
-const callContract = (encodeABI, contractAddress) => execContract(web3, chainId, priKey, encodeABI, contractAddress, null, null, null, null);	
+const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
 // let sendEncodeABI = nft.methods.increaseCap(1).encodeABI();
 // let sendEncodeABI = nft.methods.updateBaseTokenURI("https://dragonaire.com/").encodeABI();

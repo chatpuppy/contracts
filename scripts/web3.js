@@ -23,9 +23,10 @@ const BSC_TEST = Common.forCustomChain(
 	'istanbul'
 )
 
-export const execContract = (web3, chainId, priKey, sendEncodeABI, contractAddress, onTransactionHashFun, onConfirmedFunc, onReceiptFunc, onErrorFunc) => {
+export const execContract = (web3, chainId, priKey, sendEncodeABI, value, contractAddress, onTransactionHashFun, onConfirmedFunc, onReceiptFunc, onErrorFunc) => {
 	const senderAddress = (web3.eth.accounts.privateKeyToAccount('0x' + priKey)).address;
-
+	console.log('value', value, web3.utils.toHex(value));
+	
 	try {
 		web3.eth.getTransactionCount(senderAddress).then((transactionNonce) => {
 			const txData = {
@@ -33,7 +34,7 @@ export const execContract = (web3, chainId, priKey, sendEncodeABI, contractAddre
 				nonce: web3.utils.toHex(transactionNonce),
 				gasLimit: web3.utils.toHex(500000),
 				gasPrice: web3.utils.toHex(10000000000),
-				value: 0,
+				value: web3.utils.toHex(value),
 				to: contractAddress,
 				from: senderAddress,
 				data: sendEncodeABI

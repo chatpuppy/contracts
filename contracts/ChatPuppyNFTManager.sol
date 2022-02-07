@@ -21,7 +21,7 @@ contract ChatPuppyNFTManager is
     bytes32 public constant NFT_UPGRADER = keccak256("NFT_UPGRADER");
 
     ChatPuppyNFTCore public immutable nftCore;
-    uint256 public projectId = 0;
+    uint256 private projectId = 0;
     uint256 public boxPrice = 0;
 
     // Mystery Box type
@@ -45,19 +45,23 @@ contract ChatPuppyNFTManager is
         address itemFactory_,
         address randomGenerator_,
         uint256 randomFee_,
-        uint256 projectId_
+        uint256 projectId_,
+        uint256 boxPrice_
     )
         RandomConsumerBase(randomGenerator_, randomFee_)
         ItemFactoryManager(itemFactory_)
     {
+        require(boxPrice_ > 0, "ChatPuppyNFTManager: box price can not be zero");
+        require(projectId_ > 0, "ChatPuppyNFTManager: projectId must bigger than zero");
+        projectId = projectId_;
+        boxPrice = boxPrice_;
+
         nftCore = new ChatPuppyNFTCore(
             name_,
             symbol_,
             baseTokenURI_,
             initialCap_
         );
-
-        projectId = projectId_;
 
         _supportedBoxTypes.add(1); // Mystery Box Type#1, Dragon
         _supportedBoxTypes.add(2); // Mystery Box Type#2, Weapon
@@ -76,23 +80,23 @@ contract ChatPuppyNFTManager is
     }
 
     modifier onlySupportedBoxType(uint256 boxType_) {
-        require(_supportedBoxTypes.contains(boxType_), "ChatPuppyNFT: unsupported box type");
+        require(_supportedBoxTypes.contains(boxType_), "ChatPuppyNFTManager: unsupported box type");
         _;
     }
 
     modifier onlyTokenOwner(uint256 tokenId_) {
-        require(nftCore.ownerOf(tokenId_) == _msgSender(), "ChatPuppyNFT: caller is not owner");
+        require(nftCore.ownerOf(tokenId_) == _msgSender(), "ChatPuppyNFTManager: caller is not owner");
         _;
     }
 
     modifier onlyMysteryBox(uint256 tokenId_) {
         (bytes32 _dna, ) = nftCore.tokenMetaData(tokenId_);
-        require(_dna == 0, "ChatPuppyNFT: token is already unboxed");
+        require(_dna == 0, "ChatPuppyNFTManager: token is already unboxed");
         _;
     }
 
     modifier onlyExistedToken(uint256 tokenId_) {
-        require(nftCore.exists(tokenId_), "ChatPuppyNFT: token does not exists");
+        require(nftCore.exists(tokenId_), "ChatPuppyNFTManager: token does not exists");
         _;
     }
 
@@ -195,7 +199,7 @@ contract ChatPuppyNFTManager is
      * @dev Update Item Factory
      */
     function updateItemFactory(address itemFactory_) public onlyRole(CONTRACT_UPGRADER) {
-        require(itemFactory_ != address(0), "ChatPuppyNFT: itemFactory_ is the zero address");
+        require(itemFactory_ != address(0), "ChatPuppyNFTManager: itemFactory_ is the zero address");
         _updateItemFactory(itemFactory_);
     }
 
@@ -203,7 +207,7 @@ contract ChatPuppyNFTManager is
      * @dev Update ChainLink Random Generator
      */
     function updateRandomGenerator(address randomGenerator_) public onlyRole(CONTRACT_UPGRADER) {
-        require(randomGenerator_ != address(0), "ChatPuppyNFT: randomGenerator_ is the zero address");
+        require(randomGenerator_ != address(0), "ChatPuppyNFTManager: randomGenerator_ is the zero address");
         _updateRandomGenerator(randomGenerator_);
     }
 
@@ -215,6 +219,19 @@ contract ChatPuppyNFTManager is
     }
 
     /**
+     * @dev Withdraw ETH/BNB from NFTManager contracts
+     */
+    function withdraw(address to_, uint256 amount_) public onlyRole(MANAGER_ROLE) {
+        require(to_ != address(0), "ChatPuppyNFTManager: withdraw address is the zero address");
+        require(amount_ > uint256(0), "ChatPuppyNFTManager: withdraw amount is zero");
+        uint256 balance = address(this).balance;
+        require(balance >= amount_, "ChatPuppyNFTManager: withdraw amount must smaller than balance");
+        // ######
+        (bool sent, ) = to_.call{value: amount_}("");
+        require(sent, "ChatPuppyNFTManager: Failed to send Ether");
+    }
+
+    /**
      * Buy and mint
      */
     function buyAndMint(uint256 boxType_) public payable onlySupportedBoxType(boxType_) {
@@ -222,6 +239,21 @@ contract ChatPuppyNFTManager is
         _mint(_msgSender(), boxType_);
     }
 
+    /**
+     * Buy set of mystery box and mint
+     */
+    function buyAndMintBatch(uint256 boxType_, uint256 amount_) public payable onlySupportedBoxType(boxType_) {
+        require(amount_ > 0, "ChatPuppyNFTManager: amount_ is 0");
+        require(msg.value >= boxPrice * amount_, "ChatPuppyNFTManager: Batch purchase payment is not enough");
+        
+        for (uint256 i = 0; i < amount_; i++) {
+            buyAndMint(boxType_);
+        }
+    }
+
+    /**
+     * Buy, mint and unbox
+     */
     function buyMintAndUnbox(uint256 boxType_) public payable onlySupportedBoxType(boxType_) {
         require(msg.value >= boxPrice, "ChatPuppyNFTManager: payment is not enough");
         uint256 _tokenId = _mint(_msgSender(), boxType_);
@@ -239,7 +271,7 @@ contract ChatPuppyNFTManager is
      * @dev Batch mint
      */
     function mintBatch(address to_, uint256 boxType_, uint256 amount_) external onlyRole(MINTER_ROLE) onlySupportedBoxType(boxType_) {
-        require(amount_ > 0, "ChatPuppyNFT: amount_ is 0");
+        require(amount_ > 0, "ChatPuppyNFTManager: amount_ is 0");
         require(nftCore.totalSupply() + amount_ <= nftCore.cap(), "cap exceeded");
 
         for (uint256 i = 0; i < amount_; i++) {
@@ -253,9 +285,6 @@ contract ChatPuppyNFTManager is
 
         // Add box type: size 1 byte
         _artifacts = _addArtifactValue(_artifacts, 0, 8, boxType_);
-
-        // Add item default level: size 1 byte
-        // _artifacts = _addArtifactValue(_artifacts, 8, 8, uint256(1));
 
         nftCore.updateTokenMetaData(_tokenId, _artifacts);
 
@@ -391,7 +420,7 @@ contract ChatPuppyNFTManager is
     function addBoxType(uint256 boxType_) external onlyRole(MANAGER_ROLE) {
         require(boxType_ > 0 && boxType_ <= 100);
         bool success = _supportedBoxTypes.add(boxType_);
-        require(success, "ChatPuppyNFT: box type is already supported");
+        require(success, "ChatPuppyNFTManager: box type is already supported");
     }
 
     function addComboType(uint256 comboType_) external onlyRole(MANAGER_ROLE) {

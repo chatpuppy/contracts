@@ -34,7 +34,7 @@ tokensVesting.methods.getIndex('0xC4BFA07776D423711ead76CDfceDbE258e32474A').cal
 /**
  * ==== Following testing methods is Send Tx ====
  */
- const callContract = (encodeABI, contractAddress) => execContract(web3, chainId, priKey, encodeABI, contractAddress, null, null, null, null);	
+const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
  /** transfer testing
 	* 																								 genesis 		totoalAmount							tgeAmount 							cliff		duration		participant		basis

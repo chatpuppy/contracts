@@ -25,7 +25,7 @@ randomTest.methods.randomNumber().call().then((number) => console.log('Random Nu
 /**
  * ==== Following testing methods is Send Tx ====
  */
-const callContract = (encodeABI, contractAddress) => execContract(web3, chainId, priKey, encodeABI, contractAddress, null, null, null, null);	
+const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
 // 必须将本合约地址授权给ChainLinkRandomGenerator合约的CONSUMER_ROLE角色
 // TokenId is insteatd of RequestId, it can not be duplicated.
