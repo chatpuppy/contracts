@@ -22,6 +22,8 @@ contract ItemFactory is Ownable, IItemFactory {
         uint256 totalRarity;
         uint256[] itemIds;
         mapping(uint256 => RarityInfo) itemIdToRarity;
+        mapping(uint256 => uint256) itemInitialLevel;
+        mapping(uint256 => uint256) itemInitialExperience;
     }
 
     struct Range {
@@ -33,6 +35,7 @@ contract ItemFactory is Ownable, IItemFactory {
     mapping(uint256 => EnumerableSet.UintSet) private _artifactIds;
     mapping(uint256 => Range) private _artifactRanges;
     mapping(uint256 => uint256) private _itemTypes;
+
 
     constructor() {
         // Mystery Box
@@ -52,7 +55,6 @@ contract ItemFactory is Ownable, IItemFactory {
             6 types of background colors, artifact#6
             6 types of skin colors, artifact#7
         */
-        // ###### 如何有一个大的随机数生成各子随机数，并且足够离散
         _addTypeArtifact(1, 1, 0, 5);  // ItemType#1，Artifact#1, 0-5
         _addTypeArtifact(1, 2, 6, 10); // ItemType#1, Artifact#2, 6-10
         _addTypeArtifact(1, 3, 11, 16); // ItemType#1, Artifact#3, 11-16
@@ -141,7 +143,22 @@ contract ItemFactory is Ownable, IItemFactory {
         return _items[boxType_].totalRarity;
     }
 
-    function addItem(uint256 boxType_, uint256 itemType_, uint256 itemId_, uint256 rarity_) external
+    function getItemInitialLevel(uint256 boxType_, uint256 itemId_) external view returns(uint256) {
+        return _items[boxType_].itemInitialLevel[itemId_];
+    }
+
+    function getItemInitialExperience(uint256 boxType_, uint256 itemId_) external view returns(uint256) {
+        return _items[boxType_].itemInitialExperience[itemId_];
+    }
+
+    function addItem(
+        uint256 boxType_,
+        uint256 itemType_,
+        uint256 itemId_,
+        uint256 rarity_,
+        uint256 itemInitialLevel_,
+        uint256 itemInitialExperience_
+    ) external
         onlyOwner
         onlySupportedBoxType(boxType_)
         onlySupportedItemType(itemType_)
@@ -162,15 +179,17 @@ contract ItemFactory is Ownable, IItemFactory {
         _itemsForSpecificType.itemIds.push(itemId_);
 
         // Update rarity info for item
-        _itemsForSpecificType
-            .itemIdToRarity[itemId_]
-            .zeroIndex = _itemsForSpecificType.totalRarity;
+        _itemsForSpecificType.itemIdToRarity[itemId_].zeroIndex = _itemsForSpecificType.totalRarity;
         _itemsForSpecificType.itemIdToRarity[itemId_].rarity = rarity_;
 
         // Update total rarity
         _itemsForSpecificType.totalRarity += rarity_;
 
-        emit ItemAdded(boxType_, itemType_, itemId_, rarity_);
+        // Update initial level and experience
+        _itemsForSpecificType.itemInitialLevel[itemId_] = itemInitialLevel_;
+        _itemsForSpecificType.itemInitialExperience[itemId_] = itemInitialExperience_;
+
+        emit ItemAdded(boxType_, itemType_, itemId_, rarity_, itemInitialLevel_, itemInitialExperience_);
     }
 
     function getRandomItem(uint256 randomness_, uint256 boxType_) public view

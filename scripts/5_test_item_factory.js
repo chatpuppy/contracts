@@ -9,14 +9,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 const require = createRequire(import.meta.url); // construct the require method
 
-// const rpcUrl = 'https://bsc-dataseed1.binance.org';
-const rpcUrl = 'https://data-seed-prebsc-1-s1.binance.org:8545';
-const chainId = 97;
 const Web3 = require('web3');
+const rpcUrl = process.env.RPC_URL;
+const chainId = process.env.CHAIN_ID * 1;
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const itemFactoryAddress = '0x0528E41841b8BEdD4293463FAa061DdFCC5E41bd';
+const itemFactoryAddress = '0xFd3250eCDb1D067a9f0A4453b3BFB92e66f6f7ca';
 const itemFactoryJson = require('../build/contracts/ItemFactory.json');
 
 const itemFactory = new web3.eth.Contract(itemFactoryJson.abi, itemFactoryAddress);
@@ -40,15 +39,15 @@ const callContract = (encodeABI, contractAddress) => execContract(web3, chainId,
 
 /**
  * Add box#1, ItemType#1
- * item Id#1: name=PunkPuppy, rarity=30
- * item Id#2: name=MuskPuppy, rarity=9000
- * item Id#3: name=AlienPuppy, rarity=36000
- * item Id#4: name=DogePuppy, rarity=270000
- * item Id#5: name=ChatPuppy, rarity=682000
+ * item Id#1: name=PunkPuppy, rarity=30, level=10, experience=100
+ * item Id#2: name=MuskPuppy, rarity=9000, level=9, experience=90
+ * item Id#3: name=AlienPuppy, rarity=36000, level=8, experience=80
+ * item Id#4: name=DogePuppy, rarity=270000, level=7, experience=70
+ * item Id#5: name=ChatPuppy, rarity=682000, level=6, experience=60
  */
-// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 1, 3000).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 2, 9000).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 3, 36000).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 4, 270000).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 5, 682000).encodeABI();
+// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 1, 3000, 10, 100).encodeABI();
+// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 2, 9000, 9, 90).encodeABI();
+// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 3, 36000, 8, 80).encodeABI();
+// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 4, 270000, 7, 70).encodeABI();
+// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 5, 682000, 6, 60).encodeABI();
 // callContract(sendEncodeABI, itemFactoryAddress);

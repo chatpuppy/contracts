@@ -9,9 +9,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 const require = createRequire(import.meta.url); // construct the require method
 
-// const rpcUrl = 'https://bsc-dataseed1.binance.org';
-const rpcUrl = 'https://data-seed-prebsc-1-s1.binance.org:8545';
-const chainId = 97;
+const rpcUrl = process.env.RPC_URL;
+const chainId = process.env.CHAIN_ID * 1;
 const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));

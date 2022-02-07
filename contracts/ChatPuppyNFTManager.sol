@@ -32,6 +32,7 @@ contract ChatPuppyNFTManager is
     uint256 constant MAX_UNBOX_BLOCK_COUNT = 100;
     mapping(uint256 => uint256) private _tokenIdToUnboxBlockNumber;
     mapping(uint256 => uint256) private _randomnesses;
+    mapping(uint256 => uint256) private _itemNextIds;
 
     event UnboxToken(uint256 indexed tokenId, uint256 boxType);
     event TokenFulfilled(uint256 indexed tokenId);
@@ -254,15 +255,17 @@ contract ChatPuppyNFTManager is
         _artifacts = _addArtifactValue(_artifacts, 0, 8, boxType_);
 
         // Add item default level: size 1 byte
-        _artifacts = _addArtifactValue(_artifacts, 8, 8, uint256(1));
+        // _artifacts = _addArtifactValue(_artifacts, 8, 8, uint256(1));
 
         nftCore.updateTokenMetaData(_tokenId, _artifacts);
 
         return(_tokenId);
     }
 
-    function canUnbox(uint256 tokenId_) external view returns(bool) {
-        return _randomnesses[tokenId_] == 0;
+    function boxStatus(uint256 tokenId_) external view returns(uint8) {
+        if(_tokenIdToUnboxBlockNumber[tokenId_] > uint256(0) && _tokenIdToUnboxBlockNumber[tokenId_] >= block.number - MAX_UNBOX_BLOCK_COUNT) return 2; // unboxing
+        else if(_randomnesses[tokenId_] > uint256(0)) return 1; //unboxed
+        else return 0; // can unbox
     }
 
     /**
@@ -284,9 +287,7 @@ contract ChatPuppyNFTManager is
             }
         } else {
             require(
-                _tokenIdToUnboxBlockNumber[tokenId_] == uint256(0) ||
-                    _tokenIdToUnboxBlockNumber[tokenId_] <
-                    block.number - MAX_UNBOX_BLOCK_COUNT,
+                _tokenIdToUnboxBlockNumber[tokenId_] == uint256(0) || _tokenIdToUnboxBlockNumber[tokenId_] < block.number - MAX_UNBOX_BLOCK_COUNT,
                 "NFT: token is unboxing"
             );
             _tokenIdToUnboxBlockNumber[tokenId_] = block.number;
@@ -304,14 +305,18 @@ contract ChatPuppyNFTManager is
      * For getting random number by ChainLink VRF, refer to: https://docs.chain.link/docs/intermediates-tutorial/ 
      * 
      * ArtifactValue format:
-     * 0~7: boxType, len=8
-     * 16~23: itemType, len=8
-     * 24~39: itemId, len=16
-     * 40~47: artifactId_1, len=8
-     * 48~63: artifactValue_1, len=16
-     * 64~71: artifactId_2, len=8
-     * 72~87: artifactValue_2, len=16
+     * 0~7: boxType, len=8, 0-255
+     * 8~15: itemType, len=8, 0-255
+     * 16~31: itemId, len=16, 0-65535
+     * 32~47: Initial level, len=16, 0-65535
+     * 48~63: Initial experience, len=16, 0-65535
+     * 64~87: picId, len=24, the picture will save as itemId_picId.png, such as `3_12.png` it is the 12th pic in item#3
+     * 88~95: artifactId_1, len=8
+     * 96~111: artifactValue_1, len=16
+     * 112~119: artifactId_2, len=8
+     * 120~135: artifactValue_2, len=16
      * ...
+     * Max store: (256 - 88) / 24 = 7 artifacts
      * 
      * dna format: 
      * dna = bytes32(keccak256(abi.encodePacked(tokenId_, randomness_)));
@@ -328,8 +333,12 @@ contract ChatPuppyNFTManager is
             _boxType
         );
 
-        _artifacts = _addArtifactValue(_artifacts, 16, 8, _itemType); // add itemType
-        _artifacts = _addArtifactValue(_artifacts, 24, 16, _itemId); // add itemId
+        _itemNextIds[_itemId] = _itemNextIds[_itemId] + 1;
+        _artifacts = _addArtifactValue(_artifacts, 8, 8, _itemType); // add itemType
+        _artifacts = _addArtifactValue(_artifacts, 16, 16, _itemId); // add itemId
+        _artifacts = _addArtifactValue(_artifacts, 32, 16, itemFactory.getItemInitialLevel(_itemType, _itemId)); // add level
+        _artifacts = _addArtifactValue(_artifacts, 48, 16, itemFactory.getItemInitialExperience(_itemType, _itemId)); // add exeperience
+        _artifacts = _addArtifactValue(_artifacts, 64, 24, _itemNextIds[tokenId_]); // add item NextId, this is for pic image id
 
         uint256 _artifactsLength = itemFactory.artifactsLength(_itemType);
 
@@ -339,17 +348,19 @@ contract ChatPuppyNFTManager is
 
             _artifacts = _addArtifactValue(
                 _artifacts,
-                40 + i * 24,
+                88 + i * 24,
                 8,
                 _artifactId
             );
 
+            // Randome seed for artifact, it'll be same if in the same block, same item type and same item id
             uint256 _randomness = uint256(
                 keccak256(
                     abi.encodePacked(
                         randomness_,
                         block.number,
                         _itemType,
+                        _itemId,
                         _artifactId,
                         i
                     )
@@ -363,7 +374,7 @@ contract ChatPuppyNFTManager is
             );
             _artifacts = _addArtifactValue(
                 _artifacts,
-                48 + i * 24,
+                96 + i * 24,
                 16,
                 _artifactValue
             );

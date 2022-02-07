@@ -9,14 +9,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 const require = createRequire(import.meta.url); // construct the require method
 
-// const rpcUrl = 'https://bsc-dataseed1.binance.org';
-const rpcUrl = 'https://data-seed-prebsc-1-s1.binance.org:8545';
-const chainId = 97;
+const rpcUrl = process.env.RPC_URL;
+const chainId = process.env.CHAIN_ID * 1;
 const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const nftManagerAddress = '0xF8F55C08f7B771CF97EE90CE548EFdB1A95E0426';
+const nftManagerAddress = '0xd79142Bb9aa94055751FF14F299F6Aa5253AE2C7';
 const nftManagerJson = require('../build/contracts/ChatPuppyNFTManager.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 
@@ -24,7 +23,7 @@ const nftManager = new web3.eth.Contract(nftManagerJson.abi, nftManagerAddress);
 const user = '0x615b80388E3D3CaC6AA3a904803acfE7939f0399';
 
 const tokenId = 1;
-nftManager.methods.canUnbox(tokenId).call().then((result) => console.log('canUnbox ' + result));
+nftManager.methods.boxStatus(tokenId).call().then((result) => console.log('canUnbox ' + result));
 
 nftManager.methods.nftCore().call().then((nftAddress) => {
 	console.log('nft Address', nftAddress); // 0x91A568eF27D75db2faBe21e8ad8F947FB42F9bAa
@@ -35,8 +34,8 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	nft.methods.balanceOf(user).call().then((response) => console.log('balanceOf ' + user, response / 1));
 	nft.methods.cap().call().then((cap) => console.log('cap', cap * 1));
 	
-	// nft.methods.tokenURI(tokenId).call().then((res) => console.log('tokenUri of ' + tokenId, res));
-	// nft.methods.ownerOf(tokenId).call().then((owner) => console.log('owner of nft ' + tokenId, owner));
+	nft.methods.tokenURI(tokenId).call().then((res) => console.log('tokenUri of ' + tokenId, res));
+	nft.methods.ownerOf(tokenId).call().then((owner) => console.log('owner of nft ' + tokenId, owner));
 	nft.methods.tokenMetaData(tokenId).call().then((metaData) => console.log('metadata of nft ' + tokenId, metaData));
 	// // token id: 8, artifacts: 31557149308712695702487117390359031863579641058793881665793
 	// hex: 5070003060002000000000000000000000000000000000000
@@ -91,7 +90,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	// let sendEncodeABI = nftManager.methods.mintBatch(user, 1, 3).encodeABI();
 	
 	// Unbox mystery box
-	// let sendEncodeABI = nftManager.methods.unbox(1).encodeABI();
+	// let sendEncodeABI = nftManager.methods.unbox(3).encodeABI();
 
 	// callContract(sendEncodeABI, nftManagerAddress);
 });
