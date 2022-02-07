@@ -1,11 +1,12 @@
 # Smart contracts
 
 ## Addresses on kovan
+* CPT Token: `0xcAd78BFCE45549214EA2F68dc1f3E6DB9D8F8792`
 * NFT token: `0xAb50F84DC1c8Ef1464b6F29153E06280b38fA754`
 * NFT Manager(mystery box): `0x0528E41841b8BEdD4293463FAa061DdFCC5E41bd`
 * Item Factory: `0xFd3250eCDb1D067a9f0A4453b3BFB92e66f6f7ca`
 * Random Generator: `0xA28D90320005C8c043Ee79ae59e82fDd5f983f30`
-* Marketplace: 
+* Marketplace: `0xc60a6AE3a85838D3bAAf359219131B1e33103560`
 
 ## Mystery box artifacts format
 ```
@@ -123,6 +124,7 @@ nftManager.methods.mint(userAddress, boxType).send();
 ```
 nftManager.methods.buyAndMint(boxType).send();
 ```
+* Note: Using BNB/ETH while buying mystery box, but if trading on marketplace, must use ChatPuppyToken(CPT)
 
 ## Buy one mystery box and unbox immediately(anybody can do)
 ```
@@ -175,8 +177,8 @@ Then, `addOrder`
 ```
 marketplace.methods.addOrder(tokenId, paymentToken, price).send();
 ```
-* paymentToken: use `0x0000000000000000000000000000000000000000` if paid by Chain token: `ETH/BNB` etc.
-* price: `'100000000000000000'`
+* paymentToken: use `CPT` token
+* price: `'100000000000000000000'` means `100 CPT`
 
 
 ## List all order details
@@ -192,15 +194,28 @@ marketplace.methods.addOrder(tokenId, paymentToken, price).send();
 	});
 ```
 
-## Buy NFT by BNB from marketplace
-
-## Buy mystery box by BNB from marketplace
-
-## Update NFT price(BNB) on marketplace
-
-## Update NFT price(Token) on marketplace
-
 ## Unlist NFT from marketplace
+```
+marketplace.methods.cancelOrder(orderId).send();
+```
+* Note: if an NFT was listed, it can not be transfered. If you want to transfer, must run `cancelOrder` to unlist.
 
-## Unlist mystery boxes from marketplace
+## Update NFT price(CPT Token) in marketplace
+```
+marketplace.methods.updatePrice(orderId, price).send();
+```
+
+## Buy NFT by CPT token from marketplace
+First, approve the marketplace contract use CPT token
+```
+cptToken.methods.approve(marketplaceAddress, amount).send();
+```
+
+Then, call `matchOrder` in marketplace contract
+```
+marketplace.methods.matchOrder(orderId, price).send();
+```
+* Note: if buy or sell in the marketplace, must use CPT token.
+
+
 

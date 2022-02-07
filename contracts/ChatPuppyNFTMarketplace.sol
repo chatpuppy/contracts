@@ -204,10 +204,7 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
     }
 
     function updateFeeRecipient(address feeRecipient_) external onlyRole(MAINTAINER_ROLE){
-        require(
-            feeRecipient_ != address(0),
-            "ChatPuppyNFTMarketplace: feeRecipient_ is zero address"
-        );
+        // If feeRecipient is zero, burn the fee
         feeRecipient = feeRecipient_;
     }
 

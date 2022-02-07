@@ -249,7 +249,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -262,7 +263,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -275,7 +277,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -288,7 +291,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -301,7 +305,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -320,7 +325,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -344,7 +350,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -363,7 +370,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -405,7 +413,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -418,7 +427,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -457,7 +467,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -512,7 +523,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -536,7 +548,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -549,7 +562,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -562,7 +576,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -581,7 +596,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -594,7 +610,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -613,7 +630,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -637,7 +655,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -656,7 +675,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -669,7 +689,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -745,7 +766,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -817,7 +839,8 @@
       "name": "matchOrder",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.8+commit.dddeac2f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"nftAddress_\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"paymentToken_\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"feeDecimal_\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"feeRate_\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"feeRecipient_\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"orderId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"seller\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"paymentToken\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"}],\"name\":\"OrderAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"orderId\",\"type\":\"uint256\"}],\"name\":\"OrderCancelled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"orderId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"seller\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"paymentToken\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"}],\"name\":\"OrderMatched\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"orderId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"}],\"name\":\"PriceUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"previousAdminRole\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"newAdminRole\",\"type\":\"bytes32\"}],\"name\":\"RoleAdminChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleRevoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"feeDecimal\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"feeRate\",\"type\":\"uint256\"}],\"name\":\"feeRateUpdated\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"DEFAULT_ADMIN_ROLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"MAINTAINER_ROLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId_\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"paymentToken_\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"price_\",\"type\":\"uint256\"}],\"name\":\"addOrder\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"paymentToken_\",\"type\":\"address\"}],\"name\":\"addPaymentToken\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"orderId_\",\"type\":\"uint256\"}],\"name\":\"cancelOrder\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"feeDecimal\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"feeRate\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"feeRecipient\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"getRoleAdmin\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"getRoleMember\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"getRoleMemberCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"grantRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"hasRole\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"paymentToken_\",\"type\":\"address\"}],\"name\":\"isPaymentTokenSupported\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"orderId_\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"seller_\",\"type\":\"address\"}],\"name\":\"isSeller\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"orderId_\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"price_\",\"type\":\"uint256\"}],\"name\":\"matchOrder\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"nextOrderId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"nftCore\",\"outputs\":[{\"internalType\":\"contract IERC721\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"index_\",\"type\":\"uint256\"}],\"name\":\"onSaleOrderAt\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"onSaleOrderCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner_\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"index_\",\"type\":\"uint256\"}],\"name\":\"onSaleOrderOfOwnerAt\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner_\",\"type\":\"address\"}],\"name\":\"onSaleOrderOfOwnerCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"onSaleOrders\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner_\",\"type\":\"address\"}],\"name\":\"onSaleOrdersOfOwner\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"orders\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"seller\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"paymentToken\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"renounceRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"revokeRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"supportedPaymentTokens\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"feeDecimal_\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"feeRate_\",\"type\":\"uint256\"}],\"name\":\"updateFeeRate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"feeRecipient_\",\"type\":\"address\"}],\"name\":\"updateFeeRecipient\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_nftCoreAddress\",\"type\":\"address\"}],\"name\":\"updateNftCore\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"orderId_\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"price_\",\"type\":\"uint256\"}],\"name\":\"updatePrice\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"getRoleAdmin(bytes32)\":{\"details\":\"Returns the admin role that controls `role`. See {grantRole} and {revokeRole}. To change a role's admin, use {_setRoleAdmin}.\"},\"getRoleMember(bytes32,uint256)\":{\"details\":\"Returns one of the accounts that have `role`. `index` must be a value between 0 and {getRoleMemberCount}, non-inclusive. Role bearers are not sorted in any particular way, and their ordering may change at any point. WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure you perform all queries on the same block. See the following https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post] for more information.\"},\"getRoleMemberCount(bytes32)\":{\"details\":\"Returns the number of accounts that have `role`. Can be used together with {getRoleMember} to enumerate all bearers of a role.\"},\"grantRole(bytes32,address)\":{\"details\":\"Overload {grantRole} to track enumerable memberships\"},\"hasRole(bytes32,address)\":{\"details\":\"Returns `true` if `account` has been granted `role`.\"},\"renounceRole(bytes32,address)\":{\"details\":\"Overload {renounceRole} to track enumerable memberships\"},\"revokeRole(bytes32,address)\":{\"details\":\"Overload {revokeRole} to track enumerable memberships\"},\"supportsInterface(bytes4)\":{\"details\":\"See {IERC165-supportsInterface}.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/ChatPuppyNFTMarketplace.sol\":\"ChatPuppyNFTMarketplace\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/ChatPuppyNFTMarketplace.sol\":{\"keccak256\":\"0xf292218351c999bd4a18a7aa4e8b72c37c38fffbfbc06d1cdefd8f9ed0838124\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://26eefa11de3fca7bf235d2f6ce0f2f58e1d8d37755d3389299ae093d755131cd\",\"dweb:/ipfs/QmTHzxa4EfTW6nrqWEQfZBFamwKz33svEfSyXNZeRa3b1r\"]},\"project:/contracts/interfaces/IAccessControl.sol\":{\"keccak256\":\"0xd843b7bb83879843fdaa0606496aa62e3425640f0dabb5975266dd9fba63fdde\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://482dca22f81d1dae6d03d327217d23e5e90eda8bfed9b0b8d7a12878e2143fad\",\"dweb:/ipfs/QmYLBoBJm1baLCCmercRsv9gAbmnZuzuH4qPvSmXz6TMWG\"]},\"project:/contracts/interfaces/IAccessControlEnumerable.sol\":{\"keccak256\":\"0xb8b83187154dca1b44aabcf2cdf0f6416f15d5946ccb2dbea6362961a64e9b5e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://546084cc3f774d86853aae5b02cbf3a8d432dddf7a5f8d212b1554fa09bbc2a7\",\"dweb:/ipfs/QmPQWoZhY6LnmvkGgPs9Tn1Ycw4a9tBTFChK32Gj6ANyx3\"]},\"project:/contracts/lib/AccessControl.sol\":{\"keccak256\":\"0x5da7b8f9e3f70b63e7248dceb10b3ac51307dd2e9c6a213c4fb47a3ee012a228\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c812a4765e73aa9bd0a4ddb46dd063b917f101371cc86db1695e628280fb7911\",\"dweb:/ipfs/QmZSySGdFkb8HfzTmAvqjU6Cz6gek7gNoGQHtZkhUsZGwn\"]},\"project:/contracts/lib/AccessControlEnumerable.sol\":{\"keccak256\":\"0xcdebdbf0dae1f2d165a11ec748aafa24e96eeb295583e1f64d5eed936b1ceaba\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8c06719a477131af333634faaa510da52afb98abf5e480b1d714743f9dd7f22a\",\"dweb:/ipfs/QmS27d5zhAua6RMrqYDXVYjcjE7uG4FzvPDnmLapwiBS86\"]},\"project:/contracts/lib/Address.sol\":{\"keccak256\":\"0xef7d41ef197dd48e318af774f5bb60c8bf6786d7ba5ac801262b88627c70cabd\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4a9f2b3c7d6f5d28e9998e240c73149876fdd43f25a30343a1c3a6c7cfea564e\",\"dweb:/ipfs/QmRGryX7j8qJtLLCjEqvtHTTKYm6iEBZ2Dh1rDSPknz43G\"]},\"project:/contracts/lib/Context.sol\":{\"keccak256\":\"0xf4c2b346eff8d50513853dfbf4a8ec1916c650000fe8a4106914d326fa528685\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://66642839100e35279b5fe781071ec750bf40ac0cc54275f5676f03a004da2e04\",\"dweb:/ipfs/QmYwPV67tYZeLURPhUhyKsF41w39PHUmQfB3j6zkajyLFL\"]},\"project:/contracts/lib/Counters.sol\":{\"keccak256\":\"0xcce9f50a82a0555505c103528d430676378102b6c1cf351498b342a643ce7824\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a16d9e0a3172184281801cac343af54ff41823f3aa09959b765243cc828c467b\",\"dweb:/ipfs/QmNMREFurQGWFTSS8jqRwro5UrN4E4WtrJKNRRg3cHPAmS\"]},\"project:/contracts/lib/EnumerableSet.sol\":{\"keccak256\":\"0x25686131fc0bb638277fb46fabecaa0668107930d1d8c1d96f8ccdc54e88f438\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7d8244402e4df2896c3a4c0b273e820dec10148b945c4c8f0205d158df10bcc3\",\"dweb:/ipfs/QmTzLAfCxSvn7YoqEUpesE3gLpkqTQB9igpVxFZr6esuaK\"]},\"project:/contracts/lib/Strings.sol\":{\"keccak256\":\"0xcb65e48501f00af726ef391698b13fcef12b75ce5c32e907dde0f844da612931\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7529daa7a00681958b9e58c94f0738ba2c4054f3fb4c193417927deb331101d7\",\"dweb:/ipfs/QmdaTbc6H2AUych4Kt5rSLPdMYrwobf6RxkerWy8TMvhUk\"]},\"project:/contracts/lib/Token/ERC165.sol\":{\"keccak256\":\"0xd9f3e450d3501ca6bc088159145c8cbf7ab14bb487d29820032336fd83fc4443\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://071ecd51eae2ca668d03932f8cc93efa4ed5e91fdb7cb6cbdfbe9bb6b8a327cb\",\"dweb:/ipfs/QmX7t1xohRcXQj2WusNooE9K51PkLKgWVChPPDYNCyjnji\"]},\"project:/contracts/lib/Token/IERC165.sol\":{\"keccak256\":\"0x9fbc65cd183c1d13be8e68f73c6855ddb36eb4ea3e0f26e5e813a0edcfd8290f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://315603dbe7364ce045ace50e1f8926d1810de2e0b771f6195cbc39b23aff9ecc\",\"dweb:/ipfs/QmeAb2yaGf4UTo5kJRzQp7Fpios9J3pamrbmdp6fjQ2miM\"]},\"project:/contracts/lib/Token/IERC20.sol\":{\"keccak256\":\"0xb1a75c457bae7c19ee1c0064a343d5b6928b1757cb49df451e4203168bd3d6e2\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a558790ee112df7f5136d6e2bf98df7d631ca7405f086e94e3819093abce06d5\",\"dweb:/ipfs/QmTgJ5DHHj9tAzxfVXg4MwjbvtKME3CvT7DLgW42kNrN71\"]},\"project:/contracts/lib/Token/IERC721.sol\":{\"keccak256\":\"0x25d917ec21d3e1c3fe32de3bd5ca8d2232536d621fd810c166aaf86d48d5bee9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://97ae62b8a8d585a175bc638ccc9d436b60630f7b14388312c0d68dc6bd7c3c22\",\"dweb:/ipfs/QmaU3C9EtLykyDdfjmMq4H5KfDZAjSH4r975ZMNx2BP4qN\"]},\"project:/contracts/lib/Token/SafeERC20.sol\":{\"keccak256\":\"0xf88990ddba5e226e1f48503b79be9ead74f3f08a4027cc8abf819e0273f943b8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://db856f8286ca5e59cc5758860769012c89fcf166da6d8b1a00b026ab8df8101f\",\"dweb:/ipfs/QmTce1yYsgfu6u6zfWJScU75NxHz9JmahhYvUvM2dbmWvK\"]}},\"version\":1}",
@@ -45903,12 +45926,13 @@
         }
       },
       "links": {},
-      "address": "0xb8Dc7A4aceeC5e95E3e5ACc9Ee9E552efb6c2733",
-      "transactionHash": "0x885e55c6875c4b90cd6794396f5c373fc327abe79336ccf699ec5f24f90a3a02"
+      "address": "0xc60a6AE3a85838D3bAAf359219131B1e33103560",
+      "transactionHash": "0x79f8775d17cdae6427ddae5cf2c78fafba90a67f57554ed650f28ec185165d25"
     }
   },
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-02-07T12:21:27.557Z",
+  "updatedAt": "2022-02-07T13:17:15.791Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {

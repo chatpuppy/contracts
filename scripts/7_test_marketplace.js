@@ -15,15 +15,19 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const marketplaceAddress = '0xb8Dc7A4aceeC5e95E3e5ACc9Ee9E552efb6c2733';
+const marketplaceAddress = '0xc60a6AE3a85838D3bAAf359219131B1e33103560';
 const marketplaceJson = require('../build/contracts/ChatPuppyNFTMarketplace.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 
+const paymentToken = process.env.CPT_TOKEN_ADDRESS;
+const erc20Json = require('../build/contracts/CPTToken.json');
+
 const marketplace = new web3.eth.Contract(marketplaceJson.abi, marketplaceAddress);
+const erc20 = new web3.eth.Contract(erc20Json.abi, paymentToken);
 
 marketplace.methods.nftCore().call().then((nftAddress) => {
 	console.log('nft Address', nftAddress);
-	const address = '0xC4BFA07776D423711ead76CDfceDbE258e32474A';
+	const address = '0x615b80388E3D3CaC6AA3a904803acfE7939f0399';
 	const nft = new web3.eth.Contract(nftJson.abi, nftAddress);
 	nft.methods.name().call().then((response) => console.log('nft name', response));
 	nft.methods.totalSupply().call().then((response) => console.log('totalSupply', response / 1));
@@ -35,6 +39,7 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 
 	marketplace.methods.nextOrderId().call().then((orderId) => console.log('nextOrderId', orderId));
 
+	// Get all onsale list
 	marketplace.methods.onSaleOrderCount().call().then((orderAccount) => { 
 		console.log('onSaleOrderCount', orderAccount);
 		for(let i = 0; i < orderAccount; i++) {
@@ -45,7 +50,6 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 		}
 	});
 
-
 	marketplace.methods.isSeller(1, address).call().then((isSeller) => console.log('isSeller', isSeller));
 
 	/**
@@ -55,23 +59,25 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 
 	// let sendEncodeABI = marketplace.methods.addPaymentToken(0).encodeABI();
 
-	const tokenId = 3;
+	const tokenId = 4;
 
 	// Approve marketplace to the NFT
 	// let sendEncodeABI = nft.methods.approve(marketplaceAddress, tokenId).encodeABI();
 	// callContract(sendEncodeABI, nftAddress);
 
 	// add order nft
-	// let sendEncodeABI = marketplace.methods.addOrder(tokenId, '0x0000000000000000000000000000000000000000', '150000000000000000').encodeABI();
+	// let sendEncodeABI = marketplace.methods.addOrder(tokenId, paymentToken, '120000000000000000000').encodeABI();
 
 	// update price
 	// let sendEncodeABI = marketplace.methods.updatePrice(1, '200000000000000000').encodeABI();
 
 	// cancel order
-	// let sendEncodeABI = marketplace.methods.cancelOrder(1).encodeABI();
+	// let sendEncodeABI = marketplace.methods.cancelOrder(4).encodeABI();
 
-	// match order ######
-	// let sendEncodeABI = marketplace.methods.matchOrder(2, '100000000000000000').encodeABI();
+	// match order
+	// let sendEncodeABI = erc20.methods.approve(marketplaceAddress, '1200000000000000000000').encodeABI();
+	// callContract(sendEncodeABI, paymentToken);
 
+	// let sendEncodeABI = marketplace.methods.matchOrder(8, '120000000000000000000').encodeABI();
 	// callContract(sendEncodeABI, marketplaceAddress);
 });
