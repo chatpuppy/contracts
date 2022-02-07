@@ -165,7 +165,7 @@ nftManager.methods.withdraw(toAddress, amount).send();
 nft.methods.tokenMetaData(tokenId).call();
 ```
 
-## List NFT
+## add NFT to order list
 First, you need to approve marketplace contract to use the NFT tokenId:
 ```
 nft.methods.approve(marketplaceAddress, tokenId).send();
@@ -179,7 +179,18 @@ marketplace.methods.addOrder(tokenId, paymentToken, price).send();
 * price: `'100000000000000000'`
 
 
-## List mystery boxes
+## List all order details
+```
+	marketplace.methods.onSaleOrderCount().call().then((orderAccount) => { 
+		console.log('onSaleOrderCount', orderAccount);
+		for(let i = 0; i < orderAccount; i++) {
+			marketplace.methods.onSaleOrderAt(i).call().then((orderId) => {
+				console.log('orderId', orderId);
+				marketplace.methods.orders(orderId).call().then((orderDetails) => console.log('orderId', orderId, 'details', orderDetails));
+			});
+		}
+	});
+```
 
 ## Buy NFT by BNB from marketplace
 

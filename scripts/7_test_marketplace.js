@@ -40,7 +40,7 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 		for(let i = 0; i < orderAccount; i++) {
 			marketplace.methods.onSaleOrderAt(i).call().then((orderId) => {
 				console.log('orderId', orderId);
-				marketplace.methods.orders(orderId).call().then((orders) => console.log('orders', orders));
+				marketplace.methods.orders(orderId).call().then((orderDetails) => console.log('orderId', orderId, 'details', orderDetails));
 			});
 		}
 	});
@@ -69,5 +69,9 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 
 	// cancel order
 	// let sendEncodeABI = marketplace.methods.cancelOrder(1).encodeABI();
+
+	// match order ######
+	// let sendEncodeABI = marketplace.methods.matchOrder(2, '100000000000000000').encodeABI();
+
 	// callContract(sendEncodeABI, marketplaceAddress);
 });
