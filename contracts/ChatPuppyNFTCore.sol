@@ -173,14 +173,14 @@ contract ChatPuppyNFTCore is
     }
 
     function updateTokenMetaData(uint256 tokenId_, uint256 artifacts_) external onlyOwner {
-        require(_exists(tokenId_));
+        require(_exists(tokenId_), "ChatPuppyNFTCore: tokeId not exists");
 
         Item storage _info = _items[tokenId_];
         _info.artifacts = artifacts_;
     }
 
     function updateTokenMetaData(uint256 tokenId_, uint256 artifacts_, bytes32 dna_) external onlyOwner {
-        require(_exists(tokenId_));
+        require(_exists(tokenId_), "ChatPuppyNFTCore: tokeId not exists");
 
         Item storage _info = _items[tokenId_];
         _info.artifacts = artifacts_;
@@ -190,8 +190,9 @@ contract ChatPuppyNFTCore is
         }
     }
 
-    function tokenMetaData(uint256 tokenId_) external view returns (bytes32 _dna, uint256 _artifacts) {
+    function tokenMetaData(uint256 tokenId_) external view returns (bytes32 _dna, uint256 _artifacts, string memory _hexArtifacts) {
         _dna = _items[tokenId_].dna;
         _artifacts = _items[tokenId_].artifacts;
+        _hexArtifacts = _items[tokenId_].artifacts.toHexString();
     }
 }

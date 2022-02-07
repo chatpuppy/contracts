@@ -90,7 +90,7 @@ contract ChatPuppyNFTManager is
     }
 
     modifier onlyMysteryBox(uint256 tokenId_) {
-        (bytes32 _dna, ) = nftCore.tokenMetaData(tokenId_);
+        (bytes32 _dna, ,) = nftCore.tokenMetaData(tokenId_);
         require(_dna == 0, "ChatPuppyNFTManager: token is already unboxed");
         _;
     }
@@ -281,7 +281,7 @@ contract ChatPuppyNFTManager is
 
     function _mint(address to_, uint256 boxType_) private returns(uint256) {
         uint256 _tokenId = nftCore.mint(to_);
-        (, uint256 _artifacts) = nftCore.tokenMetaData(_tokenId);
+        (, uint256 _artifacts, ) = nftCore.tokenMetaData(_tokenId);
 
         // Add box type: size 1 byte
         _artifacts = _addArtifactValue(_artifacts, 0, 8, boxType_);
@@ -302,7 +302,7 @@ contract ChatPuppyNFTManager is
      * This is a payable function
      */
     function unbox(uint256 tokenId_) public payable onlyExistedToken(tokenId_) onlyTokenOwner(tokenId_) onlyMysteryBox(tokenId_) {
-        (, uint256 _artifacts) = nftCore.tokenMetaData(tokenId_);
+        (, uint256 _artifacts, ) = nftCore.tokenMetaData(tokenId_);
         uint256 _boxType = _getArtifactValue(_artifacts, 0, 8);
 
         // Check if box is combo
@@ -353,7 +353,7 @@ contract ChatPuppyNFTManager is
      */
     function fulfillRandomness(uint256 tokenId_, uint256 randomness_) internal override(RandomConsumerBase) {
         tokenId_ = tokenId_ - projectId;
-        (bytes32 _dna, uint256 _artifacts) = nftCore.tokenMetaData(tokenId_);
+        (bytes32 _dna, uint256 _artifacts, ) = nftCore.tokenMetaData(tokenId_);
         _dna = bytes32(keccak256(abi.encodePacked(tokenId_, randomness_)));
 
         uint256 _boxType = _getArtifactValue(_artifacts, 0, 8);

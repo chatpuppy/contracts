@@ -1,7 +1,7 @@
 # Smart contracts
 
 ## Addresses on kovan
-* NFT token: `0x7820D4158627F329f44c94e294109F91FE86cB77`
+* NFT token: `0xAb50F84DC1c8Ef1464b6F29153E06280b38fA754`
 * NFT Manager(mystery box): `0x0528E41841b8BEdD4293463FAa061DdFCC5E41bd`
 * Item Factory: `0xFd3250eCDb1D067a9f0A4453b3BFB92e66f6f7ca`
 * Random Generator: `0xA28D90320005C8c043Ee79ae59e82fDd5f983f30`
