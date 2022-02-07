@@ -36,7 +36,7 @@ nft.methods.ownerOf(2).call().then((owner) => console.log('owner of nft', owner)
 const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
 // let sendEncodeABI = nft.methods.increaseCap(1).encodeABI();
-// let sendEncodeABI = nft.methods.updateBaseTokenURI("https://dragonaire.com/").encodeABI();
+// let sendEncodeABI = nft.methods.updateBaseTokenURI("https://nft.chatpuppy.com/token/").encodeABI();
 // const testAcc = '0x615b80388E3D3CaC6AA3a904803acfE7939f0399';
 // let sendEncodeABI = nft.methods.mint(testAcc).encodeABI();
 // let sendEncodeABI = nft.methods.updateTokenMetaData(1, 256).encodeABI();
