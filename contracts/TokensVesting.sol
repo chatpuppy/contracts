@@ -10,8 +10,8 @@ import "./lib/Token/IERC20Mintable.sol";
  */
 contract TokensVesting is Ownable, ITokensVesting {
     IERC20Mintable public immutable token;
-    uint256 private constant DEFAULT_BASIS = 30 days;
 
+    uint256 public basis = 30 days;
     uint256 public revokedAmount = 0;
     uint256 public revokedAmountWithdrawn = 0;
 
@@ -110,36 +110,68 @@ contract TokensVesting is Ownable, ITokensVesting {
     }
 
     /**
-     * @dev Add beneficiary to vesting plan using default basis.
-     * @param beneficiary_ recipient address.
-     * @param genesisTimestamp_ genesis timestamp
-     * @param totalAmount_ total amount of tokens will be vested.
-     * @param tgeAmount_ an amount of tokens will be vested at tge.
-     * @param cliff_ cliff duration.
-     * @param duration_ linear vesting duration.
-     * @param participant_ specific type of {Participant}.
-     * Waring: Convert vesting monthly to duration carefully
-     * eg: vesting in 9 months => duration = 8 months = 8 * 30 * 24 * 60 * 60
+     * @dev Setting crowd funding params
+     * ######
      */
-    function addBeneficiary(
-        address beneficiary_,
+    struct PriceRange {
+        uint256 fromAmount;
+        uint256 toAmount;
+        uint256 price;
+    }
+    mapping(uint256 => PriceRange[]) public _price;
+
+    mapping(uint256 => uint256) public _genesisTimestamp;
+    mapping(uint256 => uint256) public _tgeAmountRatio;
+    mapping(uint256 => uint256) public _cliff;
+    mapping(uint256 => uint256) public _duration;
+    mapping(uint256 => uint256) public _basis;
+    
+    function setCrowdFunding(
+        uint8   participant_,
         uint256 genesisTimestamp_,
-        uint256 totalAmount_,
-        uint256 tgeAmount_,
+        uint256 tgeAmountRatio_,
         uint256 cliff_,
         uint256 duration_,
-        uint8 participant_
-    ) public {
-        addBeneficiaryWithBasis(
-            beneficiary_,
-            genesisTimestamp_,
-            totalAmount_,
-            tgeAmount_,
-            cliff_,
-            duration_,
-            participant_,
-            DEFAULT_BASIS
-        );
+        uint256 basis_,
+        uint256 price_
+    ) external onlyOwner {
+        require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale) 
+            && genesisTimestamp_ > 0 && tgeAmountRatio_ >= 0 && cliff_ >= 0 && duration_ >=0 && basis_ >= 0 && price_ >= 0,
+            "TokensVesting::configCrowdFunding: invalid params");
+        _genesisTimestamp[participant_] = genesisTimestamp_;
+        _tgeAmountRatio[participant_] = tgeAmountRatio_;
+        _cliff[participant_] = cliff_;
+        _duration[participant_] = duration_;
+        _basis[participant_] = basis_;
+    }
+
+    function setPriceRange (
+        uint8   participant_,
+        uint256 fromAmount_,
+        uint256 toAmount_,
+        uint256 price_
+    ) external view onlyOwner {
+        require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale), 
+         'TokensVesting::setPriceRange: participant shoud only be PrivateSale or PublicSale');
+        require(fromAmount_ > 0 && toAmount_ > 0 && toAmount_ > fromAmount_, 'TokensVesting::setPriceRange: fromAmount and toAmount is wrong');
+        require(price_ > 0, 'TokensVesting::setPriceRange: price can not be 0');
+
+    }
+
+    /**
+     * @dev Donator pay ETH/BNB and get quota of token(need donator claim after cliff)
+     */
+    function crowdFunding() public payable {
+
+    }
+
+    /**
+     * get current token price
+     */
+    function getCurrentPrice(uint8 participant_, uint256 phase_) public view returns (uint256 price_) {
+        require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale), 
+         'TokensVesting::getCurrentPrice: participant shoud only be PrivateSale or PublicSale');
+
     }
 
     /**
@@ -155,14 +187,14 @@ contract TokensVesting is Ownable, ITokensVesting {
      * Waring: Convert vesting monthly to duration carefully
      * eg: vesting in 9 months => duration = 8 months = 8 * 30 * 24 * 60 * 60
      */
-    function addBeneficiaryWithBasis(
+    function addBeneficiary(
         address beneficiary_,
         uint256 genesisTimestamp_,
         uint256 totalAmount_,
         uint256 tgeAmount_,
         uint256 cliff_,
         uint256 duration_,
-        uint8 participant_,
+        uint8   participant_,
         uint256 basis_
     ) public onlyOwner {
         require(
@@ -213,59 +245,13 @@ contract TokensVesting is Ownable, ITokensVesting {
     }
 
     /**
-     * @dev See {ITokensVesting-privateSale}.
+     * @dev get total amount by participant
      */
-    function privateSale() public view returns (uint256) {
-        return _getTotalAmountByParticipant(Participant.PrivateSale);
-    }
-
-    /**
-     * @dev See {ITokensVesting-publicSale}.
-     */
-    function publicSale() public view returns (uint256) {
-        return _getTotalAmountByParticipant(Participant.PublicSale);
-    }
-
-    /**
-     * @dev See {ITokensVesting-team}.
-     */
-    function team() public view returns (uint256) {
-        return _getTotalAmountByParticipant(Participant.Team);
-    }
-
-    /**
-     * @dev See {ITokensVesting-advisor}.
-     */
-    function advisor() public view returns (uint256) {
-        return _getTotalAmountByParticipant(Participant.Advisor);
-    }
-
-    /**
-     * @dev See {ITokensVesting-liquidity}.
-     */
-    function liquidity() public view returns (uint256) {
-        return _getTotalAmountByParticipant(Participant.Liquidity);
-    }
-
-    /**
-     * @dev See {ITokensVesting-incentives}.
-     */
-    function incentives() public view returns (uint256) {
-        return _getTotalAmountByParticipant(Participant.Incentives);
-    }
-
-    /**
-     * @dev See {ITokensVesting-marketing}.
-     */
-    function marketing() public view returns (uint256) {
-        return _getTotalAmountByParticipant(Participant.Marketing);
-    }
-
-    /**
-     * @dev See {ITokensVesting-reserve}.
-     */
-    function reserve() public view returns (uint256) {
-        return _getTotalAmountByParticipant(Participant.Reserve);
+    function getTotalAmountByParticipant(uint8 participant_) public view returns (uint256) {
+        require(Participant(participant_) > Participant.Unknown &&
+                Participant(participant_) < Participant.OutOfRange,
+            "TokensVesting::_getReleasedAmountByParticipant: participant_ out of range!");
+        return _getTotalAmountByParticipant(Participant(participant_));
     }
 
     /**
@@ -668,6 +654,14 @@ contract TokensVesting is Ownable, ITokensVesting {
         revokedAmountWithdrawn = revokedAmountWithdrawn + amount_;
         token.mint(_msgSender(), amount_);
         emit Withdraw(_msgSender(), amount_);
+    }
+
+    /**
+     * @dev Update basis_
+     */
+    function updateBasic(uint256 basis_) public onlyOwner {
+        require(basis_ > 0, "TokensVesting::updateBasic: basic must be greater than 0");
+        basis = basis_;
     }
 
     /**

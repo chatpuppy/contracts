@@ -4,6 +4,6 @@ const Env = require('../env');
 module.exports = function (deployer) {
     deployer.deploy(
         TokensVesting,
-        Env.get('DARE_TOKEN_ADDRESS')
+        Env.get('CPT_TOKEN_ADDRESS')
     );
 };

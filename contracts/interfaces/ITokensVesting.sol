@@ -9,47 +9,7 @@ interface ITokensVesting {
      * @dev Returns the total amount of tokens in vesting plan.
      */
     function total() external view returns (uint256);
-
-    /**
-     * @dev Returns the total amount of private sale tokens in vesting plan.
-     */
-    function privateSale() external view returns (uint256);
-
-    /**
-     * @dev Returns the total amount of public sale tokens in vesting plan.
-     */
-    function publicSale() external view returns (uint256);
-
-    /**
-     * @dev Returns the total amount of team tokens in vesting plan.
-     */
-    function team() external view returns (uint256);
-
-    /**
-     * @dev Returns the total amount of advisor tokens in vesting plan.
-     */
-    function advisor() external view returns (uint256);
-
-    /**
-     * @dev Returns the total amount of liquidity tokens in vesting plan.
-     */
-    function liquidity() external view returns (uint256);
-
-    /**
-     * @dev Returns the total amount of incentives tokens in vesting plan.
-     */
-    function incentives() external view returns (uint256);
-
-    /**
-     * @dev Returns the total amount of marketing tokens in vesting plan.
-     */
-    function marketing() external view returns (uint256);
-
-    /**
-     * @dev Returns the total amount of reserve tokens in vesting plan.
-     */
-    function reserve() external view returns (uint256);
-
+    
     /**
      * @dev Returns the total releasable amount of tokens.
      */
