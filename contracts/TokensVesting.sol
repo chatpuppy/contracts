@@ -109,17 +109,6 @@ contract TokensVesting is Ownable, ITokensVesting {
         return (has, index);
     }
 
-    function getBeneficiaryCount(address beneficiary_) public view returns(uint256) {
-        uint256 count = 0;
-        for(uint256 i = 0; i < _beneficiaries.length; i++) {
-            if(_beneficiaries[i].beneficiary == beneficiary_) {
-                count++;
-                break;
-            }
-        }
-        return count;
-    }
-
     /**
      * @dev Get total beneficiaries amount
      */
@@ -187,15 +176,16 @@ contract TokensVesting is Ownable, ITokensVesting {
      * If 1BNB = 1000CPT, the price should be 1000, not 1000 * 1e18!
      */
     function updatePriceRange (
-        uint8 participant_, 
-        uint256 index_, 
-        uint256 fromAmount_, 
-        uint256 toAmount_, 
+        uint8 participant_,
+        uint256 index_,
+        uint256 fromAmount_,
+        uint256 toAmount_,
         uint256 price_
     ) external onlyOwner {
-        require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale), 
-         'TokensVesting: participant shoud only be PrivateSale or PublicSale');
-        require(fromAmount_ > 0 && toAmount_ > 0 && toAmount_ > fromAmount_ && price_ > 0, 'TokensVesting: price or fromAmount or toAmount is wrong');
+        require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
+             'TokensVesting: participant shoud only be PrivateSale or PublicSale');
+        require(fromAmount_ > 0 && toAmount_ > 0 && toAmount_ > fromAmount_ && price_ > 0,
+            'TokensVesting: price or fromAmount or toAmount is wrong');
         require(_priceRange[participant_][index_].price > 0, 'TokensVesting: price of index not set');
 
         _priceRange[participant_][index_].fromAmount = fromAmount_;

@@ -229,50 +229,65 @@ OK
 
 ### Add beneficiary by owner
 ```
-addBeneficiary
+function addBeneficiary(
+		address beneficiary_,
+		uint256 genesisTimestamp_,
+		uint256 totalAmount_,
+		uint256 tgeAmount_,
+		uint256 cliff_,
+		uint256 duration_,
+		uint8   participant_,
+		uint256 basis_
+) external;
 ```
 OK
 
 ### Start vesting of a beneficiary by owner
 ```
-activate
+activate(beneficiaryIndex)
 ```
 OK
 
 ### Start all beneficiaries' vesting by owner
 ```
-activateAll
+activateAll()
 ```
 OK
 
 ### Start a type of participants vesting by owner
 ```
-activeParticipant
+activeParticipant(participant)
 ```
 Ok
 
 ### Release all amount for all beneficiaries by owner
 * Note: make sure the token vesting contract address is authorized by CPT Token
 ```
-releaseAll
+releaseAll()
 ```
 OK
 
 ### Release all amount for a type of participants by owner
 ```
-releaseParticipant
+releaseParticipant(participant)
 ```
 OK
 
 ### Forbiden a beneficiary to claim by owner
 ```
-revoke
+revoke(beneficiaryIndex)
 ```
 OK
 
 ### Withdraw all revoked amount from contract by owner
 ```
-withdraw
+withdraw(amount)
+```
+OK
+
+#### Get all beneficiaries data only by owner
+```
+getAllBeneficiaries()
 ```
 OK
 
@@ -307,25 +322,19 @@ OK
 
 #### Get totol amount of all beneficiaries
 ```
-getTotalAmountByParticipant
-```
-OK
-
-#### Get all beneficiaries data
-```
-getAllBeneficiaries
+getTotalAmountByParticipant(participant)
 ```
 OK
 
 #### Get count of all beneficiaries
 ```
-getBeneficiaryCount
+getBeneficiaryCount()
 ```
 OK
 
 #### Get total amount of a type of participants
 ```
-getTotalAmountByParticipant
+getTotalAmountByParticipant(participant)
 ```
 OK
 
@@ -337,13 +346,13 @@ OK
 
 #### Get releasable amount of a beneficiary
 ```
-releasable(index)
+releasable(beneficiaryIndex)
 ```
 OK
 
 #### Get releasable amount of of a type of participants
 ```
-participantReleasable
+participantReleasable(participant)
 ```
 OK
 
@@ -356,25 +365,25 @@ OK
 
 #### Get all released amount of a type of participants
 ```
-participantReleased
+participantReleased(participant)
 ```
 OK
 
 #### Get is already in the beneficiaries list
 ```
-getBeneficiaryCount
+getBeneficiaryCount()
 ```
 OK
 
 #### Get beneficiary's index
 ```
-getIndex
+getIndex(beneficiaryAddress)
 ```
 OK
 
 #### Get beneficiary by index
 ```
-getBeneficiary
+getBeneficiary(beneficiaryIndex)
 ```
 OK
 
@@ -392,63 +401,64 @@ OK
 
 #### Get price for phase according to the raised amount
 ```
-getPriceForAmount
+getPriceForAmount(participant, amount)
 ```
 
 #### Get price for the current phase
 ```
-getCurrentPrice
+getCurrentPrice(participant)
 ```
 
 #### Get price range data of given participant for crowd funding
 ```
-_priceRange
+_priceRange(participant)
 ```
 
 #### Get Genesis Timestamp of given participant for crowd funding
 ```
-_genesisTimestamp
+_genesisTimestamp(participant)
 ```
 
 #### Get tge amount ratio of given participant for crowd funding
 ```
-_tgeAmountRatio
+_tgeAmountRatio(participant)
 ```
 
 #### Get tge amount ratio decimals of given participant for crowd funding
 ```
-_ratioDecimals
+_ratioDecimals(participant)
 ```
 
 #### Get cliff of given participant for crowd funding
 ```
-_cliff
+_cliff(participant)
 ```
 
 #### Get duration of given participant for crowd funding
 ```
-_duration
+_duration(participant)
 ```
 
 #### Get basis of given participant for crowd funding
 ```
-_basis
+_basis(participant)
 ```
 
 #### Get limitation of given participant for crowd funding
 ```
-_limitation
+_limitation(participant)
 ```
 
 ### 2.2- Set methods buy beneficiary or donator
 
 #### Release/claim by the beneficiary himself
 ```
-release
+release()
 ```
 OK
 
 ### CrowdFunding
+This is payable function, pay ETH/BNB and get token benefit, the investor should claim the token then can get real token.
 ```
-crowdFunding
+crowdFunding(participant)
 ```
