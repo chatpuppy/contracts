@@ -1,5 +1,5 @@
 /**
- * Testing Item Factory
+ * Testing Randomness
  */
 
 import {execContract} from './web3.js';

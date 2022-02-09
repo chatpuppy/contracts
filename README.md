@@ -225,6 +225,7 @@ marketplace.methods.matchOrder(orderId, price).send();
 ```
 updateToken(tokenAddress)
 ```
+OK
 
 ### Add beneficiary by owner
 ```
@@ -248,27 +249,32 @@ OK
 ```
 activeParticipant
 ```
+Ok
 
 ### Release all amount for all beneficiaries by owner
 * Note: make sure the token vesting contract address is authorized by CPT Token
 ```
 releaseAll
 ```
+OK
 
 ### Release all amount for a type of participants by owner
 ```
 releaseParticipant
 ```
+OK
 
 ### Forbiden a beneficiary to claim by owner
 ```
 revoke
 ```
+OK
 
 ### Withdraw all revoked amount from contract by owner
 ```
 withdraw
 ```
+OK
 
 ### Set croud funding params by owner
 ```
@@ -291,57 +297,98 @@ updatePriceRange
 ```
 token
 ```
+OK
 
 #### Get total amount
 ```
 total()
 ```
+OK
 
 #### Get totol amount of all beneficiaries
 ```
 getTotalAmountByParticipant
 ```
+OK
 
 #### Get all beneficiaries data
 ```
 getAllBeneficiaries
 ```
+OK
 
 #### Get count of all beneficiaries
 ```
 getBeneficiaryCount
 ```
+OK
 
 #### Get total amount of a type of participants
 ```
 getTotalAmountByParticipant
 ```
+OK
 
 #### Get all releasable amount of all beneficiaries
 ```
 releasable()
 ```
+OK
 
 #### Get releasable amount of a beneficiary
 ```
 releasable(index)
 ```
+OK
 
 #### Get releasable amount of of a type of participants
 ```
 participantReleasable
 ```
+OK
 
 #### Get all released amount of all beneficiaries
 * Note: make sure the token vesting contract address is authorized by CPT Token
 ```
 released()
 ```
+OK
 
 #### Get all released amount of a type of participants
 ```
 participantReleased
 ```
+OK
+
+#### Get is already in the beneficiaries list
+```
+getBeneficiaryCount
+```
+OK
+
+#### Get beneficiary's index
+```
+getIndex
+```
+OK
+
+#### Get beneficiary by index
+```
+getBeneficiary
+```
+OK
+
+#### Get revoked amount
+```
+revokedAmount
+```
+OK
+
+#### Get revoked and withdrawed amount
+```
+revokedAmountWithdrawn
+```
+OK
 
 #### Get price for phase according to the raised amount
 ```
@@ -351,26 +398,6 @@ getPriceForAmount
 #### Get price for the current phase
 ```
 getCurrentPrice
-```
-
-#### Get beneficiary's index
-```
-getIndex
-```
-
-#### Get is already in the beneficiaries list
-```
-getBeneficiaryCount
-```
-
-#### Get revoked amount
-```
-revokedAmount
-```
-
-#### Get revoked and withdrawed amount
-```
-revokedAmountWithdrawn
 ```
 
 #### Get price range data of given participant for crowd funding
@@ -413,17 +440,13 @@ _basis
 _limitation
 ```
 
-#### Get beneficiary by index
-```
-getBeneficiary
-```
-
 ### 2.2- Set methods buy beneficiary or donator
 
 #### Release/claim by the beneficiary himself
 ```
 release
 ```
+OK
 
 ### CrowdFunding
 ```

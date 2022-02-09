@@ -36,7 +36,7 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 // let sendEncodeABI = dareContract.methods.transfer('0x3444E23231619b361c8350F4C83F82BCfAB36F65', '72000000000000000000').encodeABI();
 
 // Grand TokenVesting contract as MINT_ROLE
-// const TokenVestingAddress = '0x6adb30205dd2D2902f32E40e0f2CE15c728F9492';
-// let sendEncodeABI = cptContract.methods.grantRole('0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848', TokenVestingAddress).encodeABI();
+const TokenVestingAddress = '0x2aF62ba102B18BAad705d9a2A2040858DFf4632b';
+let sendEncodeABI = cptContract.methods.grantRole('0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6', TokenVestingAddress).encodeABI();
 
-// callContract(sendEncodeABI, cptContractAddress);
+callContract(sendEncodeABI, cptContractAddress);

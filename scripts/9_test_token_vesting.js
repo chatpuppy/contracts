@@ -1,5 +1,5 @@
 /**
- * Testing NFT Manager
+ * Testing TokenVesting
  */
 
 import {execContract} from './web3.js';
@@ -17,7 +17,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 const senderAddress = (web3.eth.accounts.privateKeyToAccount('0x' + priKey)).address;
 console.log('发起地址', senderAddress);
 
-const tokensVestingAddress = '0x6adb30205dd2D2902f32E40e0f2CE15c728F9492';
+const tokensVestingAddress = '0x2aF62ba102B18BAad705d9a2A2040858DFf4632b';
 const tokensVestingJson = require('../build/contracts/TokensVesting.json');
 const tokensVesting = new web3.eth.Contract(tokensVestingJson.abi, tokensVestingAddress);
 
@@ -25,15 +25,25 @@ tokensVesting.methods.total().call().then((total) => console.log('已发行量',
 tokensVesting.methods.getTotalAmountByParticipant(1).call().then((amount) => console.log('类型', 1, '总量', amount));
 tokensVesting.methods.getBeneficiaryCount().call().then((total) => console.log('受益人数量', total));
 
-tokensVesting.methods.releasable().call().then((releasable) => console.log('可提现', releasable));
+
+tokensVesting.methods.releasable(1).call().then((releasable) => console.log('总可提现', releasable/1e18));
+tokensVesting.methods.participantReleasable(7).call().then((participantReleasable) => console.log('participantReleasable', participantReleasable / 1e18));
 tokensVesting.methods.token().call().then((token) => console.log('CPT token', token));
 
-// tokensVesting.methods.getIndex('0xC4BFA07776D423711ead76CDfceDbE258e32474A').call().then((index) => {
-// 	console.log('index', index);
-// 	tokensVesting.methods.releasable(index).call().then((total) => console.log('我的可提现总量', total / 1e18));
-// 	tokensVesting.methods.getBeneficiary(index).call().then((beneficiary) => console.log(beneficiary));
-// })
-// tokensVesting.methods.getAllBeneficiaries().call({from: '0x615b80388E3D3CaC6AA3a904803acfE7939f0399'}).then((all) => console.log('所有受益人', all));
+tokensVesting.methods.getIndex(senderAddress).call().then((response) => {
+	console.log('index', response, response[0] ? response[1] : 'no');
+	if(response[0]) {
+		tokensVesting.methods.releasable(response[1]).call().then((total) => console.log('我的可提现总量', total / 1e18));
+		tokensVesting.methods.getBeneficiary(response[1]).call().then((beneficiary) => console.log(beneficiary));	
+	}
+})
+// tokensVesting.methods.getAllBeneficiaries().call({from: senderAddress}).then((all) => console.log('所有受益人', all));
+tokensVesting.methods.getTotalAmountByParticipant(7).call({from: senderAddress}).then((all) => console.log('类型总金额', all/1e18));
+
+tokensVesting.methods.participantReleased(7).call({from: senderAddress}).then((all) => console.log('类型已提现', all/1e18));
+tokensVesting.methods.getBeneficiary(0).call({from: senderAddress}).then((all) => console.log('getBeneficiary', all/1e18));
+tokensVesting.methods.revokedAmount().call({from: senderAddress}).then((all) => console.log('revokedAmount', all/1e18));
+tokensVesting.methods.revokedAmountWithdrawn().call({from: senderAddress}).then((all) => console.log('revokedAmountWithdrawn', all/1e18));
 
 /**
  * ==== Following testing methods is Send Tx ====
@@ -51,18 +61,29 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 	*/
 
 // let sendEncodeABI = tokensVesting.methods.addBeneficiary(
-// 	'0x615b80388E3D3CaC6AA3a904803acfE7939f0399',
-// 	'1644400534',
-// 	'100000000000000000000000',
-// 	'0',
-// 	(12*3600).toString(),
-// 	(20*24*3600).toString(),
+// 	'0xC4BFA07776D423711ead76CDfceDbE258e32474A',
+// 	'1644403234',
+// 	'200000000000000000000000',
+// 	'5000000000000000000000',
+// 	(0).toString(),
+// 	(24*3600).toString(),
 // 	7,
-// 	(2*3600).toString()
+// 	(60).toString()
 // ).encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.activateAll().encodeABI();
+// let sendEncodeABI = tokensVesting.methods.updateToken('0x7C4b6E294Fd0ae77B6E1730CBEb1B8491859Ee24').encodeABI();
 
-// 确保TokenVesting合约已经获取DARE代币的 MINTER_ROLE 权限
+// 确保TokenVesting合约已经获取CPT代币的 MINTER_ROLE 权限
 // let sendEncodeABI = tokensVesting.methods.release().encodeABI();
+
+// let sendEncodeABI = tokensVesting.methods.releaseAll().encodeABI();
+
+// let sendEncodeABI = tokensVesting.methods.releaseParticipant(7).encodeABI();
+
+// let sendEncodeABI = tokensVesting.methods.revoke(0).encodeABI();
+
+// let sendEncodeABI = tokensVesting.methods.withdraw('10000000000000000000000000').encodeABI();
+
 // callContract(sendEncodeABI, tokensVestingAddress);
+

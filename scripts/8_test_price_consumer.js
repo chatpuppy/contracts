@@ -1,5 +1,5 @@
 /**
- * Testing NFT Manager
+ * Testing Price Consumer
  */
 
 import {execContract} from './web3.js';

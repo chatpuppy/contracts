@@ -96,15 +96,17 @@ contract TokensVesting is Ownable, ITokensVesting {
     /**
      * @dev Get index by beneficiary
      */
-    function getIndex(address beneficiary_) public view returns(uint256) {
+    function getIndex(address beneficiary_) public view returns(bool, uint256) {
+        bool has = false;
         uint256 index = 0;
         for(uint256 i = 0; i < _beneficiaries.length; i++) {
             if(_beneficiaries[i].beneficiary == beneficiary_) {
                 index = i;
+                has = true;
                 break;
             }
         }
-        return index;
+        return (has, index);
     }
 
     function getBeneficiaryCount(address beneficiary_) public view returns(uint256) {
@@ -509,17 +511,12 @@ contract TokensVesting is Ownable, ITokensVesting {
      * Emits a {TokensReleased} event.
      */
     function release() public {
-        uint256 index_ = getIndex(_msgSender());
-        require(
-            index_ >= 0 && index_ < _beneficiaries.length,
-            "TokensVesting: index out of range!"
-        );
+        (bool has_, uint256 index_) = getIndex(_msgSender());
+        require(has_, "TokensVesting: user not found in beneficiary list");
+        require(index_ >= 0 && index_ < _beneficiaries.length, "TokensVesting: index out of range!");
 
         VestingInfo storage info = _beneficiaries[index_];
-        require(
-            _msgSender() == owner() || _msgSender() == info.beneficiary,
-            "TokensVesting: unauthorised sender!"
-        );
+        require(_msgSender() == owner() || _msgSender() == info.beneficiary, "TokensVesting: unauthorised sender!");
 
         uint256 unreleased = _releasableAmount(
             info.genesisTimestamp,
