@@ -45,6 +45,18 @@ tokensVesting.methods.getBeneficiary(0).call({from: senderAddress}).then((all) =
 tokensVesting.methods.revokedAmount().call({from: senderAddress}).then((all) => console.log('revokedAmount', all/1e18));
 tokensVesting.methods.revokedAmountWithdrawn().call({from: senderAddress}).then((all) => console.log('revokedAmountWithdrawn', all/1e18));
 
+console.log('======================================================');
+const participant = 2;
+tokensVesting.methods._genesisTimestamp(participant).call({from: senderAddress}).then((res) => console.log('_genesisTimestamp', res));
+tokensVesting.methods._tgeAmountRatio(participant).call({from: senderAddress}).then((res) => console.log('_tgeAmountRatio', res));
+tokensVesting.methods._ratioDecimals(participant).call({from: senderAddress}).then((res) => console.log('_ratioDecimals', res));
+tokensVesting.methods._cliff(participant).call({from: senderAddress}).then((res) => console.log('_cliff', res));
+tokensVesting.methods._duration(participant).call({from: senderAddress}).then((res) => console.log('_duration', res));
+tokensVesting.methods._basis(participant).call({from: senderAddress}).then((res) => console.log('_basis', res));
+tokensVesting.methods._limitation(participant).call({from: senderAddress}).then((res) => console.log('_limitation', res));
+
+tokensVesting.methods.getPriceForAmount(1, 199999).call({from: senderAddress}).then((res) => console.log('price', res));
+
 /**
  * ==== Following testing methods is Send Tx ====
  */
@@ -84,6 +96,36 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 // let sendEncodeABI = tokensVesting.methods.revoke(0).encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.withdraw('10000000000000000000000000').encodeABI();
+
+// setCrowdFundingParams
+/**
+ * participant	genesisTimestamp	tgeAmountRatio	ratioDecimals	cliff		duration	basis	startTimestamp				endTimestamp				limitation
+ * 1						1644422134				20							2							60*10		60*5			60		1644421800(23:50)			1644424200(00:30)		1000000000000000000
+ * 2						1644423300				10							2							60*10		60*5			60		1644422400(00:00)			1644425100(00:45)		500000000000000000
+ */
+
+// let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
+// 	1, 1644422134, 20, 2, 600, 300, 60, 1644421800, 1644424200, '1000000000000000000'
+// ).encodeABI();
+
+// let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
+// 	2, 1644423300, 10, 2, 600, 300, 60, 1644422400, 1644425100, '500000000000000000'
+// ).encodeABI();
+
+/**
+ * participant	No	fromAmount		toAmount		price
+ * 1						0		0							100000			10000	
+ * 1						1		100000				200000			9000
+ * 1						2		200000				300000			8100
+ * 1						3		300000				400000			7290
+ * 
+ * 
+ */
+
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(1, 1, 100000, 10000).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(1, 100000, 200000, 9000).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(1, 200000, 300000, 8100).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(1, 300000, 400000, 7290).encodeABI();
 
 // callContract(sendEncodeABI, tokensVestingAddress);
 

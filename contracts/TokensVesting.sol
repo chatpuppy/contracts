@@ -53,7 +53,6 @@ contract TokensVesting is Ownable, ITokensVesting {
      */
     struct PriceRange {
         uint256 fromAmount;
-        uint256 toAmount;
         uint256 price;
     }
     mapping(uint256 => PriceRange[]) public _priceRange;
@@ -137,8 +136,8 @@ contract TokensVesting is Ownable, ITokensVesting {
     ) external onlyOwner {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale)
             && genesisTimestamp_ > block.timestamp && tgeAmountRatio_ >= 0 && cliff_ >= 0 && duration_ >=0 && basis_ >= 0
-            && startTimestamp_ > 0 && endTimestamp_ > 0 && endTimestamp_ >= startTimestamp_,
-            "TokensVesting: invalid params");
+            && startTimestamp_ > block.timestamp && endTimestamp_ > block.timestamp && endTimestamp_ >= startTimestamp_,
+            "TokensVesting: add invalid params");
         _genesisTimestamp[participant_] = genesisTimestamp_;
         _tgeAmountRatio[participant_] = tgeAmountRatio_;
         _ratioDecimals[participant_] = ratioDecimals_;
@@ -156,20 +155,18 @@ contract TokensVesting is Ownable, ITokensVesting {
     function setPriceRange (
         uint8   participant_,
         uint256 fromAmount_,
-        uint256 toAmount_,
         uint256 price_
     ) external onlyOwner {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
             'TokensVesting: participant shoud only be PrivateSale or PublicSale');
-        require(fromAmount_ > 0 && toAmount_ > 0 && toAmount_ > fromAmount_ && price_ > 0,
-            'TokensVesting: price or fromAmount or toAmount is wrong');
+        require(fromAmount_ >= 0 && price_ > 0,
+            'TokensVesting: price or fromAmount is wrong');
 
         PriceRange storage priceRange_ = _priceRange[participant_].push();
         priceRange_.fromAmount = fromAmount_;
-        priceRange_.toAmount = toAmount_;
         priceRange_.price = price_;
 
-        emit PriceRangeAdded(participant_, fromAmount_, toAmount_, price_);
+        emit PriceRangeAdded(participant_, fromAmount_, price_);
     }
 
     /**
@@ -180,18 +177,18 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint8 participant_,
         uint256 index_,
         uint256 fromAmount_,
-        uint256 toAmount_,
         uint256 price_
     ) external onlyOwner {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
              'TokensVesting: participant shoud only be PrivateSale or PublicSale');
-        require(fromAmount_ > 0 && toAmount_ > 0 && toAmount_ > fromAmount_ && price_ > 0,
-            'TokensVesting: price or fromAmount or toAmount is wrong');
+        require(fromAmount_ >= 0 && price_ > 0,
+            'TokensVesting: price or fromAmount is wrong');
         require(_priceRange[participant_][index_].price > 0, 'TokensVesting: price of index not set');
 
         _priceRange[participant_][index_].fromAmount = fromAmount_;
-        _priceRange[participant_][index_].toAmount = toAmount_;
         _priceRange[participant_][index_].price = price_;
+
+        emit PriceRangeUpdated(participant_, index_, fromAmount_, price_);
     }
 
     /**
@@ -241,16 +238,25 @@ contract TokensVesting is Ownable, ITokensVesting {
 
     function _getPriceForAmount(uint8 participant_, uint256 amount_) internal view returns(uint256 price_, uint256 index_) {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
-         'TokensVesting: participant shoud only be PrivateSale or PublicSale');
-        for(uint256 i = 0; i < _priceRange[participant_].length; i++) {
-            PriceRange memory range = _priceRange[participant_][i];
-            if(range.fromAmount <= amount_ && range.toAmount >= amount_) {
-                price_ = range.price;
-                index_ = i;
+         'TokensVesting: participant should only be PrivateSale or PublicSale');
+
+        uint256 total_ = total();
+        PriceRange[] memory priceRange_ = _priceRange[participant_];
+        if(total_ + amount_ > priceRange_[priceRange_.length - 1].fromAmount) {
+            price_ = priceRange_[priceRange_.length - 1].price;
+            index_ = priceRange_.length - 1;
+        } else {
+            for(uint256 i = 1; i < priceRange_.length; i++) {
+                if(priceRange_[i].fromAmount >= total_ + amount_) {
+                    price_ = priceRange_[i-1].price;
+                    index_ = i - 1;
+                    break;
+                }
             }
         }
     }
-
+// 0, 1000, 2000, 3000
+// 4000
     /**
      * @dev Add beneficiary to vesting plan by owner.
      * @param beneficiary_ recipient address.
@@ -541,6 +547,13 @@ contract TokensVesting is Ownable, ITokensVesting {
         revokedAmountWithdrawn = revokedAmountWithdrawn + amount_;
         token.mint(_msgSender(), amount_);
         emit Withdraw(_msgSender(), amount_);
+    }
+
+    /**
+     * @dev Withdraw ETH/BNB from contract.
+     */
+    function withdrawCoin(uint256 amount_) public onlyOwner {
+        // ######
     }
 
     function updateToken(address token_) public onlyOwner {

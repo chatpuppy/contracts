@@ -295,15 +295,22 @@ OK
 ```
 setCrowdFundingParams
 ```
+OK
 
 ### Add price and amount range for each phase by owner
 ```
 setPriceRange
 ```
+OK
 
 ### Update price and amount range for each phase by owner
 ```
 updatePriceRange
+```
+
+### Withdraw ETH/BNB from contract by owner
+```
+withdrawCoin(amount)
 ```
 
 ## 2- Operated by all
@@ -413,41 +420,49 @@ getCurrentPrice(participant)
 ```
 _priceRange(participant)
 ```
+OK
 
 #### Get Genesis Timestamp of given participant for crowd funding
 ```
 _genesisTimestamp(participant)
 ```
+OK
 
 #### Get tge amount ratio of given participant for crowd funding
 ```
 _tgeAmountRatio(participant)
 ```
+OK
 
 #### Get tge amount ratio decimals of given participant for crowd funding
 ```
 _ratioDecimals(participant)
 ```
+OK
 
 #### Get cliff of given participant for crowd funding
 ```
 _cliff(participant)
 ```
+OK
 
 #### Get duration of given participant for crowd funding
 ```
 _duration(participant)
 ```
+OK
 
 #### Get basis of given participant for crowd funding
 ```
 _basis(participant)
 ```
+OK
 
 #### Get limitation of given participant for crowd funding
 ```
 _limitation(participant)
 ```
+OK
 
 ### 2.2- Set methods buy beneficiary or donator
 
