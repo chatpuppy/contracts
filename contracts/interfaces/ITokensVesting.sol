@@ -30,7 +30,7 @@ interface ITokensVesting {
     function setPriceRange(uint8 participant, uint256 fromAmount, uint256 toAmount, uint256 price) external;
 
     function setCrowdFundingParams(uint8   participant, uint256 genesisTimestamp, uint256 tgeAmountRatio, uint256 ratioDecimals,
-        uint256 cliff, uint256 duration, uint256 basis, uint256 startTimestamp, uint256 endTimestamp) external;
+        uint256 cliff, uint256 duration, uint256 basis, uint256 startTimestamp, uint256 endTimestamp, uint256 limitation) external;
 
     function updatePriceRange (uint8 participant, uint256 index, uint256 fromAmount, uint256 toAmount, uint256 price) external;
 

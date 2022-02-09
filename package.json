@@ -1,7 +1,8 @@
 {
-  "name": "chatpuppy-contracts",
+  "name": "chat-contract",
   "version": "1.0.0",
   "description": "ChatPuppy smart contracts",
+  "type": "module",
   "scripts": {
     "compile": "truffle compile",
     "deploy-cpt-testnet": "truffle migrate --network bscTestnet -f 2 --to 2",

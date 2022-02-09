@@ -1,7 +1,7 @@
 # Smart contracts
 
 ## Addresses on kovan
-* CPT Token: `0xcAd78BFCE45549214EA2F68dc1f3E6DB9D8F8792`
+* CPT Token: `0x7C4b6E294Fd0ae77B6E1730CBEb1B8491859Ee24`
 * NFT token: `0xAb50F84DC1c8Ef1464b6F29153E06280b38fA754`
 * NFT Manager(mystery box): `0x0528E41841b8BEdD4293463FAa061DdFCC5E41bd`
 * Item Factory: `0xFd3250eCDb1D067a9f0A4453b3BFB92e66f6f7ca`
@@ -221,20 +221,28 @@ marketplace.methods.matchOrder(orderId, price).send();
 
 # Token Managment
 ## 1- Only operated by owner
+### Update ERC20 token
+```
+updateToken(tokenAddress)
+```
+
 ### Add beneficiary by owner
 ```
 addBeneficiary
 ```
+OK
 
 ### Start vesting of a beneficiary by owner
 ```
 activate
 ```
+OK
 
 ### Start all beneficiaries' vesting by owner
 ```
 activateAll
 ```
+OK
 
 ### Start a type of participants vesting by owner
 ```
@@ -242,6 +250,7 @@ activeParticipant
 ```
 
 ### Release all amount for all beneficiaries by owner
+* Note: make sure the token vesting contract address is authorized by CPT Token
 ```
 releaseAll
 ```
@@ -278,6 +287,16 @@ updatePriceRange
 
 ## 2- Operated by all
 ### 2.1- Get methods
+#### Get ERC20 token address
+```
+token
+```
+
+#### Get total amount
+```
+total()
+```
+
 #### Get totol amount of all beneficiaries
 ```
 getTotalAmountByParticipant
@@ -314,8 +333,9 @@ participantReleasable
 ```
 
 #### Get all released amount of all beneficiaries
+* Note: make sure the token vesting contract address is authorized by CPT Token
 ```
-released
+released()
 ```
 
 #### Get all released amount of a type of participants
@@ -336,6 +356,11 @@ getCurrentPrice
 #### Get beneficiary's index
 ```
 getIndex
+```
+
+#### Get is already in the beneficiaries list
+```
+getBeneficiaryCount
 ```
 
 #### Get revoked amount
@@ -381,6 +406,11 @@ _duration
 #### Get basis of given participant for crowd funding
 ```
 _basis
+```
+
+#### Get limitation of given participant for crowd funding
+```
+_limitation
 ```
 
 #### Get beneficiary by index

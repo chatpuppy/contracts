@@ -25,8 +25,7 @@ const BSC_TEST = Common.forCustomChain(
 
 export const execContract = (web3, chainId, priKey, sendEncodeABI, value, contractAddress, onTransactionHashFun, onConfirmedFunc, onReceiptFunc, onErrorFunc) => {
 	const senderAddress = (web3.eth.accounts.privateKeyToAccount('0x' + priKey)).address;
-	console.log('value', value, web3.utils.toHex(value));
-	
+		
 	try {
 		web3.eth.getTransactionCount(senderAddress).then((transactionNonce) => {
 			const txData = {

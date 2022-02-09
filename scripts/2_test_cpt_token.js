@@ -14,23 +14,29 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const cptContractAddress = '0xcAd78BFCE45549214EA2F68dc1f3E6DB9D8F8792';
+const cptContractAddress = '0x7C4b6E294Fd0ae77B6E1730CBEb1B8491859Ee24';
 const cptContractJson = require('../build/contracts/CPTToken.json');
 
 const cptContract = new web3.eth.Contract(cptContractJson.abi, cptContractAddress);
 
 cptContract.methods.name().call().then((response) => console.log('token name', response));
 cptContract.methods.totalSupply().call().then((response) => console.log('totalSupply', response / 1e18));
-
-cptContract.methods.balanceOf('0x615b80388E3D3CaC6AA3a904803acfE7939f0399').call().then((response) => console.log('balanceOf', response / 1e18));
+cptContract.methods.cap().call().then((response) => console.log('cap', response));
+// cptContract.methods.balanceOf('0x615b80388E3D3CaC6AA3a904803acfE7939f0399').call().then((response) => console.log('balanceOf', response / 1e18));
 cptContract.methods.owner().call().then((owner) => console.log('owner', owner));
+cptContract.methods.MINTER_ROLE().call().then((response) => console.log('MINTER_ROLE', response));
+cptContract.methods.BURNER_ROLE().call().then((response) => console.log('BURNER_ROLE', response));
 
 /**
  * ==== Following testing methods is Send Tx ====
  */
 const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
-let sendEncodeABI = cptContract.methods.mint('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '10000000000000000000000').encodeABI(); 
+// let sendEncodeABI = cptContract.methods.mint('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '10000000000000000000000').encodeABI(); 
 // let sendEncodeABI = dareContract.methods.transfer('0x3444E23231619b361c8350F4C83F82BCfAB36F65', '72000000000000000000').encodeABI();
 
-callContract(sendEncodeABI, cptContractAddress);
+// Grand TokenVesting contract as MINT_ROLE
+// const TokenVestingAddress = '0x6adb30205dd2D2902f32E40e0f2CE15c728F9492';
+// let sendEncodeABI = cptContract.methods.grantRole('0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848', TokenVestingAddress).encodeABI();
+
+// callContract(sendEncodeABI, cptContractAddress);

@@ -14,21 +14,25 @@ const chainId = process.env.CHAIN_ID * 1;
 const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
+const senderAddress = (web3.eth.accounts.privateKeyToAccount('0x' + priKey)).address;
+console.log('发起地址', senderAddress);
 
-const tokensVestingAddress = '0x920d3F1557bE1e3AF2077a76A10cB400b99EB798';//'0x456EACCf71a8AFD0369AE1B91Be7Af3b40D2e865';
+const tokensVestingAddress = '0x6adb30205dd2D2902f32E40e0f2CE15c728F9492';
 const tokensVestingJson = require('../build/contracts/TokensVesting.json');
 const tokensVesting = new web3.eth.Contract(tokensVestingJson.abi, tokensVestingAddress);
 
-tokensVesting.methods.total().call().then((total) => console.log('总量', total / 1e18));
-tokensVesting.methods.privateSale().call().then((total) => console.log('私募总量', total / 1e18));
-tokensVesting.methods.team().call().then((total) => console.log('Team总量', total / 1e18));
-
+tokensVesting.methods.total().call().then((total) => console.log('已发行量', total / 1e18));
+tokensVesting.methods.getTotalAmountByParticipant(1).call().then((amount) => console.log('类型', 1, '总量', amount));
 tokensVesting.methods.getBeneficiaryCount().call().then((total) => console.log('受益人数量', total));
-tokensVesting.methods.getIndex('0xC4BFA07776D423711ead76CDfceDbE258e32474A').call().then((index) => {
-	console.log('index', index);
-	tokensVesting.methods.releasable(index).call().then((total) => console.log('我的可提现总量', total / 1e18));
-	tokensVesting.methods.getBeneficiary(index).call().then((beneficiary) => console.log(beneficiary));
-})
+
+tokensVesting.methods.releasable().call().then((releasable) => console.log('可提现', releasable));
+tokensVesting.methods.token().call().then((token) => console.log('CPT token', token));
+
+// tokensVesting.methods.getIndex('0xC4BFA07776D423711ead76CDfceDbE258e32474A').call().then((index) => {
+// 	console.log('index', index);
+// 	tokensVesting.methods.releasable(index).call().then((total) => console.log('我的可提现总量', total / 1e18));
+// 	tokensVesting.methods.getBeneficiary(index).call().then((beneficiary) => console.log(beneficiary));
+// })
 // tokensVesting.methods.getAllBeneficiaries().call({from: '0x615b80388E3D3CaC6AA3a904803acfE7939f0399'}).then((all) => console.log('所有受益人', all));
 
 /**
@@ -46,11 +50,11 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 	* kov#5 0x3444E23231619b361c8350F4C83F82BCfAB36F65 1642607300 600000_000000000000000000 5000_000000000000000000	12*3600 20*24*3600  7							2*3600
 	*/
 
-// let sendEncodeABI = tokensVesting.methods.addBeneficiaryWithBasis(
-// 	'0x3444E23231619b361c8350F4C83F82BCfAB36F65',
-// 	'1642607300',
-// 	'600000000000000000000000',
-// 	'5000000000000000000000',
+// let sendEncodeABI = tokensVesting.methods.addBeneficiary(
+// 	'0x615b80388E3D3CaC6AA3a904803acfE7939f0399',
+// 	'1644400534',
+// 	'100000000000000000000000',
+// 	'0',
 // 	(12*3600).toString(),
 // 	(20*24*3600).toString(),
 // 	7,
@@ -60,5 +64,5 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 // let sendEncodeABI = tokensVesting.methods.activateAll().encodeABI();
 
 // 确保TokenVesting合约已经获取DARE代币的 MINTER_ROLE 权限
-// let sendEncodeABI = tokensVesting.methods.release(1).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.release().encodeABI();
 // callContract(sendEncodeABI, tokensVestingAddress);

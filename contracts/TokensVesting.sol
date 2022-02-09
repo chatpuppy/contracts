@@ -9,7 +9,7 @@ import "./lib/Token/IERC20Mintable.sol";
  * @dev Implementation of the {ITokenVesting} interface.
  */
 contract TokensVesting is Ownable, ITokensVesting {
-    IERC20Mintable public immutable token;
+    IERC20Mintable public token;
 
     uint256 public revokedAmount = 0;
     uint256 public revokedAmountWithdrawn = 0;
@@ -63,9 +63,10 @@ contract TokensVesting is Ownable, ITokensVesting {
     mapping(uint256 => uint256) public _ratioDecimals; // default is 2, if _tgeAmountRatio is 50, the ratio is 50 / 10**2 = 50%
     mapping(uint256 => uint256) public _cliff;
     mapping(uint256 => uint256) public _duration;
-    mapping(uint256 => uint256) public _basis;
+    mapping(uint256 => uint256) public _basis; // seconds
     mapping(uint256 => uint256) public _startTimestamp;
     mapping(uint256 => uint256) public _endTimestamp;
+    mapping(uint256 => uint256) public _limitation; // this limitation is ETH/BNB amount, not token amount
 
     event BeneficiaryAdded(address indexed beneficiary, uint256 amount);
     event BeneficiaryActivated(uint256 index, address indexed beneficiary);
@@ -82,12 +83,7 @@ contract TokensVesting is Ownable, ITokensVesting {
      * construction.
      */
     constructor(address token_) {
-        require(
-            token_ != address(0),
-            "TokensVesting: token_ is the zero address!"
-        );
-
-        token = IERC20Mintable(token_);
+        updateToken(token_);
     }
 
     /**
@@ -109,6 +105,17 @@ contract TokensVesting is Ownable, ITokensVesting {
             }
         }
         return index;
+    }
+
+    function getBeneficiaryCount(address beneficiary_) public view returns(uint256) {
+        uint256 count = 0;
+        for(uint256 i = 0; i < _beneficiaries.length; i++) {
+            if(_beneficiaries[i].beneficiary == beneficiary_) {
+                count++;
+                break;
+            }
+        }
+        return count;
     }
 
     /**
@@ -134,10 +141,12 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 duration_,
         uint256 basis_,
         uint256 startTimestamp_,
-        uint256 endTimestamp_
+        uint256 endTimestamp_,
+        uint256 limitation_
     ) external onlyOwner {
-        require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale) 
-            && genesisTimestamp_ > block.timestamp && tgeAmountRatio_ >= 0 && cliff_ >= 0 && duration_ >=0 && basis_ >= 0 && startTimestamp_ > 0 && endTimestamp_ > 0 && endTimestamp_ >= startTimestamp_,
+        require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale)
+            && genesisTimestamp_ > block.timestamp && tgeAmountRatio_ >= 0 && cliff_ >= 0 && duration_ >=0 && basis_ >= 0
+            && startTimestamp_ > 0 && endTimestamp_ > 0 && endTimestamp_ >= startTimestamp_,
             "TokensVesting: invalid params");
         _genesisTimestamp[participant_] = genesisTimestamp_;
         _tgeAmountRatio[participant_] = tgeAmountRatio_;
@@ -147,6 +156,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         _basis[participant_] = basis_;
         _startTimestamp[participant_] = startTimestamp_;
         _endTimestamp[participant_] = endTimestamp_;
+        _limitation[participant_] = limitation_;
     }
 
     /**
@@ -209,18 +219,19 @@ contract TokensVesting is Ownable, ITokensVesting {
      * @dev Donator pay ETH/BNB and get quota of token(need donator claim after cliff)
      */
     function crowdFunding(uint8 participant_) external payable {
+        require(_startTimestamp[participant_] <= block.timestamp, 'TokensVesting: crowd funding is not start');
+        require(_endTimestamp[participant_] >= block.timestamp, 'TokensVesting: crowd funding is end');
+
         (uint256 price_, ) = _getPriceForAmount(participant_, _getTotalAmount());
         require(price_ > 0, 'TokensVesting: price must be greater than 0');
         uint256 decimals = token.decimals();
         uint256 tokenAmount = msg.value * price_ / 10**(18 - decimals);
         require(tokenAmount > 0, 'TokensVesting: token amount must be greater than 0');
+        require(_limitation[participant_] >= msg.value, 'TokensVesting: more than limitation');
 
         // add beneficiary
-        require(_startTimestamp[participant_] <= block.timestamp, 'TokensVesting: crowd funding is not start');
-        require(_endTimestamp[participant_] >= block.timestamp, 'TokensVesting: crowd funding is end');
-
         _addBeneficiary(
-            msg.sender,
+            _msgSender(),
             _genesisTimestamp[participant_],
             tokenAmount,
             tokenAmount * _tgeAmountRatio[participant_] / 10 ** _ratioDecimals[participant_],
@@ -230,7 +241,7 @@ contract TokensVesting is Ownable, ITokensVesting {
             _basis[participant_]
         );
 
-        emit CrowdFundingAdded(participant_, msg.sender, price_, tokenAmount);
+        emit CrowdFundingAdded(participant_, _msgSender(), price_, tokenAmount);
     }
 
     function _getPriceForAmount(uint8 participant_, uint256 amount_) internal view returns(uint256 price_, uint256 index_) {
@@ -316,7 +327,7 @@ contract TokensVesting is Ownable, ITokensVesting {
             "TokensVesting: basis_ must be greater than 0!"
         );
 
-        require(getIndex(beneficiary_) == 0, "TokensVesting: this account is in the beneficiaries list");
+        require(getBeneficiaryCount(beneficiary_) == 0, "TokensVesting: this account is in the beneficiaries list");
 
         VestingInfo storage info = _beneficiaries.push();
         info.beneficiary = beneficiary_;
@@ -493,11 +504,12 @@ contract TokensVesting is Ownable, ITokensVesting {
     }
 
     /**
-     * @dev Release all releasable amount of tokens for the sepecific beneficiary by index.
+     * @dev Release all releasable amount of tokens
      *
      * Emits a {TokensReleased} event.
      */
-    function release(uint256 index_) public {
+    function release() public {
+        uint256 index_ = getIndex(_msgSender());
         require(
             index_ >= 0 && index_ < _beneficiaries.length,
             "TokensVesting: index out of range!"
@@ -542,6 +554,11 @@ contract TokensVesting is Ownable, ITokensVesting {
         revokedAmountWithdrawn = revokedAmountWithdrawn + amount_;
         token.mint(_msgSender(), amount_);
         emit Withdraw(_msgSender(), amount_);
+    }
+
+    function updateToken(address token_) public onlyOwner {
+        require(token_ != address(0), "TokensVesting: token_ is the zero address!");
+        token = IERC20Mintable(token_);
     }
 
     /**
