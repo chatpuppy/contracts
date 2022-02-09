@@ -49,6 +49,23 @@ contract TokensVesting is Ownable, ITokensVesting {
 
     VestingInfo[] private _beneficiaries;
 
+    /**
+     * @dev Setting crowd funding params
+     */
+    struct PriceRange {
+        uint256 fromAmount;
+        uint256 toAmount;
+        uint256 price;
+    }
+    mapping(uint256 => PriceRange[]) public _priceRange;
+
+    mapping(uint256 => uint256) public _genesisTimestamp;
+    mapping(uint256 => uint256) public _tgeAmountRatio;
+    mapping(uint256 => uint256) public _ratioDecimals; // default is 2, if _tgeAmountRatio is 50, the ratio is 50 / 10**2 = 50%
+    mapping(uint256 => uint256) public _cliff;
+    mapping(uint256 => uint256) public _duration;
+    mapping(uint256 => uint256) public _basis;
+
     event BeneficiaryAdded(address indexed beneficiary, uint256 amount);
     event BeneficiaryActivated(uint256 index, address indexed beneficiary);
     event BeneficiaryRevoked(
@@ -56,8 +73,6 @@ contract TokensVesting is Ownable, ITokensVesting {
         address indexed beneficiary,
         uint256 amount
     );
-
-    event Withdraw(address indexed receiver, uint256 amount);
 
     /**
      * @dev Sets the value for {token}.
@@ -68,7 +83,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     constructor(address token_) {
         require(
             token_ != address(0),
-            "TokensVesting::constructor: token_ is the zero address!"
+            "TokensVesting: token_ is the zero address!"
         );
 
         token = IERC20Mintable(token_);
@@ -108,28 +123,12 @@ contract TokensVesting is Ownable, ITokensVesting {
     function getAllBeneficiaries() public view onlyOwner returns (VestingInfo[] memory) {
         return _beneficiaries;
     }
-
-    /**
-     * @dev Setting crowd funding params
-     * ######
-     */
-    struct PriceRange {
-        uint256 fromAmount;
-        uint256 toAmount;
-        uint256 price;
-    }
-    mapping(uint256 => PriceRange[]) public _price;
-
-    mapping(uint256 => uint256) public _genesisTimestamp;
-    mapping(uint256 => uint256) public _tgeAmountRatio;
-    mapping(uint256 => uint256) public _cliff;
-    mapping(uint256 => uint256) public _duration;
-    mapping(uint256 => uint256) public _basis;
     
-    function setCrowdFunding(
+    function setCrowdFundingParams(
         uint8   participant_,
         uint256 genesisTimestamp_,
         uint256 tgeAmountRatio_,
+        uint256 ratioDecimals_,
         uint256 cliff_,
         uint256 duration_,
         uint256 basis_,
@@ -137,45 +136,110 @@ contract TokensVesting is Ownable, ITokensVesting {
     ) external onlyOwner {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale) 
             && genesisTimestamp_ > 0 && tgeAmountRatio_ >= 0 && cliff_ >= 0 && duration_ >=0 && basis_ >= 0 && price_ >= 0,
-            "TokensVesting::configCrowdFunding: invalid params");
+            "TokensVesting: invalid params");
         _genesisTimestamp[participant_] = genesisTimestamp_;
         _tgeAmountRatio[participant_] = tgeAmountRatio_;
+        _ratioDecimals[participant_] = ratioDecimals_;
         _cliff[participant_] = cliff_;
         _duration[participant_] = duration_;
         _basis[participant_] = basis_;
     }
 
+    /**
+     * @dev add the price for each phase
+     */
     function setPriceRange (
         uint8   participant_,
         uint256 fromAmount_,
         uint256 toAmount_,
         uint256 price_
-    ) external view onlyOwner {
+    ) external onlyOwner {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale), 
-         'TokensVesting::setPriceRange: participant shoud only be PrivateSale or PublicSale');
-        require(fromAmount_ > 0 && toAmount_ > 0 && toAmount_ > fromAmount_, 'TokensVesting::setPriceRange: fromAmount and toAmount is wrong');
-        require(price_ > 0, 'TokensVesting::setPriceRange: price can not be 0');
+         'TokensVesting: participant shoud only be PrivateSale or PublicSale');
+        require(fromAmount_ > 0 && toAmount_ > 0 && toAmount_ > fromAmount_ && price_ > 0, 'TokensVesting: price or fromAmount or toAmount is wrong');
 
+        PriceRange storage priceRange_ = _priceRange[participant_].push();
+        priceRange_.fromAmount = fromAmount_;
+        priceRange_.toAmount = toAmount_;
+        priceRange_.price = price_;
+
+        emit PriceRangeAdded(participant_, fromAmount_, toAmount_, price_);
+    }
+
+    /**
+     * @dev update the price for each phase
+     * If 1BNB = 1000CPT, the price should be 1000, not 1000 * 1e18!
+     */
+    function updatePriceRange (
+        uint8 participant_, 
+        uint256 index_, 
+        uint256 fromAmount_, 
+        uint256 toAmount_, 
+        uint256 price_
+    ) external onlyOwner {
+        require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale), 
+         'TokensVesting: participant shoud only be PrivateSale or PublicSale');
+        require(fromAmount_ > 0 && toAmount_ > 0 && toAmount_ > fromAmount_ && price_ > 0, 'TokensVesting: price or fromAmount or toAmount is wrong');
+        require(_priceRange[participant_][index_].price > 0, 'TokensVesting: price of index not set');
+
+        _priceRange[participant_][index_].fromAmount = fromAmount_;
+        _priceRange[participant_][index_].toAmount = toAmount_;
+        _priceRange[participant_][index_].price = price_;
+    }
+
+    /**
+     * @dev get current price according to the raised amount
+     */
+    function getPriceForAmount (
+        uint8 participant_,
+        uint256 amount_
+    ) external view returns(uint256 price_, uint256 index_) {
+        (price_, index_) = _getPriceForAmount(participant_, amount_);
+    }
+
+    function getCurrentPrice (uint8 participant_) external view returns (uint256 price_, uint256 index_) {
+        (price_, index_) = _getPriceForAmount(participant_, _getTotalAmount());
     }
 
     /**
      * @dev Donator pay ETH/BNB and get quota of token(need donator claim after cliff)
      */
-    function crowdFunding() public payable {
+    function crowdFunding(uint8 participant_) external payable {
+        (uint256 price_, ) = _getPriceForAmount(participant_, _getTotalAmount());
+        require(price_ > 0, 'TokensVesting: price must be greater than 0');
+        uint256 decimals = token.decimals();
+        uint256 tokenAmount = msg.value * price_ / 10**(18 - decimals);
+        require(tokenAmount > 0, 'TokensVesting: token amount must be greater than 0');
 
+        // add beneficiary ######
+        _addBeneficiary(
+            msg.sender,
+            _genesisTimestamp[participant_],
+            tokenAmount,
+            tokenAmount * _tgeAmountRatio[participant_] / 10 ** _ratioDecimals[participant_],
+            _cliff[participant_],
+            _duration[participant_],
+            participant_,
+            _basis[participant_]
+        );
+
+        emit CrowdFundingAdded(participant_, msg.sender, price_, tokenAmount);
     }
 
-    /**
-     * get current token price
-     */
-    function getCurrentPrice(uint8 participant_, uint256 phase_) public view returns (uint256 price_) {
+    function _getPriceForAmount(uint8 participant_, uint256 amount_) internal view returns(uint256 price_, uint256 index_) {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale), 
-         'TokensVesting::getCurrentPrice: participant shoud only be PrivateSale or PublicSale');
-
+         'TokensVesting: participant shoud only be PrivateSale or PublicSale');
+        for(uint256 i = 0; i < _priceRange[participant_].length; i++) {
+            PriceRange memory range = _priceRange[participant_][i];
+            if(range.fromAmount <= amount_ && range.toAmount >= amount_) {
+                price_ = range.price;
+                index_ = i;
+            }
+        }
     }
 
     /**
-     * @dev Add beneficiary to vesting plan.
+     * @dev Add beneficiary to vesting plan by owner.
      * @param beneficiary_ recipient address.
      * @param genesisTimestamp_ genesis timestamp
      * @param totalAmount_ total amount of tokens will be vested.
@@ -196,31 +260,53 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 duration_,
         uint8   participant_,
         uint256 basis_
-    ) public onlyOwner {
+    ) external onlyOwner {
+        _addBeneficiary(
+            beneficiary_,
+            genesisTimestamp_,
+            totalAmount_,
+            tgeAmount_,
+            cliff_,
+            duration_,
+            participant_,
+            basis_
+        );
+    }
+
+    function _addBeneficiary(
+        address beneficiary_,
+        uint256 genesisTimestamp_,
+        uint256 totalAmount_,
+        uint256 tgeAmount_,
+        uint256 cliff_,
+        uint256 duration_,
+        uint8   participant_,
+        uint256 basis_
+    ) internal {
         require(
             genesisTimestamp_ >= block.timestamp,
-            "TokensVesting::addBeneficiary: genesis too soon!"
+            "TokensVesting: genesis too soon!"
         );
         require(
             beneficiary_ != address(0),
-            "TokensVesting::addBeneficiary: beneficiary_ is the zero address!"
+            "TokensVesting: beneficiary_ is the zero address!"
         );
         require(
             totalAmount_ >= tgeAmount_,
-            "TokensVesting::addBeneficiary: totalAmount_ must be greater than or equal to tgeAmount_!"
+            "TokensVesting: totalAmount_ must be greater than or equal to tgeAmount_!"
         );
         require(
             Participant(participant_) > Participant.Unknown &&
                 Participant(participant_) < Participant.OutOfRange,
-            "TokensVesting::addBeneficiary: participant_ out of range!"
+            "TokensVesting: participant_ out of range!"
         );
         require(
             genesisTimestamp_ + cliff_ + duration_ <= type(uint256).max,
-            "TokensVesting::addBeneficiary: out of uint256 range!"
+            "TokensVesting: out of uint256 range!"
         );
         require(
             basis_ > 0,
-            "TokensVesting::addBeneficiary: basis_ must be greater than 0!"
+            "TokensVesting: basis_ must be greater than 0!"
         );
 
         VestingInfo storage info = _beneficiaries.push();
@@ -250,7 +336,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     function getTotalAmountByParticipant(uint8 participant_) public view returns (uint256) {
         require(Participant(participant_) > Participant.Unknown &&
                 Participant(participant_) < Participant.OutOfRange,
-            "TokensVesting::_getReleasedAmountByParticipant: participant_ out of range!");
+            "TokensVesting: participant out of range!");
         return _getTotalAmountByParticipant(Participant(participant_));
     }
 
@@ -262,7 +348,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     function activate(uint256 index_) public onlyOwner {
         require(
             index_ >= 0 && index_ < _beneficiaries.length,
-            "TokensVesting::activate: index_ out of range!"
+            "TokensVesting: index out of range!"
         );
 
         _activate(index_);
@@ -280,75 +366,15 @@ contract TokensVesting is Ownable, ITokensVesting {
     }
 
     /**
-     * @dev Activate all of private sale beneficiaries.
-     *
-     * Only active beneficiaries can claim tokens.
+     * @dev Active specific beneficiary by participant
+     * onlyOwner
      */
-    function activatePrivateSale() public onlyOwner {
-        return _activateParticipant(Participant.PrivateSale);
-    }
 
-    /**
-     * @dev Activate all of public sale beneficiaries.
-     *
-     * Only active beneficiaries can claim tokens.
-     */
-    function activatePublicSale() public onlyOwner {
-        return _activateParticipant(Participant.PublicSale);
-    }
-
-    /**
-     * @dev Activate all of team beneficiaries.
-     *
-     * Only active beneficiaries can claim tokens.
-     */
-    function activateTeam() public onlyOwner {
-        return _activateParticipant(Participant.Team);
-    }
-
-    /**
-     * @dev Activate all of advisor beneficiaries.
-     *
-     * Only active beneficiaries can claim tokens.
-     */
-    function activateAdvisor() public onlyOwner {
-        return _activateParticipant(Participant.Advisor);
-    }
-
-    /**
-     * @dev Activate all of liquidity beneficiaries.
-     *
-     * Only active beneficiaries can claim tokens.
-     */
-    function activateLiquidity() public onlyOwner {
-        return _activateParticipant(Participant.Liquidity);
-    }
-
-    /**
-     * @dev Activate all of incentives beneficiaries.
-     *
-     * Only active beneficiaries can claim tokens.
-     */
-    function activateIncentives() public onlyOwner {
-        return _activateParticipant(Participant.Incentives);
-    }
-
-    /**
-     * @dev Activate all of marketing beneficiaries.
-     *
-     * Only active beneficiaries can claim tokens.
-     */
-    function activateMarketing() public onlyOwner {
-        return _activateParticipant(Participant.Marketing);
-    }
-
-    /**
-     * @dev Activate all of reserve beneficiaries.
-     *
-     * Only active beneficiaries can claim tokens.
-     */
-    function activateReserve() public onlyOwner {
-        return _activateParticipant(Participant.Reserve);
+    function activeParticipant(uint8 participant_) public onlyOwner {
+        require(Participant(participant_) > Participant.Unknown &&
+            Participant(participant_) < Participant.OutOfRange,
+        "TokensVesting: participant out of range!");
+        return _activateParticipant(Participant(participant_));
     }
 
     /**
@@ -359,7 +385,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     function revoke(uint256 index_) public onlyOwner {
         require(
             index_ >= 0 && index_ < _beneficiaries.length,
-            "TokensVesting::revoke: index_ out of range!"
+            "TokensVesting: index out of range!"
         );
 
         _revoke(index_);
@@ -396,7 +422,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     function releasable(uint256 index_) public view returns (uint256) {
         require(
             index_ >= 0 && index_ < _beneficiaries.length,
-            "TokensVesting::release: index_ out of range!"
+            "TokensVesting: index out of range!"
         );
 
         VestingInfo storage info = _beneficiaries[index_];
@@ -414,60 +440,11 @@ contract TokensVesting is Ownable, ITokensVesting {
         return _releasable;
     }
 
-    /**
-     * @dev See {ITokensVesting-privateSaleReleasable}.
-     */
-    function privateSaleReleasable() public view returns (uint256) {
-        return _getReleasableByParticipant(Participant.PrivateSale);
-    }
-
-    /**
-     * @dev See {ITokensVesting-publicSaleReleasable}.
-     */
-    function publicSaleReleasable() public view returns (uint256) {
-        return _getReleasableByParticipant(Participant.PublicSale);
-    }
-
-    /**
-     * @dev See {ITokensVesting-teamReleasable}.
-     */
-    function teamReleasable() public view returns (uint256) {
-        return _getReleasableByParticipant(Participant.Team);
-    }
-
-    /**
-     * @dev See {ITokensVesting-advisorReleasable}.
-     */
-    function advisorReleasable() public view returns (uint256) {
-        return _getReleasableByParticipant(Participant.Advisor);
-    }
-
-    /**
-     * @dev See {ITokensVesting-liquidityReleasable}.
-     */
-    function liquidityReleasable() public view returns (uint256) {
-        return _getReleasableByParticipant(Participant.Liquidity);
-    }
-
-    /**
-     * @dev See {ITokensVesting-incentivesReleasable}.
-     */
-    function incentivesReleasable() public view returns (uint256) {
-        return _getReleasableByParticipant(Participant.Incentives);
-    }
-
-    /**
-     * @dev See {ITokensVesting-marketingReleasable}.
-     */
-    function marketingReleasable() public view returns (uint256) {
-        return _getReleasableByParticipant(Participant.Marketing);
-    }
-
-    /**
-     * @dev See {ITokensVesting-reserveReleasable}.
-     */
-    function reserveReleasable() public view returns (uint256) {
-        return _getReleasableByParticipant(Participant.Reserve);
+    function participantReleasable(uint8 participant_) public view returns (uint256) {
+        require(Participant(participant_) > Participant.Unknown &&
+            Participant(participant_) < Participant.OutOfRange,
+        "TokensVesting: participant out of range!");
+        return _getReleasableByParticipant(Participant(participant_));
     }
 
     /**
@@ -477,60 +454,11 @@ contract TokensVesting is Ownable, ITokensVesting {
         return _getReleasedAmount();
     }
 
-    /**
-     * @dev See {ITokensVesting-privateSaleReleased}.
-     */
-    function privateSaleReleased() public view returns (uint256) {
-        return _getReleasedAmountByParticipant(Participant.PrivateSale);
-    }
-
-    /**
-     * @dev See {ITokensVesting-publicSaleReleased}.
-     */
-    function publicSaleReleased() public view returns (uint256) {
-        return _getReleasedAmountByParticipant(Participant.PublicSale);
-    }
-
-    /**
-     * @dev See {ITokensVesting-teamReleased}.
-     */
-    function teamReleased() public view returns (uint256) {
-        return _getReleasedAmountByParticipant(Participant.Team);
-    }
-
-    /**
-     * @dev See {ITokensVesting-advisorReleased}.
-     */
-    function advisorReleased() public view returns (uint256) {
-        return _getReleasedAmountByParticipant(Participant.Advisor);
-    }
-
-    /**
-     * @dev See {ITokensVesting-liquidityReleased}.
-     */
-    function liquidityReleased() public view returns (uint256) {
-        return _getReleasedAmountByParticipant(Participant.Liquidity);
-    }
-
-    /**
-     * @dev See {ITokensVesting-incentivesReleased}.
-     */
-    function incentivesReleased() public view returns (uint256) {
-        return _getReleasedAmountByParticipant(Participant.Incentives);
-    }
-
-    /**
-     * @dev See {ITokensVesting-marketingReleased}.
-     */
-    function marketingReleased() public view returns (uint256) {
-        return _getReleasedAmountByParticipant(Participant.Marketing);
-    }
-
-    /**
-     * @dev See {ITokensVesting-reserveReleased}.
-     */
-    function reserveReleased() public view returns (uint256) {
-        return _getReleasedAmountByParticipant(Participant.Reserve);
+    function participantReleased(uint8 participant_) public view returns (uint256) {
+        require(Participant(participant_) > Participant.Unknown &&
+            Participant(participant_) < Participant.OutOfRange,
+        "TokensVesting: participant out of range!");
+        return _getReleasedAmountByParticipant(Participant(participant_));
     }
 
     /**
@@ -540,7 +468,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 _releasable = releasable();
         require(
             _releasable > 0,
-            "TokensVesting::releaseAll: no tokens are due!"
+            "TokensVesting: no tokens are due!"
         );
 
         for (uint256 i = 0; i < _beneficiaries.length; i++) {
@@ -548,60 +476,11 @@ contract TokensVesting is Ownable, ITokensVesting {
         }
     }
 
-    /**
-     * @dev See {ITokensVesting-releasePrivateSale}.
-     */
-    function releasePrivateSale() public onlyOwner {
-        return _releaseParticipant(Participant.PrivateSale);
-    }
-
-    /**
-     * @dev See {ITokensVesting-releasePublicSale}.
-     */
-    function releasePublicSale() public onlyOwner {
-        return _releaseParticipant(Participant.PublicSale);
-    }
-
-    /**
-     * @dev See {ITokensVesting-releaseTeam}.
-     */
-    function releaseTeam() public onlyOwner {
-        return _releaseParticipant(Participant.Team);
-    }
-
-    /**
-     * @dev See {ITokensVesting-releaseAdvisor}.
-     */
-    function releaseAdvisor() public onlyOwner {
-        return _releaseParticipant(Participant.Advisor);
-    }
-
-    /**
-     * @dev See {ITokensVesting-releaseLiquidity}.
-     */
-    function releaseLiquidity() public onlyOwner {
-        return _releaseParticipant(Participant.Liquidity);
-    }
-
-    /**
-     * @dev See {ITokensVesting-releaseIncentives}.
-     */
-    function releaseIncentives() public onlyOwner {
-        return _releaseParticipant(Participant.Incentives);
-    }
-
-    /**
-     * @dev See {ITokensVesting-releaseMarketing}.
-     */
-    function releaseMarketing() public onlyOwner {
-        return _releaseParticipant(Participant.Marketing);
-    }
-
-    /**
-     * @dev See {ITokensVesting-releaseReserve}.
-     */
-    function releaseReserve() public onlyOwner {
-        return _releaseParticipant(Participant.Reserve);
+    function releaseParticipant(uint8 participant_) public onlyOwner {
+        require(Participant(participant_) > Participant.Unknown &&
+            Participant(participant_) < Participant.OutOfRange,
+        "TokensVesting: participant out of range!");
+        return _releaseParticipant(Participant(participant_));
     }
 
     /**
@@ -612,13 +491,13 @@ contract TokensVesting is Ownable, ITokensVesting {
     function release(uint256 index_) public {
         require(
             index_ >= 0 && index_ < _beneficiaries.length,
-            "TokensVesting::release: index_ out of range!"
+            "TokensVesting: index out of range!"
         );
 
         VestingInfo storage info = _beneficiaries[index_];
         require(
             _msgSender() == owner() || _msgSender() == info.beneficiary,
-            "TokensVesting::release: unauthorised sender!"
+            "TokensVesting: unauthorised sender!"
         );
 
         uint256 unreleased = _releasableAmount(
@@ -632,7 +511,7 @@ contract TokensVesting is Ownable, ITokensVesting {
             info.basis
         );
 
-        require(unreleased > 0, "TokensVesting::release: no tokens are due!");
+        require(unreleased > 0, "TokensVesting: no tokens are due!");
 
         info.releasedAmount = info.releasedAmount + unreleased;
         token.mint(info.beneficiary, unreleased);
@@ -645,10 +524,10 @@ contract TokensVesting is Ownable, ITokensVesting {
      * Withdraw amount of tokens upto revoked amount.
      */
     function withdraw(uint256 amount_) public onlyOwner {
-        require(amount_ > 0, "TokensVesting::withdraw: Bad params!");
+        require(amount_ > 0, "TokensVesting: Bad params!");
         require(
             amount_ <= revokedAmount - revokedAmountWithdrawn,
-            "TokensVesting::withdraw: Amount exceeded revoked amount withdrawable!"
+            "TokensVesting: Amount exceeded revoked amount withdrawable!"
         );
 
         revokedAmountWithdrawn = revokedAmountWithdrawn + amount_;
@@ -660,7 +539,7 @@ contract TokensVesting is Ownable, ITokensVesting {
      * @dev Update basis_
      */
     function updateBasic(uint256 basis_) public onlyOwner {
-        require(basis_ > 0, "TokensVesting::updateBasic: basic must be greater than 0");
+        require(basis_ > 0, "TokensVesting: basic must be greater than 0");
         basis = basis_;
     }
 
@@ -727,7 +606,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         require(
             Participant(participant_) > Participant.Unknown &&
                 Participant(participant_) < Participant.OutOfRange,
-            "TokensVesting::_getReleasedAmountByParticipant: participant_ out of range!"
+            "TokensVesting: participant out of range!"
         );
 
         uint256 releasedAmount = 0;
@@ -773,7 +652,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     ) private view returns (uint256) {
         require(
             totalAmount_ >= tgeAmount_,
-            "TokensVesting::_vestedAmount: Bad params!"
+            "TokensVesting: Bad params!"
         );
 
         if (block.timestamp < genesisTimestamp_) {
@@ -876,7 +755,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 _releasable = _getReleasableByParticipant(participant_);
         require(
             _releasable > 0,
-            "TokensVesting::_releaseParticipant: no tokens are due!"
+            "TokensVesting: no tokens are due!"
         );
 
         for (uint256 i = 0; i < _beneficiaries.length; i++) {

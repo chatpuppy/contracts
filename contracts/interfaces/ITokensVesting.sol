@@ -9,96 +9,16 @@ interface ITokensVesting {
      * @dev Returns the total amount of tokens in vesting plan.
      */
     function total() external view returns (uint256);
-    
+
     /**
      * @dev Returns the total releasable amount of tokens.
      */
     function releasable() external view returns (uint256);
 
     /**
-     * @dev Returns the total releasable amount of private sale tokens.
-     */
-    function privateSaleReleasable() external view returns (uint256);
-
-    /**
-     * @dev Returns the total releasable amount of public sale tokens.
-     */
-    function publicSaleReleasable() external view returns (uint256);
-
-    /**
-     * @dev Returns the total releasable amount of team tokens.
-     */
-    function teamReleasable() external view returns (uint256);
-
-    /**
-     * @dev Returns the total releasable amount of advisor tokens.
-     */
-    function advisorReleasable() external view returns (uint256);
-
-    /**
-     * @dev Returns the total releasable amount of liquidity tokens.
-     */
-    function liquidityReleasable() external view returns (uint256);
-
-    /**
-     * @dev Returns the total releasable amount of incentives tokens.
-     */
-    function incentivesReleasable() external view returns (uint256);
-
-    /**
-     * @dev Returns the total releasable amount of marketing tokens.
-     */
-    function marketingReleasable() external view returns (uint256);
-
-    /**
-     * @dev Returns the total releasable amount of reserve tokens.
-     */
-    function reserveReleasable() external view returns (uint256);
-
-    /**
      * @dev Returns the total released amount of tokens.
      */
     function released() external view returns (uint256);
-
-    /**
-     * @dev Returns the total released amount of private sale tokens.
-     */
-    function privateSaleReleased() external view returns (uint256);
-
-    /**
-     * @dev Returns the total released amount of public sale tokens.
-     */
-    function publicSaleReleased() external view returns (uint256);
-
-    /**
-     * @dev Returns the total released amount of team tokens
-     */
-    function teamReleased() external view returns (uint256);
-
-    /**
-     * @dev Returns the total released amount of advisor tokens.
-     */
-    function advisorReleased() external view returns (uint256);
-
-    /**
-     * @dev Returns the total released amount of liquidity tokens.
-     */
-    function liquidityReleased() external view returns (uint256);
-
-    /**
-     * @dev Returns the total released amount of incentives tokens.
-     */
-    function incentivesReleased() external view returns (uint256);
-
-    /**
-     * @dev Returns the total released amount of marketing tokens.
-     */
-    function marketingReleased() external view returns (uint256);
-
-    /**
-     * @dev Returns the total released amount of reserve tokens.
-     */
-    function reserveReleased() external view returns (uint256);
 
     /**
      * @dev Unlocks all releasable amount of tokens.
@@ -107,64 +27,35 @@ interface ITokensVesting {
      */
     function releaseAll() external;
 
-    /**
-     * @dev Unlocks all releasable amount of private sale tokens.
-     *
-     * Emits a {TokensReleased} event.
-     */
-    function releasePrivateSale() external;
+    function setPriceRange(uint8 participant, uint256 fromAmount, uint256 toAmount, uint256 price) external;
 
-    /**
-     * @dev Unlocks all releasable amount of public sale tokens.
-     *
-     * Emits a {TokensReleased} event.
-     */
-    function releasePublicSale() external;
+    function setCrowdFundingParams(uint8   participant, uint256 genesisTimestamp, uint256 tgeAmountRatio, uint256 ratioDecimals,
+        uint256 cliff, uint256 duration, uint256 basis, uint256 price) external;
 
-    /**
-     * @dev Unlocks all releasable amount of team tokens.
-     *
-     * Emits a {TokensReleased} event.
-     */
-    function releaseTeam() external;
+    function updatePriceRange (uint8 participant, uint256 index, uint256 fromAmount, uint256 toAmount, uint256 price) external;
 
-    /**
-     * @dev Unlocks all releasable amount of advisor tokens.
-     *
-     * Emits a {TokensReleased} event.
-     */
-    function releaseAdvisor() external;
+    function getPriceForAmount(uint8 participant, uint256 amount) external view returns(uint256, uint256);
 
-    /**
-     * @dev Unlocks all releasable amount of liquidity tokens.
-     *
-     * Emits a {TokensReleased} event.
-     */
-    function releaseLiquidity() external;
+    function getCurrentPrice(uint8 participant) external view returns(uint256, uint256);
 
-    /**
-     * @dev Unlocks all releasable amount of incentives tokens.
-     *
-     * Emits a {TokensReleased} event.
-     */
-    function releaseIncentives() external;
+    function crowdFunding(uint8 participant) external payable;
 
-    /**
-     * @dev Unlocks all releasable amount of marketing tokens.
-     *
-     * Emits a {TokensReleased} event.
-     */
-    function releaseMarketing() external;
+    function addBeneficiary(
+        address beneficiary,
+        uint256 genesisTimestamp,
+        uint256 totalAmount,
+        uint256 tgeAmount,
+        uint256 cliff,
+        uint256 duration,
+        uint8   participant,
+        uint256 basis
+    ) external;
 
-    /**
-     * @dev Unlocks all releasable amount of reserve tokens.
-     *
-     * Emits a {TokensReleased} event.
-     */
-    function releaseReserve() external;
-
-    /**
-     * @dev Emitted when having amount of tokens are released.
-     */
     event TokensReleased(address indexed beneficiary, uint256 amount);
+
+    event Withdraw(address indexed receiver, uint256 amount);
+
+    event PriceRangeAdded(uint8 participant, uint256 fromAmount, uint256 toAmount, uint256 price);
+    event PriceRangeUpdated(uint8 participant, uint256 index, uint256 fromAmount, uint256 toAmount, uint256 price);
+    event CrowdFundingAdded(uint8 participant, address account, uint256 price, uint256 amount);
 }
