@@ -219,7 +219,7 @@ marketplace.methods.matchOrder(orderId, price).send();
 
 ----------------------------------------------------------------
 
-# Token Managment
+# Token vesting managment
 ## 1- Only operated by owner
 ### Update ERC20 token
 ```
