@@ -122,7 +122,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     function getAllBeneficiaries() public view onlyOwner returns (VestingInfo[] memory) {
         return _beneficiaries;
     }
-    
+
     function setCrowdFundingParams(
         uint8   participant_,
         uint256 genesisTimestamp_,
@@ -321,8 +321,6 @@ contract TokensVesting is Ownable, ITokensVesting {
             basis_ > 0,
             "TokensVesting: basis_ must be greater than 0!"
         );
-
-        require(getBeneficiaryCount(beneficiary_) == 0, "TokensVesting: this account is in the beneficiaries list");
 
         VestingInfo storage info = _beneficiaries.push();
         info.beneficiary = beneficiary_;
@@ -586,8 +584,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     function _getTotalAmountByParticipant(Participant participant_)
         private
         view
-        returns (uint256)
-    {
+        returns (uint256) {
         uint256 totalAmount = 0;
         for (uint256 i = 0; i < _beneficiaries.length; i++) {
             if (_beneficiaries[i].participant == participant_) {
@@ -608,8 +605,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     function _getReleasedAmountByParticipant(Participant participant_)
         private
         view
-        returns (uint256)
-    {
+        returns (uint256) {
         require(
             Participant(participant_) > Participant.Unknown &&
                 Participant(participant_) < Participant.OutOfRange,
@@ -731,8 +727,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     function _getReleasableByParticipant(Participant participant_)
         private
         view
-        returns (uint256)
-    {
+        returns (uint256) {
         uint256 _releasable = 0;
 
         for (uint256 i = 0; i < _beneficiaries.length; i++) {
@@ -751,7 +746,6 @@ contract TokensVesting is Ownable, ITokensVesting {
                     );
             }
         }
-
         return _releasable;
     }
 
