@@ -159,9 +159,10 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 toAmount_,
         uint256 price_
     ) external onlyOwner {
-        require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale), 
-         'TokensVesting: participant shoud only be PrivateSale or PublicSale');
-        require(fromAmount_ > 0 && toAmount_ > 0 && toAmount_ > fromAmount_ && price_ > 0, 'TokensVesting: price or fromAmount or toAmount is wrong');
+        require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
+            'TokensVesting: participant shoud only be PrivateSale or PublicSale');
+        require(fromAmount_ > 0 && toAmount_ > 0 && toAmount_ > fromAmount_ && price_ > 0,
+            'TokensVesting: price or fromAmount or toAmount is wrong');
 
         PriceRange storage priceRange_ = _priceRange[participant_].push();
         priceRange_.fromAmount = fromAmount_;
@@ -211,8 +212,10 @@ contract TokensVesting is Ownable, ITokensVesting {
      * @dev Donator pay ETH/BNB and get quota of token(need donator claim after cliff)
      */
     function crowdFunding(uint8 participant_) external payable {
-        require(_startTimestamp[participant_] <= block.timestamp, 'TokensVesting: crowd funding is not start');
-        require(_endTimestamp[participant_] >= block.timestamp, 'TokensVesting: crowd funding is end');
+        require(_startTimestamp[participant_] <= block.timestamp,
+            'TokensVesting: crowd funding is not start');
+        require(_endTimestamp[participant_] >= block.timestamp,
+            'TokensVesting: crowd funding is end');
 
         (uint256 price_, ) = _getPriceForAmount(participant_, _getTotalAmount());
         require(price_ > 0, 'TokensVesting: price must be greater than 0');
@@ -237,7 +240,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     }
 
     function _getPriceForAmount(uint8 participant_, uint256 amount_) internal view returns(uint256 price_, uint256 index_) {
-        require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale), 
+        require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
          'TokensVesting: participant shoud only be PrivateSale or PublicSale');
         for(uint256 i = 0; i < _priceRange[participant_].length; i++) {
             PriceRange memory range = _priceRange[participant_][i];
@@ -411,8 +414,7 @@ contract TokensVesting is Ownable, ITokensVesting {
 
         for (uint256 i = 0; i < _beneficiaries.length; i++) {
             VestingInfo storage info = _beneficiaries[i];
-            _releasable =
-                _releasable +
+            _releasable = _releasable +
                 _releasableAmount(
                     info.genesisTimestamp,
                     info.totalAmount,
@@ -617,9 +619,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 releasedAmount = 0;
         for (uint256 i = 0; i < _beneficiaries.length; i++) {
             if (_beneficiaries[i].participant == participant_)
-                releasedAmount =
-                    releasedAmount +
-                    _beneficiaries[i].releasedAmount;
+                releasedAmount = releasedAmount + _beneficiaries[i].releasedAmount;
         }
         return releasedAmount;
     }
@@ -738,8 +738,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         for (uint256 i = 0; i < _beneficiaries.length; i++) {
             VestingInfo storage info = _beneficiaries[i];
             if (info.participant == participant_) {
-                _releasable =
-                    _releasable +
+                _releasable = _releasable +
                     _releasableAmount(
                         info.genesisTimestamp,
                         info.totalAmount,
