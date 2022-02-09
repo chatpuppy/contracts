@@ -217,5 +217,140 @@ marketplace.methods.matchOrder(orderId, price).send();
 ```
 * Note: if buy or sell in the marketplace, must use CPT token.
 
+----------------------------------------------------------------
 
+# Token Managment
+## 1- Only operated by owner
+### Add beneficiary by owner
+```
+addBeneficiary
+```
 
+### Start vesting of a beneficiary by owner
+```
+activate
+```
+
+### Start all beneficiaries' vesting by owner
+```
+activateAll
+```
+
+### Start a type of participants vesting by owner
+```
+activeParticipant
+```
+
+### Release all amount for all beneficiaries by owner
+```
+releaseAll
+```
+
+### Release all amount for a type of participants by owner
+```
+releaseParticipant
+```
+
+### Forbiden a beneficiary to claim by owner
+```
+revoke
+```
+
+### Withdraw all revoked amount from contract by owner
+```
+withdraw
+```
+
+### Set croud funding params by owner
+```
+setCrowdFundingParams
+```
+
+### Add price and amount range for each phase by owner
+```
+setPriceRange
+```
+
+### Update price and amount range for each phase by owner
+```
+updatePriceRange
+```
+
+## 2- Operated by all
+### 2.1- Get methods
+#### Get totol amount of all beneficiaries
+```
+getTotalAmountByParticipant
+```
+
+#### Get all beneficiaries data
+```
+getAllBeneficiaries
+```
+
+#### Get count of all beneficiaries
+```
+getBeneficiaryCount
+```
+
+#### Get total amount of a type of participants
+```
+getTotalAmountByParticipant
+```
+
+#### Get all releasable amount of all beneficiaries
+```
+releasable()
+```
+
+#### Get releasable amount of a beneficiary
+```
+releasable(index)
+```
+
+#### Get releasable amount of of a type of participants
+```
+participantReleasable
+```
+
+#### Get all released amount of all beneficiaries
+```
+released
+```
+
+#### Get all released amount of a type of participants
+```
+participantReleased
+```
+
+#### Get price for phase according to the raised amount
+```
+getPriceForAmount
+```
+
+#### Get price for the current phase
+```
+getCurrentPrice
+```
+
+#### Get beneficiary's index
+```
+getIndex
+```
+
+#### Get beneficiary by index
+```
+getBeneficiary
+```
+
+### 2.2- Set methods buy beneficiary or donator
+
+#### Release/claim by the beneficiary himself
+```
+release
+```
+
+### CrowdFunding
+```
+crowdFunding
+```

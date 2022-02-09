@@ -15,7 +15,7 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const tokensVestingAddress = '0xE719F48693FB5Ad7be6fBc030d2A46bf6b6f6323';//'0x456EACCf71a8AFD0369AE1B91Be7Af3b40D2e865';
+const tokensVestingAddress = '0x920d3F1557bE1e3AF2077a76A10cB400b99EB798';//'0x456EACCf71a8AFD0369AE1B91Be7Af3b40D2e865';
 const tokensVestingJson = require('../build/contracts/TokensVesting.json');
 const tokensVesting = new web3.eth.Contract(tokensVestingJson.abi, tokensVestingAddress);
 

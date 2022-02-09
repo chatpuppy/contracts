@@ -11,7 +11,6 @@ import "./lib/Token/IERC20Mintable.sol";
 contract TokensVesting is Ownable, ITokensVesting {
     IERC20Mintable public immutable token;
 
-    uint256 public basis = 30 days;
     uint256 public revokedAmount = 0;
     uint256 public revokedAmountWithdrawn = 0;
 
@@ -309,6 +308,8 @@ contract TokensVesting is Ownable, ITokensVesting {
             "TokensVesting: basis_ must be greater than 0!"
         );
 
+        require(getIndex(beneficiary_) == 0, "TokensVesting: this account is in the beneficiaries list");
+
         VestingInfo storage info = _beneficiaries.push();
         info.beneficiary = beneficiary_;
         info.genesisTimestamp = genesisTimestamp_;
@@ -533,14 +534,6 @@ contract TokensVesting is Ownable, ITokensVesting {
         revokedAmountWithdrawn = revokedAmountWithdrawn + amount_;
         token.mint(_msgSender(), amount_);
         emit Withdraw(_msgSender(), amount_);
-    }
-
-    /**
-     * @dev Update basis_
-     */
-    function updateBasic(uint256 basis_) public onlyOwner {
-        require(basis_ > 0, "TokensVesting: basic must be greater than 0");
-        basis = basis_;
     }
 
     /**
