@@ -113,11 +113,11 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 // ).encodeABI();
 
 /**
- * participant	No	fromAmount		toAmount		price
- * 1						0		0							100000			10000	
- * 1						1		100000				200000			9000
- * 1						2		200000				300000			8100
- * 1						3		300000				400000			7290
+ * participant	No	fromAmount		price
+ * 1						0		0							10000	
+ * 1						1		100000				9000
+ * 1						2		200000				8100
+ * 1						3		300000				7290
  * 
  * 
  */
