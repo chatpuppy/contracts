@@ -64,6 +64,8 @@ contract TokensVesting is Ownable, ITokensVesting {
     mapping(uint256 => uint256) public _cliff;
     mapping(uint256 => uint256) public _duration;
     mapping(uint256 => uint256) public _basis;
+    mapping(uint256 => uint256) public _startTimestamp;
+    mapping(uint256 => uint256) public _endTimestamp;
 
     event BeneficiaryAdded(address indexed beneficiary, uint256 amount);
     event BeneficiaryActivated(uint256 index, address indexed beneficiary);
@@ -131,10 +133,11 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 cliff_,
         uint256 duration_,
         uint256 basis_,
-        uint256 price_
+        uint256 startTimestamp_,
+        uint256 endTimestamp_
     ) external onlyOwner {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale) 
-            && genesisTimestamp_ > 0 && tgeAmountRatio_ >= 0 && cliff_ >= 0 && duration_ >=0 && basis_ >= 0 && price_ >= 0,
+            && genesisTimestamp_ > block.timestamp && tgeAmountRatio_ >= 0 && cliff_ >= 0 && duration_ >=0 && basis_ >= 0 && startTimestamp_ > 0 && endTimestamp_ > 0 && endTimestamp_ >= startTimestamp_,
             "TokensVesting: invalid params");
         _genesisTimestamp[participant_] = genesisTimestamp_;
         _tgeAmountRatio[participant_] = tgeAmountRatio_;
@@ -142,6 +145,8 @@ contract TokensVesting is Ownable, ITokensVesting {
         _cliff[participant_] = cliff_;
         _duration[participant_] = duration_;
         _basis[participant_] = basis_;
+        _startTimestamp[participant_] = startTimestamp_;
+        _endTimestamp[participant_] = endTimestamp_;
     }
 
     /**
@@ -210,7 +215,10 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 tokenAmount = msg.value * price_ / 10**(18 - decimals);
         require(tokenAmount > 0, 'TokensVesting: token amount must be greater than 0');
 
-        // add beneficiary ######
+        // add beneficiary
+        require(_startTimestamp[participant_] <= block.timestamp, 'TokensVesting: crowd funding is not start');
+        require(_endTimestamp[participant_] >= block.timestamp, 'TokensVesting: crowd funding is end');
+
         _addBeneficiary(
             msg.sender,
             _genesisTimestamp[participant_],

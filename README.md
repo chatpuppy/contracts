@@ -338,6 +338,51 @@ getCurrentPrice
 getIndex
 ```
 
+#### Get revoked amount
+```
+revokedAmount
+```
+
+#### Get revoked and withdrawed amount
+```
+revokedAmountWithdrawn
+```
+
+#### Get price range data of given participant for crowd funding
+```
+_priceRange
+```
+
+#### Get Genesis Timestamp of given participant for crowd funding
+```
+_genesisTimestamp
+```
+
+#### Get tge amount ratio of given participant for crowd funding
+```
+_tgeAmountRatio
+```
+
+#### Get tge amount ratio decimals of given participant for crowd funding
+```
+_ratioDecimals
+```
+
+#### Get cliff of given participant for crowd funding
+```
+_cliff
+```
+
+#### Get duration of given participant for crowd funding
+```
+_duration
+```
+
+#### Get basis of given participant for crowd funding
+```
+_basis
+```
+
 #### Get beneficiary by index
 ```
 getBeneficiary
