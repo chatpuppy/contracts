@@ -313,6 +313,16 @@ updatePriceRange
 withdrawCoin(amount)
 ```
 
+### Redeem ETH/BNB to the token buyers
+```
+redeem(participant, to)
+```
+
+### Update redeem fee (ex. 50 means 5%)
+```
+updateRedeemFee
+```
+
 ## 2- Operated by all
 ### 2.1- Get methods
 #### Get ERC20 token address
@@ -477,3 +487,4 @@ This is payable function, pay ETH/BNB and get token benefit, the investor should
 ```
 crowdFunding(participant)
 ```
+
