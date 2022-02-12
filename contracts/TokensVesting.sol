@@ -13,6 +13,7 @@ contract TokensVesting is Ownable, ITokensVesting {
 
     uint256 public revokedAmount = 0;
     uint256 public revokedAmountWithdrawn = 0;
+    uint256 private _redeemFee = 500; // 500 means 500 / 10000 = 5%
 
     enum Participant {
         Unknown,
@@ -46,19 +47,13 @@ contract TokensVesting is Ownable, ITokensVesting {
         Status status;
         uint256 price;
     }
-
     VestingInfo[] private _beneficiaries;
 
-    /**
-     * @dev Setting crowd funding params
-     */
     struct PriceRange {
         uint256 fromAmount; // Token amount, not BNB/ETH amount
         uint256 price;
     }
     mapping(uint256 => PriceRange[]) private _priceRange;
-
-    uint256 private _redeemFee = 500; // 500 means 500 / 10000 = 5%
 
     struct CrowdFundingParams {
         uint256 genesisTimestamp;
@@ -84,22 +79,14 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 amount
     );
 
-    /**
-     * @dev Sets the value for {token}.
-     *
-     * This value are immutable: it can only be set once during
-     * construction.
-     */
+    event TokensReleased(address indexed beneficiary, uint256 amount);
+    event Withdraw(address indexed receiver, uint256 amount);
+    event PriceRangeAdded(uint8 participant, uint256 fromAmount, uint256 price);
+    event PriceRangeUpdated(uint8 participant, uint256 index, uint256 fromAmount, uint256 price);
+    event CrowdFundingAdded(uint8 participant, address account, uint256 price, uint256 amount);
+
     constructor(address token_) {
         updateToken(token_);
-    }
-
-    function priceRange(uint256 participant_) public view returns(PriceRange[] memory) {
-        return _priceRange[participant_];
-    }
-
-    function crowdFundingParams(uint256 participant_) public view returns(CrowdFundingParams memory) {
-        return _crowdFundingParams[participant_];
     }
 
     /**
@@ -139,6 +126,9 @@ contract TokensVesting is Ownable, ITokensVesting {
         return _beneficiaries;
     }
 
+    /**
+     * @dev Set crowd funding params
+     */
     function setCrowdFundingParams(
         uint8   participant_,
         uint256 genesisTimestamp_,
@@ -168,6 +158,16 @@ contract TokensVesting is Ownable, ITokensVesting {
         _crowdFundingParams[participant_].limitation = limitation_;
         _crowdFundingParams[participant_].lowest = lowest_;
         _crowdFundingParams[participant_].acceptOverCap = acceptOverCap_;
+
+        // Because stack too deep, the allowRedeem will set by owner, default is false.
+        // _crowdFundingParams[participant_].allowRedeem = allowRedeem_;
+    }
+
+    /**
+     * @dev Get crowd funding params
+     */
+    function crowdFundingParams(uint256 participant_) public view returns(CrowdFundingParams memory) {
+        return _crowdFundingParams[participant_];
     }
 
     /**
@@ -188,6 +188,13 @@ contract TokensVesting is Ownable, ITokensVesting {
         priceRange_.price = price_;
 
         emit PriceRangeAdded(participant_, fromAmount_, price_);
+    }
+
+    /**
+     * @dev Get the price range list
+     */
+    function priceRange(uint256 participant_) public view returns(PriceRange[] memory) {
+        return _priceRange[participant_];
     }
 
     /**
@@ -214,17 +221,19 @@ contract TokensVesting is Ownable, ITokensVesting {
     }
 
     /**
-     * @dev get current price according to the raised amount
+     * @dev get current price according to the raised amount and amount want to donate.
      */
-    function getPriceForAmount (
-        uint8 participant_,
-        uint256 amount_
-    ) external view returns(uint256 price_, uint256 index_) {
-        (price_, index_) = _getPriceForAmount(participant_, amount_);
+    function getPriceForAmount (uint8 participant_, uint256 amount_) external view returns(uint256 price_, uint256 index_) {
+        // the price must be according to the after-donation amount
+        (price_, index_) = _getPriceForAmount(participant_, getTotalAmountByParticipant(participant_) + amount_);
     }
 
-    function getCurrentPrice (uint8 participant_) external view returns (uint256 price_, uint256 index_) {
-        (price_, index_) = _getPriceForAmount(participant_, _getTotalAmount());
+    /**
+     * @dev Get the 
+     */
+    function getCurrentPrice (uint8 participant_, uint256 amount_) external view returns (uint256 price_, uint256 index_) {
+        // the price must be according to the after-donation amount
+        (price_, index_) = _getPriceForAmount(participant_, getTotalAmountByParticipant(participant_) + amount_);
     }
 
     /**
@@ -239,16 +248,20 @@ contract TokensVesting is Ownable, ITokensVesting {
         require(_crowdFundingParams[participant_].endTimestamp >= block.timestamp,
             'TokensVesting: crowd funding is end');
 
-        (uint256 price_, ) = _getPriceForAmount(participant_, _getTotalAmount());
+        (uint256 price_, ) = _getPriceForAmount(participant_, getTotalAmountByParticipant(participant_));
         require(price_ > 0, 'TokensVesting: price must be greater than 0');
         uint256 decimals = token.decimals();
         uint256 tokenAmount = msg.value * price_ / 10**(18 - decimals);
         require(tokenAmount > 0, 'TokensVesting: token amount must be greater than 0');
 
+        // Recalculate the the price and tokenAmount according the after-donation amount
+        (uint256 price2_, ) = _getPriceForAmount(participant_, getTotalAmountByParticipant(participant_) + tokenAmount);
+        uint256 tokenAmount2 = msg.value * price2_ / 10**(18 - decimals);
+
         if(!_crowdFundingParams[participant_].acceptOverCap) {
             PriceRange[] memory priceRange_ = _priceRange[participant_];
             require(
-                getTotalAmountByParticipant(participant_) + tokenAmount <= priceRange_[priceRange_.length - 1].fromAmount,
+                getTotalAmountByParticipant(participant_) + tokenAmount2 <= priceRange_[priceRange_.length - 1].fromAmount,
                 'TokensVesting: more than cap');
         }
 
@@ -256,8 +269,8 @@ contract TokensVesting is Ownable, ITokensVesting {
         _addBeneficiary(
             _msgSender(),
             _crowdFundingParams[participant_].genesisTimestamp,
-            tokenAmount,
-            tokenAmount * _crowdFundingParams[participant_].tgeAmountRatio / 10 ** _crowdFundingParams[participant_].ratioDecimals,
+            tokenAmount2,
+            tokenAmount2 * _crowdFundingParams[participant_].tgeAmountRatio / 10 ** _crowdFundingParams[participant_].ratioDecimals,
             _crowdFundingParams[participant_].cliff,
             _crowdFundingParams[participant_].duration,
             participant_,
@@ -265,21 +278,20 @@ contract TokensVesting is Ownable, ITokensVesting {
             price_
         );
 
-        emit CrowdFundingAdded(participant_, _msgSender(), price_, tokenAmount);
+        emit CrowdFundingAdded(participant_, _msgSender(), price_, tokenAmount2);
     }
 
     function _getPriceForAmount(uint8 participant_, uint256 amount_) internal view returns(uint256 price_, uint256 index_) {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
          'TokensVesting: participant should only be PrivateSale or PublicSale');
 
-        uint256 total_ = getTotalAmountByParticipant(participant_);
         PriceRange[] memory priceRange_ = _priceRange[participant_];
-        if(total_ + amount_ >= priceRange_[priceRange_.length - 1].fromAmount) {
+        if(amount_ >= priceRange_[priceRange_.length - 1].fromAmount) {
             price_ = priceRange_[priceRange_.length - 1].price;
             index_ = priceRange_.length - 1;
         } else {
             for(uint256 i = 1; i < priceRange_.length; i++) {
-                if(priceRange_[i].fromAmount > total_ + amount_) {
+                if(priceRange_[i].fromAmount > amount_) {
                     price_ = priceRange_[i-1].price;
                     index_ = i - 1;
                     break;
@@ -287,8 +299,7 @@ contract TokensVesting is Ownable, ITokensVesting {
             }
         }
     }
-// 0, 1000, 2000, 3000
-// 4000
+
     /**
      * @dev Add beneficiary to vesting plan by owner.
      * @param beneficiary_ recipient address.

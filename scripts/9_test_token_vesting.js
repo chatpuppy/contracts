@@ -122,18 +122,10 @@ const basis = 10; // 10 seconds
 // 	2, genesisTimestamp, 10, 2, cliff, duration, basis, startTimestamp, endTimestamp, '1000000000000000000', '25000000000000000', true
 // ).encodeABI();
 
-/**
- * participant	No	fromAmount				price
- * 2						0		0									10000	
- * 2						1		100000*1e18				9000
- * 2						2		200000*1e18				8100
- * 2						3		300000*1e18				7290
- */
-
 // let sendEncodeABI = tokensVesting.methods.setPriceRange(2, 0, 10000).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '100000000000000000000000', 9000).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '200000000000000000000000', 8000).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '300000000000000000000000', 7000).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '100000000000000000000000', 11000).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '200000000000000000000000', 12000).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '300000000000000000000000', 13000).encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, '300000000000000000000000', 7390).encodeABI();
 // let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, '200000000000000000000000', 8200).encodeABI();

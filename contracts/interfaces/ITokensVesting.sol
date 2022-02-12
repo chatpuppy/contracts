@@ -52,9 +52,7 @@ interface ITokensVesting {
     ) external;
 
     function getPriceForAmount(uint8 participant, uint256 amount) external view returns(uint256, uint256);
-
-    function getCurrentPrice(uint8 participant) external view returns(uint256, uint256);
-
+    function getCurrentPrice(uint8 participant, uint256 amount) external view returns(uint256, uint256);
     function crowdFunding(uint8 participant) external payable;
 
     function addBeneficiary(
@@ -68,12 +66,4 @@ interface ITokensVesting {
         uint256 basis,
         uint256 price
     ) external;
-
-    event TokensReleased(address indexed beneficiary, uint256 amount);
-
-    event Withdraw(address indexed receiver, uint256 amount);
-
-    event PriceRangeAdded(uint8 participant, uint256 fromAmount, uint256 price);
-    event PriceRangeUpdated(uint8 participant, uint256 index, uint256 fromAmount, uint256 price);
-    event CrowdFundingAdded(uint8 participant, address account, uint256 price, uint256 amount);
 }
