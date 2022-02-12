@@ -52,7 +52,6 @@ interface ITokensVesting {
     ) external;
 
     function getPriceForAmount(uint8 participant, uint256 amount) external view returns(uint256, uint256);
-    function getCurrentPrice(uint8 participant, uint256 amount) external view returns(uint256, uint256);
     function crowdFunding(uint8 participant) external payable;
 
     function addBeneficiary(

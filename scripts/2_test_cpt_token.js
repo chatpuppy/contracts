@@ -32,11 +32,11 @@ cptContract.methods.BURNER_ROLE().call().then((response) => console.log('BURNER_
  */
 const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
-// let sendEncodeABI = cptContract.methods.mint('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '10000000000000000000000').encodeABI(); 
+// let sendEncodeABI = cptContract.methods.mint('0x1A81FCbe4a7b9d43B831Ed47A1100262D47eB8cD', '100000000000000000000000000').encodeABI(); 
 // let sendEncodeABI = dareContract.methods.transfer('0x3444E23231619b361c8350F4C83F82BCfAB36F65', '72000000000000000000').encodeABI();
 
 // Grand TokenVesting contract as MINT_ROLE
-const TokenVestingAddress = '0xf77ece61884340c588b6516F0B3adEe205390B30';
+const TokenVestingAddress = '0xd0190d8367486Cd81d966748B35013952CB77Df8';
 let sendEncodeABI = cptContract.methods.grantRole(
 	'0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6', 
 	TokenVestingAddress).encodeABI();

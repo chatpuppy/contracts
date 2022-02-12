@@ -228,59 +228,6 @@ contract TokensVesting is Ownable, ITokensVesting {
         (price_, index_) = _getPriceForAmount(participant_, getTotalAmountByParticipant(participant_) + amount_);
     }
 
-    /**
-     * @dev Get the 
-     */
-    function getCurrentPrice (uint8 participant_, uint256 amount_) external view returns (uint256 price_, uint256 index_) {
-        // the price must be according to the after-donation amount
-        (price_, index_) = _getPriceForAmount(participant_, getTotalAmountByParticipant(participant_) + amount_);
-    }
-
-    /**
-     * @dev Donator pay ETH/BNB and get quota of token(need donator claim after cliff)
-     */
-    function crowdFunding(uint8 participant_) external payable {
-        require(_crowdFundingParams[participant_].limitation >= msg.value, 'TokensVesting: more than limitation');
-        require(_crowdFundingParams[participant_].lowest <= msg.value, 'TokensVesting: less than lowest');
-
-        require(_crowdFundingParams[participant_].startTimestamp <= block.timestamp,
-            'TokensVesting: crowd funding is not start');
-        require(_crowdFundingParams[participant_].endTimestamp >= block.timestamp,
-            'TokensVesting: crowd funding is end');
-
-        (uint256 price_, ) = _getPriceForAmount(participant_, getTotalAmountByParticipant(participant_));
-        require(price_ > 0, 'TokensVesting: price must be greater than 0');
-        uint256 decimals = token.decimals();
-        uint256 tokenAmount = msg.value * price_ / 10**(18 - decimals);
-        require(tokenAmount > 0, 'TokensVesting: token amount must be greater than 0');
-
-        // Recalculate the the price and tokenAmount according the after-donation amount
-        (uint256 price2_, ) = _getPriceForAmount(participant_, getTotalAmountByParticipant(participant_) + tokenAmount);
-        uint256 tokenAmount2 = msg.value * price2_ / 10**(18 - decimals);
-
-        if(!_crowdFundingParams[participant_].acceptOverCap) {
-            PriceRange[] memory priceRange_ = _priceRange[participant_];
-            require(
-                getTotalAmountByParticipant(participant_) + tokenAmount2 <= priceRange_[priceRange_.length - 1].fromAmount,
-                'TokensVesting: more than cap');
-        }
-
-        // add beneficiary
-        _addBeneficiary(
-            _msgSender(),
-            _crowdFundingParams[participant_].genesisTimestamp,
-            tokenAmount2,
-            tokenAmount2 * _crowdFundingParams[participant_].tgeAmountRatio / 10 ** _crowdFundingParams[participant_].ratioDecimals,
-            _crowdFundingParams[participant_].cliff,
-            _crowdFundingParams[participant_].duration,
-            participant_,
-            _crowdFundingParams[participant_].basis,
-            price_
-        );
-
-        emit CrowdFundingAdded(participant_, _msgSender(), price_, tokenAmount2);
-    }
-
     function _getPriceForAmount(uint8 participant_, uint256 amount_) internal view returns(uint256 price_, uint256 index_) {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
          'TokensVesting: participant should only be PrivateSale or PublicSale');
@@ -298,6 +245,52 @@ contract TokensVesting is Ownable, ITokensVesting {
                 }
             }
         }
+    }
+
+    /**
+     * @dev Donator pay ETH/BNB and get quota of token(need donator claim after cliff)
+     */
+    function crowdFunding(uint8 participant_) external payable {
+        require(_crowdFundingParams[participant_].limitation >= msg.value, 'TokensVesting: more than limitation');
+        require(_crowdFundingParams[participant_].lowest <= msg.value, 'TokensVesting: less than lowest');
+
+        require(_crowdFundingParams[participant_].startTimestamp <= block.timestamp,
+            'TokensVesting: crowd funding is not start');
+        require(_crowdFundingParams[participant_].endTimestamp >= block.timestamp,
+            'TokensVesting: crowd funding is end');
+
+        uint256 total_ = getTotalAmountByParticipant(participant_);
+        (uint256 price_, ) = _getPriceForAmount(participant_, total_);
+        require(price_ > 0, 'TokensVesting: price must be greater than 0');
+        uint256 decimals = token.decimals();
+        uint256 tokenAmount = msg.value * price_ / 10**(18 - decimals);
+        require(tokenAmount > 0, 'TokensVesting: token amount must be greater than 0');
+
+        // Recalculate the the price and tokenAmount according the after-donation amount
+        (price_, ) = _getPriceForAmount(participant_, total_ + tokenAmount);
+        tokenAmount = msg.value * price_ / 10**(18 - decimals);
+
+        if(!_crowdFundingParams[participant_].acceptOverCap) {
+            PriceRange[] memory priceRange_ = _priceRange[participant_];
+            require(
+                total_ + tokenAmount <= priceRange_[priceRange_.length - 1].fromAmount,
+                'TokensVesting: more than cap of this participant type');
+        }
+
+        // add beneficiary
+        _addBeneficiary(
+            _msgSender(),
+            _crowdFundingParams[participant_].genesisTimestamp,
+            tokenAmount,
+            tokenAmount * _crowdFundingParams[participant_].tgeAmountRatio / 10 ** _crowdFundingParams[participant_].ratioDecimals,
+            _crowdFundingParams[participant_].cliff,
+            _crowdFundingParams[participant_].duration,
+            participant_,
+            _crowdFundingParams[participant_].basis,
+            price_
+        );
+
+        emit CrowdFundingAdded(participant_, _msgSender(), price_, tokenAmount);
     }
 
     /**

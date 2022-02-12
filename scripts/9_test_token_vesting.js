@@ -17,7 +17,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 const senderAddress = (web3.eth.accounts.privateKeyToAccount('0x' + priKey)).address;
 console.log('发起地址', senderAddress);
 
-const tokensVestingAddress = '0xf77ece61884340c588b6516F0B3adEe205390B30';
+const tokensVestingAddress = '0xd0190d8367486Cd81d966748B35013952CB77Df8';
 const tokensVestingJson = require('../build/contracts/TokensVesting.json');
 const tokensVesting = new web3.eth.Contract(tokensVestingJson.abi, tokensVestingAddress);
 
@@ -50,7 +50,6 @@ tokensVesting.methods.crowdFundingParams(participant).call({from: senderAddress}
 tokensVesting.methods.priceRange(participant).call({from: senderAddress}).then((res) => console.log('price range', res));
 
 tokensVesting.methods.getPriceForAmount(2, 300000).call({from: senderAddress}).then((res) => console.log('price', res));
-tokensVesting.methods.getCurrentPrice(2).call({from: senderAddress}).then((res) => console.log('getCurrentPrice', res));
 
 tokensVesting.methods.redeemFee().call().then((res) => console.log('redeemFee', res));
 
@@ -123,21 +122,21 @@ const basis = 10; // 10 seconds
 // ).encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.setPriceRange(2, 0, 10000).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '100000000000000000000000', 11000).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '200000000000000000000000', 12000).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '300000000000000000000000', 13000).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '100000000000000000000000', 9000).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '200000000000000000000000', 8000).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '300000000000000000000000', 7000).encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, '300000000000000000000000', 7390).encodeABI();
 // let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, '200000000000000000000000', 8200).encodeABI();
 
-// let sendEncodeABI = tokensVesting.methods.withdrawCoin('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '10000000000000000').encodeABI();
+let sendEncodeABI = tokensVesting.methods.withdrawCoin('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '24000000000000000').encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.updateRedeemFee(500).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.redeem(2, '0x615b80388E3D3CaC6AA3a904803acfE7939f0399').encodeABI();
+// let sendEncodeABI = tokensVesting.methods.redeem(2, '0x3444E23231619b361c8350F4C83F82BCfAB36F65').encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.setAllowRedeem(2, true).encodeABI();
-// callContract(sendEncodeABI, tokensVestingAddress);
+callContract(sendEncodeABI, tokensVestingAddress);
 
 // let sendEncodeABI = tokensVesting.methods.crowdFunding(2).encodeABI();
-// callContract(sendEncodeABI, tokensVestingAddress, '40000000000000000');
+// callContract(sendEncodeABI, tokensVestingAddress, '30000000000000000');
 
