@@ -158,9 +158,6 @@ contract TokensVesting is Ownable, ITokensVesting {
         _crowdFundingParams[participant_].limitation = limitation_;
         _crowdFundingParams[participant_].lowest = lowest_;
         _crowdFundingParams[participant_].acceptOverCap = acceptOverCap_;
-
-        // Because stack too deep, the allowRedeem will set by owner, default is false.
-        // _crowdFundingParams[participant_].allowRedeem = allowRedeem_;
     }
 
     /**
@@ -746,8 +743,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         }
 
         return
-            _vestedAmount(genesisTimestamp_, totalAmount_, tgeAmount_, cliff_, duration_, basis_) -
-            releasedAmount_;
+            _vestedAmount(genesisTimestamp_, totalAmount_, tgeAmount_, cliff_, duration_, basis_) - releasedAmount_;
     }
 
     function _vestedAmount(
