@@ -56,21 +56,25 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 fromAmount; // Token amount, not BNB/ETH amount
         uint256 price;
     }
-    mapping(uint256 => PriceRange[]) public _priceRange;
+    mapping(uint256 => PriceRange[]) private _priceRange;
 
-    uint256 public _redeemFee; // 500 means 500 / 10000 = 5%
+    uint256 private _redeemFee = 500; // 500 means 500 / 10000 = 5%
 
-    mapping(uint256 => uint256) public _genesisTimestamp;
-    mapping(uint256 => uint256) public _tgeAmountRatio;
-    mapping(uint256 => uint256) public _ratioDecimals; // default is 2, if _tgeAmountRatio is 50, the ratio is 50 / 10**2 = 50%
-    mapping(uint256 => uint256) public _cliff;
-    mapping(uint256 => uint256) public _duration;
-    mapping(uint256 => uint256) public _basis; // seconds
-    mapping(uint256 => uint256) public _startTimestamp;
-    mapping(uint256 => uint256) public _endTimestamp;
-    mapping(uint256 => uint256) public _limitation; // this limitation is ETH/BNB amount, not token amount
-    mapping(uint256 => uint256) public _lowest;
-    mapping(uint256 => bool)    public _acceptOverCap; // if amount more than cap, can accept?
+    struct CrowdFundingParams {
+        uint256 genesisTimestamp;
+        uint256 tgeAmountRatio;
+        uint256 ratioDecimals; // default is 2, if _tgeAmountRatio is 50, the ratio is 50 / 10**2 = 50%
+        uint256 cliff;
+        uint256 duration;
+        uint256 basis; // seconds
+        uint256 startTimestamp;
+        uint256 endTimestamp;
+        uint256 limitation; // investment max, this limitation is ETH/BNB amount, not token amount
+        uint256 lowest;     // investment min, this limitation is ETH/BNB amount, not token amount
+        bool    acceptOverCap; // if amount more than cap, can accept?
+        bool    allowRedeem;
+    }
+    mapping(uint256 => CrowdFundingParams) private _crowdFundingParams;
 
     event BeneficiaryAdded(address indexed beneficiary, uint256 amount);
     event BeneficiaryActivated(uint256 index, address indexed beneficiary);
@@ -88,6 +92,14 @@ contract TokensVesting is Ownable, ITokensVesting {
      */
     constructor(address token_) {
         updateToken(token_);
+    }
+
+    function priceRange(uint256 participant_) public view returns(PriceRange[] memory) {
+        return _priceRange[participant_];
+    }
+
+    function crowdFundingParams(uint256 participant_) public view returns(CrowdFundingParams memory) {
+        return _crowdFundingParams[participant_];
     }
 
     /**
@@ -139,23 +151,23 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 endTimestamp_,
         uint256 limitation_,
         uint256 lowest_,
-        bool acceptOverCap_
+        bool    acceptOverCap_
     ) external onlyOwner {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale)
             && genesisTimestamp_ > block.timestamp && tgeAmountRatio_ >= 0 && cliff_ >= 0 && duration_ >=0 && basis_ >= 0
             && startTimestamp_ > block.timestamp && endTimestamp_ > block.timestamp && endTimestamp_ >= startTimestamp_,
             "TokensVesting: add invalid params");
-        _genesisTimestamp[participant_] = genesisTimestamp_;
-        _tgeAmountRatio[participant_] = tgeAmountRatio_;
-        _ratioDecimals[participant_] = ratioDecimals_;
-        _cliff[participant_] = cliff_;
-        _duration[participant_] = duration_;
-        _basis[participant_] = basis_;
-        _startTimestamp[participant_] = startTimestamp_;
-        _endTimestamp[participant_] = endTimestamp_;
-        _limitation[participant_] = limitation_;
-        _lowest[participant_] = lowest_;
-        _acceptOverCap[participant_] = acceptOverCap_;
+        _crowdFundingParams[participant_].genesisTimestamp = genesisTimestamp_;
+        _crowdFundingParams[participant_].tgeAmountRatio = tgeAmountRatio_;
+        _crowdFundingParams[participant_].ratioDecimals = ratioDecimals_;
+        _crowdFundingParams[participant_].cliff = cliff_;
+        _crowdFundingParams[participant_].duration = duration_;
+        _crowdFundingParams[participant_].basis = basis_;
+        _crowdFundingParams[participant_].startTimestamp = startTimestamp_;
+        _crowdFundingParams[participant_].endTimestamp = endTimestamp_;
+        _crowdFundingParams[participant_].limitation = limitation_;
+        _crowdFundingParams[participant_].lowest = lowest_;
+        _crowdFundingParams[participant_].acceptOverCap = acceptOverCap_;
     }
 
     /**
@@ -192,6 +204,7 @@ contract TokensVesting is Ownable, ITokensVesting {
              'TokensVesting: participant shoud only be PrivateSale or PublicSale');
         require(fromAmount_ >= 0 && price_ > 0,
             'TokensVesting: price or fromAmount is wrong');
+            
         require(_priceRange[participant_][index_].price > 0, 'TokensVesting: price of index not set');
 
         _priceRange[participant_][index_].fromAmount = fromAmount_;
@@ -218,12 +231,12 @@ contract TokensVesting is Ownable, ITokensVesting {
      * @dev Donator pay ETH/BNB and get quota of token(need donator claim after cliff)
      */
     function crowdFunding(uint8 participant_) external payable {
-        require(_limitation[participant_] >= msg.value, 'TokensVesting: more than limitation');
-        require(_lowest[participant_] <= msg.value, 'TokensVesting: less than lowest');
+        require(_crowdFundingParams[participant_].limitation >= msg.value, 'TokensVesting: more than limitation');
+        require(_crowdFundingParams[participant_].lowest <= msg.value, 'TokensVesting: less than lowest');
 
-        require(_startTimestamp[participant_] <= block.timestamp,
+        require(_crowdFundingParams[participant_].startTimestamp <= block.timestamp,
             'TokensVesting: crowd funding is not start');
-        require(_endTimestamp[participant_] >= block.timestamp,
+        require(_crowdFundingParams[participant_].endTimestamp >= block.timestamp,
             'TokensVesting: crowd funding is end');
 
         (uint256 price_, ) = _getPriceForAmount(participant_, _getTotalAmount());
@@ -232,7 +245,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 tokenAmount = msg.value * price_ / 10**(18 - decimals);
         require(tokenAmount > 0, 'TokensVesting: token amount must be greater than 0');
 
-        if(!_acceptOverCap[participant_]) {
+        if(!_crowdFundingParams[participant_].acceptOverCap) {
             PriceRange[] memory priceRange_ = _priceRange[participant_];
             require(
                 getTotalAmountByParticipant(participant_) + tokenAmount <= priceRange_[priceRange_.length - 1].fromAmount,
@@ -242,13 +255,13 @@ contract TokensVesting is Ownable, ITokensVesting {
         // add beneficiary
         _addBeneficiary(
             _msgSender(),
-            _genesisTimestamp[participant_],
+            _crowdFundingParams[participant_].genesisTimestamp,
             tokenAmount,
-            tokenAmount * _tgeAmountRatio[participant_] / 10 ** _ratioDecimals[participant_],
-            _cliff[participant_],
-            _duration[participant_],
+            tokenAmount * _crowdFundingParams[participant_].tgeAmountRatio / 10 ** _crowdFundingParams[participant_].ratioDecimals,
+            _crowdFundingParams[participant_].cliff,
+            _crowdFundingParams[participant_].duration,
             participant_,
-            _basis[participant_],
+            _crowdFundingParams[participant_].basis,
             price_
         );
 
@@ -350,6 +363,9 @@ contract TokensVesting is Ownable, ITokensVesting {
             basis_ > 0,
             "TokensVesting: basis_ must be greater than 0!"
         );
+
+        (bool has_, ) = getIndex(beneficiary_);
+        require(!has_, "TokensVesting: beneficiary exist");
 
         VestingInfo storage info = _beneficiaries.push();
         info.beneficiary = beneficiary_;
@@ -596,6 +612,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     function redeem(uint8 participant_, address to_) public onlyOwner {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
             'TokensVesting: redeem participant should only be PrivateSale or PublicSale');
+        require(_crowdFundingParams[participant_].allowRedeem, 'TokensVesting: redeem not allowed');
         require(to_ != address(0), "TokensVesting: redeem address is the zero address");
         
         // get the public sale price
@@ -611,7 +628,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         _revoke(beneficiaryId);
         uint256 revokeAmount_ = revokedAmount - oldRevokedAmount;
 
-        // get redeem amount ######
+        // get redeem amount
         uint256 redeemAmount_ = revokeAmount_  / price_ * (10000 - _redeemFee) / 10000;
         (bool sent, ) = to_.call{value: redeemAmount_}("");
         require(sent, "TokensVesting: Fail to redeem Ether");
@@ -622,6 +639,18 @@ contract TokensVesting is Ownable, ITokensVesting {
         _redeemFee = fee_;
     }
 
+    function redeemFee() public view returns(uint256) {
+        return _redeemFee;
+    }
+
+    function setAllowRedeem(uint8 participant_, bool status) public onlyOwner {
+        require(
+            Participant(participant_) > Participant.Unknown &&
+                Participant(participant_) < Participant.OutOfRange,
+            "TokensVesting: participant_ out of range!"
+        );
+        _crowdFundingParams[participant_].allowRedeem = status;
+    }
     /**
      * @dev Release all releasable amount of tokens for the sepecific beneficiary by index.
      *

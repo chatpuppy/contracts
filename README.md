@@ -301,33 +301,49 @@ OK
 ```
 setPriceRange
 ```
-OK
+OK OK
 
 ### Update price and amount range for each phase by owner
 ```
 updatePriceRange
 ```
+OK
 
 ### Withdraw ETH/BNB from contract by owner
 ```
-withdrawCoin(amount)
+withdrawCoin(to, amount)
 ```
+OK
 
-### Redeem ETH/BNB to the token buyers
+### Set redeem status by owner
+```
+setAllowRedeem(participant, status)
+```
+OK
+
+### Redeem ETH/BNB to the token buyers by owner
 ```
 redeem(participant, to)
 ```
+OK
 
-### Update redeem fee (ex. 50 means 5%)
+### Update redeem fee (ex. 50 means 5%) by owner
 ```
 updateRedeemFee
 ```
+OK
 
 ## 2- Operated by all
 ### 2.1- Get methods
 #### Get ERC20 token address
 ```
 token
+```
+OK
+
+#### Get redeem fee rate (500 means 5%)
+```
+redeemFee()
 ```
 OK
 
@@ -420,57 +436,23 @@ OK
 ```
 getPriceForAmount(participant, amount)
 ```
+OK
 
 #### Get price for the current phase
 ```
 getCurrentPrice(participant)
 ```
+OK
 
 #### Get price range data of given participant for crowd funding
 ```
-_priceRange(participant)
+priceRange(participant)
 ```
 OK
 
-#### Get Genesis Timestamp of given participant for crowd funding
+#### Get config of crowd funding of given participant
 ```
-_genesisTimestamp(participant)
-```
-OK
-
-#### Get tge amount ratio of given participant for crowd funding
-```
-_tgeAmountRatio(participant)
-```
-OK
-
-#### Get tge amount ratio decimals of given participant for crowd funding
-```
-_ratioDecimals(participant)
-```
-OK
-
-#### Get cliff of given participant for crowd funding
-```
-_cliff(participant)
-```
-OK
-
-#### Get duration of given participant for crowd funding
-```
-_duration(participant)
-```
-OK
-
-#### Get basis of given participant for crowd funding
-```
-_basis(participant)
-```
-OK
-
-#### Get limitation of given participant for crowd funding
-```
-_limitation(participant)
+crowdFundingParams(participant)
 ```
 OK
 
@@ -487,4 +469,5 @@ This is payable function, pay ETH/BNB and get token benefit, the investor should
 ```
 crowdFunding(participant)
 ```
+OK
 

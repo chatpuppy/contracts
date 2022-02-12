@@ -17,17 +17,16 @@ const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 const senderAddress = (web3.eth.accounts.privateKeyToAccount('0x' + priKey)).address;
 console.log('发起地址', senderAddress);
 
-const tokensVestingAddress = '0x2aF62ba102B18BAad705d9a2A2040858DFf4632b';
+const tokensVestingAddress = '0xf77ece61884340c588b6516F0B3adEe205390B30';
 const tokensVestingJson = require('../build/contracts/TokensVesting.json');
 const tokensVesting = new web3.eth.Contract(tokensVestingJson.abi, tokensVestingAddress);
 
+const participant = 2;
 tokensVesting.methods.total().call().then((total) => console.log('已发行量', total / 1e18));
-tokensVesting.methods.getTotalAmountByParticipant(1).call().then((amount) => console.log('类型', 1, '总量', amount));
 tokensVesting.methods.getBeneficiaryCount().call().then((total) => console.log('受益人数量', total));
 
-
-tokensVesting.methods.releasable(1).call().then((releasable) => console.log('总可提现', releasable/1e18));
-tokensVesting.methods.participantReleasable(7).call().then((participantReleasable) => console.log('participantReleasable', participantReleasable / 1e18));
+tokensVesting.methods.releasable().call().then((releasable) => console.log('总可提现', releasable/1e18));
+tokensVesting.methods.participantReleasable(participant).call().then((participantReleasable) => console.log('participantReleasable', participantReleasable / 1e18));
 tokensVesting.methods.token().call().then((token) => console.log('CPT token', token));
 
 tokensVesting.methods.getIndex(senderAddress).call().then((response) => {
@@ -37,25 +36,23 @@ tokensVesting.methods.getIndex(senderAddress).call().then((response) => {
 		tokensVesting.methods.getBeneficiary(response[1]).call().then((beneficiary) => console.log(beneficiary));	
 	}
 })
-// tokensVesting.methods.getAllBeneficiaries().call({from: senderAddress}).then((all) => console.log('所有受益人', all));
-tokensVesting.methods.getTotalAmountByParticipant(7).call({from: senderAddress}).then((all) => console.log('类型总金额', all/1e18));
 
-tokensVesting.methods.participantReleased(7).call({from: senderAddress}).then((all) => console.log('类型已提现', all/1e18));
-tokensVesting.methods.getBeneficiary(0).call({from: senderAddress}).then((all) => console.log('getBeneficiary', all/1e18));
-tokensVesting.methods.revokedAmount().call({from: senderAddress}).then((all) => console.log('revokedAmount', all/1e18));
+tokensVesting.methods.getAllBeneficiaries().call({from: senderAddress}).then((all) => console.log('所有受益人', all));
+tokensVesting.methods.getTotalAmountByParticipant(participant).call({from: senderAddress}).then((all) => console.log('类型总金额', all/1e18));
+
+tokensVesting.methods.participantReleased(participant).call({from: senderAddress}).then((all) => console.log('类型已提现', all/1e18));
+// tokensVesting.methods.getBeneficiary(0).call({from: senderAddress}).then((all) => console.log('getBeneficiary', all/1e18));
+tokensVesting.methods.revokedAmount().call({from: senderAddress}).then((all) => console.log('revokedAmount', all / 1e18));
 tokensVesting.methods.revokedAmountWithdrawn().call({from: senderAddress}).then((all) => console.log('revokedAmountWithdrawn', all/1e18));
 
 console.log('======================================================');
-const participant = 2;
-tokensVesting.methods._genesisTimestamp(participant).call({from: senderAddress}).then((res) => console.log('_genesisTimestamp', res));
-tokensVesting.methods._tgeAmountRatio(participant).call({from: senderAddress}).then((res) => console.log('_tgeAmountRatio', res));
-tokensVesting.methods._ratioDecimals(participant).call({from: senderAddress}).then((res) => console.log('_ratioDecimals', res));
-tokensVesting.methods._cliff(participant).call({from: senderAddress}).then((res) => console.log('_cliff', res));
-tokensVesting.methods._duration(participant).call({from: senderAddress}).then((res) => console.log('_duration', res));
-tokensVesting.methods._basis(participant).call({from: senderAddress}).then((res) => console.log('_basis', res));
-tokensVesting.methods._limitation(participant).call({from: senderAddress}).then((res) => console.log('_limitation', res));
+tokensVesting.methods.crowdFundingParams(participant).call({from: senderAddress}).then((res) => console.log('crowdFundingParams', res));
+tokensVesting.methods.priceRange(participant).call({from: senderAddress}).then((res) => console.log('price range', res));
 
-tokensVesting.methods.getPriceForAmount(1, 199999).call({from: senderAddress}).then((res) => console.log('price', res));
+tokensVesting.methods.getPriceForAmount(2, 300000).call({from: senderAddress}).then((res) => console.log('price', res));
+tokensVesting.methods.getCurrentPrice(2).call({from: senderAddress}).then((res) => console.log('getCurrentPrice', res));
+
+tokensVesting.methods.redeemFee().call().then((res) => console.log('redeemFee', res));
 
 /**
  * ==== Following testing methods is Send Tx ====
@@ -98,34 +95,57 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 // let sendEncodeABI = tokensVesting.methods.withdraw('10000000000000000000000000').encodeABI();
 
 // setCrowdFundingParams
-/**
+/** 
+ * testing: 
+ * genesis timestamp = now + 20min
+ * starttimestamp = now + 10min
+ * endtimestamp = now + 15min
+ * 
  * participant	genesisTimestamp	tgeAmountRatio	ratioDecimals	cliff		duration	basis	startTimestamp				endTimestamp				limitation
  * 1						1644422134				20							2							60*10		60*5			60		1644421800(23:50)			1644424200(00:30)		1000000000000000000
  * 2						1644423300				10							2							60*10		60*5			60		1644422400(00:00)			1644425100(00:45)		500000000000000000
  */
 
+const now = new Date().getTime();
+const startTimestamp = Math.floor(now / 1000) + 2 * 60;
+const endTimestamp = Math.floor(now / 1000) + 4 * 60;
+const genesisTimestamp = Math.floor(now / 1000) + 5 * 60;
+const cliff = 0; // 0 minutes
+const duration = 900; // 15 minutes
+const basis = 10; // 10 seconds
+
 // let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
-// 	1, 1644422134, 20, 2, 600, 300, 60, 1644421800, 1644424200, '1000000000000000000'
+// 	1, genesisTimestamp, 20, 2, cliff, duration, basis, startTimestamp, endTimestamp, '50000000000000000000', '25000000000000000000', false
 // ).encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
-// 	2, 1644423300, 10, 2, 600, 300, 60, 1644422400, 1644425100, '500000000000000000'
+// 	2, genesisTimestamp, 10, 2, cliff, duration, basis, startTimestamp, endTimestamp, '1000000000000000000', '25000000000000000', true
 // ).encodeABI();
 
 /**
- * participant	No	fromAmount		price
- * 1						0		0							10000	
- * 1						1		100000				9000
- * 1						2		200000				8100
- * 1						3		300000				7290
- * 
- * 
+ * participant	No	fromAmount				price
+ * 2						0		0									10000	
+ * 2						1		100000*1e18				9000
+ * 2						2		200000*1e18				8100
+ * 2						3		300000*1e18				7290
  */
 
-// let sendEncodeABI = tokensVesting.methods.setPriceRange(1, 1, 100000, 10000).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.setPriceRange(1, 100000, 200000, 9000).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.setPriceRange(1, 200000, 300000, 8100).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.setPriceRange(1, 300000, 400000, 7290).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, 0, 10000).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '100000000000000000000000', 9000).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '200000000000000000000000', 8000).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '300000000000000000000000', 7000).encodeABI();
 
+// let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, '300000000000000000000000', 7390).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, '200000000000000000000000', 8200).encodeABI();
+
+// let sendEncodeABI = tokensVesting.methods.withdrawCoin('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '10000000000000000').encodeABI();
+
+// let sendEncodeABI = tokensVesting.methods.updateRedeemFee(500).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.redeem(2, '0x615b80388E3D3CaC6AA3a904803acfE7939f0399').encodeABI();
+
+// let sendEncodeABI = tokensVesting.methods.setAllowRedeem(2, true).encodeABI();
 // callContract(sendEncodeABI, tokensVestingAddress);
+
+// let sendEncodeABI = tokensVesting.methods.crowdFunding(2).encodeABI();
+// callContract(sendEncodeABI, tokensVestingAddress, '40000000000000000');
 
