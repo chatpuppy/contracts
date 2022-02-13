@@ -227,7 +227,6 @@ We need 2 pages
   
 	*show the donation UI and donate.*
   
-	
 	* Get the donation start time from `data = crowFundingParams(participant)`, get the start and end time from `data.startTimestamp` and `data.endTimestamp`. If the start time is later than now, show `Not start`. If the end time is earlier than now, show `Already End`.
   * Show the donation details
     * Total issued: `total()`
@@ -258,6 +257,7 @@ We need 2 pages
   * Input text field: input BNB/ETH amount
   * Button: 
     * Donate: `crowFunding(participant)`
+
 * `DONATED` page
   
 	*An account can not be more than one in one type of participant.*

@@ -17,7 +17,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 const senderAddress = (web3.eth.accounts.privateKeyToAccount('0x' + priKey)).address;
 console.log('发起地址', senderAddress);
 
-const tokensVestingAddress = '0xd0190d8367486Cd81d966748B35013952CB77Df8';
+const tokensVestingAddress = '0xe948C608027F18bE72E3193B094dF5D398A197b0';
 const tokensVestingJson = require('../build/contracts/TokensVesting.json');
 const tokensVesting = new web3.eth.Contract(tokensVestingJson.abi, tokensVestingAddress);
 
@@ -106,12 +106,12 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
  */
 
 const now = new Date().getTime();
-const startTimestamp = Math.floor(now / 1000) + 2 * 60;
-const endTimestamp = Math.floor(now / 1000) + 4 * 60;
-const genesisTimestamp = Math.floor(now / 1000) + 5 * 60;
+const startTimestamp = Math.floor(now / 1000) + 1 * 24 * 3600;
+const endTimestamp = Math.floor(now / 1000) + 7 * 24 * 3600;
+const genesisTimestamp = Math.floor(now / 1000) + 8 * 24 * 3600;
 const cliff = 0; // 0 minutes
-const duration = 900; // 15 minutes
-const basis = 10; // 10 seconds
+const duration = 90 * 24 * 3600; // 90 days
+const basis = 24 * 3600; // 1 day
 
 // let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
 // 	1, genesisTimestamp, 2000, cliff, duration, basis, startTimestamp, endTimestamp, '50000000000000000000', '25000000000000000000', false, false
@@ -125,6 +125,7 @@ const basis = 10; // 10 seconds
 // let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '100000000000000000000000', 9000).encodeABI();
 // let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '200000000000000000000000', 8000).encodeABI();
 // let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '300000000000000000000000', 7000).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '500000000000000000000000', 7000).encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, '300000000000000000000000', 7390).encodeABI();
 // let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, '200000000000000000000000', 8200).encodeABI();
