@@ -41,7 +41,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 cliff;
         uint256 duration;
         uint256 releasedAmount;
-        uint256 basis;
+        uint256 eraBasis;
         address beneficiary;
         Participant participant;
         Status status;
@@ -60,7 +60,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 tgeAmountRatio; // 0-10000, if _tgeAmountRatio is 50, the ratio is 50 / 10**2 = 50%
         uint256 cliff;
         uint256 duration;
-        uint256 basis;          // seconds
+        uint256 eraBasis;          // seconds
         uint256 startTimestamp; // funding start
         uint256 endTimestamp;   // funding end
         uint256 highest;        // investment max, this limitation is ETH/BNB amount, not token amount
@@ -140,7 +140,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 tgeAmountRatio_,
         uint256 cliff_,
         uint256 duration_,
-        uint256 basis_,
+        uint256 eraBasis_,
         uint256 startTimestamp_,
         uint256 endTimestamp_,
         uint256 highest_,
@@ -151,7 +151,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         require(Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale, 
             "TokensVesting: participant shoud only be PrivateSale or PublicSale");
         require(tgeAmountRatio_ >= 0 && tgeAmountRatio_ <= 10000, "TokensVesting: tge ratio is more than 10000");
-        require(basis_ <= duration_, "TokensVesting: basis_ smaller than duration_");
+        require(eraBasis_ <= duration_, "TokensVesting: eraBasis_ smaller than duration_");
 
         require(endTimestamp_ > startTimestamp_, "TokensVesting: end time is later than start");
 
@@ -164,7 +164,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         _crowdFundingParams[participant_].tgeAmountRatio = tgeAmountRatio_;
         _crowdFundingParams[participant_].cliff = cliff_;
         _crowdFundingParams[participant_].duration = duration_;
-        _crowdFundingParams[participant_].basis = basis_;
+        _crowdFundingParams[participant_].eraBasis = eraBasis_;
         _crowdFundingParams[participant_].startTimestamp = startTimestamp_;
         _crowdFundingParams[participant_].endTimestamp = endTimestamp_;
         _crowdFundingParams[participant_].highest = highest_;
@@ -278,7 +278,7 @@ contract TokensVesting is Ownable, ITokensVesting {
             _crowdFundingParams[participant_].cliff,
             _crowdFundingParams[participant_].duration,
             participant_,
-            _crowdFundingParams[participant_].basis,
+            _crowdFundingParams[participant_].eraBasis,
             price_
         );
 
@@ -294,7 +294,7 @@ contract TokensVesting is Ownable, ITokensVesting {
      * @param cliff_ cliff duration.
      * @param duration_ linear vesting duration.
      * @param participant_ specific type of {Participant}.
-     * @param basis_ basis duration for linear vesting.
+     * @param eraBasis_ duration for linear vesting.
      * @param price_ price of buying token
      * Waring: Convert vesting monthly to duration carefully
      * eg: vesting in 9 months => duration = 8 months = 8 * 30 * 24 * 60 * 60
@@ -307,7 +307,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 cliff_,
         uint256 duration_,
         uint8   participant_,
-        uint256 basis_,
+        uint256 eraBasis_,
         uint256 price_
     ) external onlyOwner {
         _addBeneficiary(
@@ -318,7 +318,7 @@ contract TokensVesting is Ownable, ITokensVesting {
             cliff_,
             duration_,
             participant_,
-            basis_,
+            eraBasis_,
             price_ 
         );
     }
@@ -405,7 +405,7 @@ contract TokensVesting is Ownable, ITokensVesting {
                     info.duration,
                     info.releasedAmount,
                     info.status,
-                    info.basis
+                    info.eraBasis
                 );
         }
 
@@ -426,7 +426,7 @@ contract TokensVesting is Ownable, ITokensVesting {
             info.duration,
             info.releasedAmount,
             info.status,
-            info.basis
+            info.eraBasis
         );
 
         return _releasable;
@@ -577,7 +577,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 cliff_,
         uint256 duration_,
         uint8   participant_,
-        uint256 basis_,
+        uint256 eraBasis_,
         uint256 price_ 
     ) internal {
         require(
@@ -602,8 +602,8 @@ contract TokensVesting is Ownable, ITokensVesting {
             "TokensVesting: out of uint256 range!"
         );
         require(
-            basis_ > 0,
-            "TokensVesting: basis_ must be greater than 0!"
+            eraBasis_ > 0,
+            "TokensVesting: eraBasis_ must be greater than 0!"
         );
 
         (bool has_, ) = getIndex(participant_, beneficiary_);
@@ -618,7 +618,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         info.duration = duration_;
         info.participant = Participant(participant_);
         info.status = Status.Inactive;
-        info.basis = basis_;
+        info.eraBasis = eraBasis_;
         info.price = price_; 
 
         emit BeneficiaryAdded(beneficiary_, totalAmount_);
@@ -654,7 +654,7 @@ contract TokensVesting is Ownable, ITokensVesting {
             info.duration,
             info.releasedAmount,
             info.status,
-            info.basis
+            info.eraBasis
         );
 
         if (unreleased > 0) {
@@ -710,7 +710,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 duration_,
         uint256 releasedAmount_,
         Status status_,
-        uint256 basis_
+        uint256 eraBasis_
     ) private view returns (uint256) {
         if (status_ == Status.Inactive) {
             return 0;
@@ -721,7 +721,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         }
 
         return
-            _vestedAmount(genesisTimestamp_, totalAmount_, tgeAmount_, cliff_, duration_, basis_) - releasedAmount_;
+            _vestedAmount(genesisTimestamp_, totalAmount_, tgeAmount_, cliff_, duration_, eraBasis_) - releasedAmount_;
     }
 
     function _vestedAmount(
@@ -730,7 +730,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 tgeAmount_,
         uint256 cliff_,
         uint256 duration_,
-        uint256 basis_
+        uint256 eraBasis_
     ) private view returns (uint256) {
         if(totalAmount_ < tgeAmount_) {
             return 0;
@@ -751,8 +751,8 @@ contract TokensVesting is Ownable, ITokensVesting {
             return linearVestingAmount + tgeAmount_;
         }
 
-        uint256 releaseMilestones = (timeLeftAfterStart - cliff_) / basis_ + 1;
-        uint256 totalReleaseMilestones = (duration_ + basis_ - 1) / basis_ + 1;
+        uint256 releaseMilestones = (timeLeftAfterStart - cliff_) / eraBasis_ + 1;
+        uint256 totalReleaseMilestones = (duration_ + eraBasis_ - 1) / eraBasis_ + 1;
         return
             (linearVestingAmount / totalReleaseMilestones) *
             releaseMilestones +
@@ -790,7 +790,7 @@ contract TokensVesting is Ownable, ITokensVesting {
             info.duration,
             info.releasedAmount,
             info.status,
-            info.basis
+            info.eraBasis
         );
 
         uint256 oldTotalAmount = info.totalAmount;
@@ -819,7 +819,7 @@ contract TokensVesting is Ownable, ITokensVesting {
                         info.duration,
                         info.releasedAmount,
                         info.status,
-                        info.basis
+                        info.eraBasis
                     );
             }
         }

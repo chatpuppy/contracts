@@ -35,7 +35,7 @@ interface ITokensVesting {
         uint256 tgeAmountRatio,
         uint256 cliff,
         uint256 duration,
-        uint256 basis,
+        uint256 eraBasis,
         uint256 startTimestamp,
         uint256 endTimestamp,
         uint256 highest,
@@ -62,7 +62,7 @@ interface ITokensVesting {
         uint256 cliff,
         uint256 duration,
         uint8   participant,
-        uint256 basis,
+        uint256 eraBasis,
         uint256 price
     ) external;
 }
