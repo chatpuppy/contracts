@@ -29,7 +29,7 @@ tokensVesting.methods.releasable().call().then((releasable) => console.log('总�
 tokensVesting.methods.participantReleasable(participant).call().then((participantReleasable) => console.log('participantReleasable', participantReleasable / 1e18));
 tokensVesting.methods.token().call().then((token) => console.log('CPT token', token));
 
-tokensVesting.methods.getIndex(senderAddress).call().then((response) => {
+tokensVesting.methods.getIndex(participant, senderAddress).call().then((response) => {
 	console.log('index', response, response[0] ? response[1] : 'no');
 	if(response[0]) {
 		tokensVesting.methods.releasable(response[1]).call().then((total) => console.log('我的可提现总量', total / 1e18));
@@ -114,11 +114,11 @@ const duration = 900; // 15 minutes
 const basis = 10; // 10 seconds
 
 // let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
-// 	1, genesisTimestamp, 20, 2, cliff, duration, basis, startTimestamp, endTimestamp, '50000000000000000000', '25000000000000000000', false
+// 	1, genesisTimestamp, 2000, cliff, duration, basis, startTimestamp, endTimestamp, '50000000000000000000', '25000000000000000000', false, false
 // ).encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
-// 	2, genesisTimestamp, 10, 2, cliff, duration, basis, startTimestamp, endTimestamp, '1000000000000000000', '25000000000000000', true
+// 	2, genesisTimestamp, 1000, cliff, duration, basis, startTimestamp, endTimestamp, '1000000000000000000', '25000000000000000', true, true
 // ).encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.setPriceRange(2, 0, 10000).encodeABI();
@@ -129,13 +129,13 @@ const basis = 10; // 10 seconds
 // let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, '300000000000000000000000', 7390).encodeABI();
 // let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, '200000000000000000000000', 8200).encodeABI();
 
-let sendEncodeABI = tokensVesting.methods.withdrawCoin('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '24000000000000000').encodeABI();
+// let sendEncodeABI = tokensVesting.methods.withdrawCoin('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '24000000000000000').encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.updateRedeemFee(500).encodeABI();
 // let sendEncodeABI = tokensVesting.methods.redeem(2, '0x3444E23231619b361c8350F4C83F82BCfAB36F65').encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.setAllowRedeem(2, true).encodeABI();
-callContract(sendEncodeABI, tokensVestingAddress);
+// callContract(sendEncodeABI, tokensVestingAddress);
 
 // let sendEncodeABI = tokensVesting.methods.crowdFunding(2).encodeABI();
 // callContract(sendEncodeABI, tokensVestingAddress, '30000000000000000');

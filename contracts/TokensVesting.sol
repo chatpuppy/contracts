@@ -50,23 +50,22 @@ contract TokensVesting is Ownable, ITokensVesting {
     VestingInfo[] private _beneficiaries;
 
     struct PriceRange {
-        uint256 fromAmount; // Token amount, not BNB/ETH amount
-        uint256 price;
+        uint256 fromAmount;     // Token amount, not BNB/ETH amount
+        uint256 price;          // if 0.5BNB change to 10000 CPT, the price is 10000 / 0.5 = 20000
     }
     mapping(uint256 => PriceRange[]) private _priceRange;
 
     struct CrowdFundingParams {
         uint256 genesisTimestamp;
-        uint256 tgeAmountRatio;
-        uint256 ratioDecimals; // default is 2, if _tgeAmountRatio is 50, the ratio is 50 / 10**2 = 50%
+        uint256 tgeAmountRatio; // 0-10000, if _tgeAmountRatio is 50, the ratio is 50 / 10**2 = 50%
         uint256 cliff;
         uint256 duration;
-        uint256 basis; // seconds
-        uint256 startTimestamp;
-        uint256 endTimestamp;
-        uint256 limitation; // investment max, this limitation is ETH/BNB amount, not token amount
-        uint256 lowest;     // investment min, this limitation is ETH/BNB amount, not token amount
-        bool    acceptOverCap; // if amount more than cap, can accept?
+        uint256 basis;          // seconds
+        uint256 startTimestamp; // funding start
+        uint256 endTimestamp;   // funding end
+        uint256 highest;        // investment max, this limitation is ETH/BNB amount, not token amount
+        uint256 lowest;         // investment min, this limitation is ETH/BNB amount, not token amount
+        bool    acceptOverCap;  // if amount more than cap, can accept?
         bool    allowRedeem;
     }
     mapping(uint256 => CrowdFundingParams) private _crowdFundingParams;
@@ -100,20 +99,8 @@ contract TokensVesting is Ownable, ITokensVesting {
         bool has = false;
         uint256 index = 0;
         for(uint256 i = 0; i < _beneficiaries.length; i++) {
-            if(_beneficiaries[i].beneficiary == beneficiary_ && _beneficiaries[i].participant == Participant(participant_)) {
-                index = i;
-                has = true;
-                break;
-            }
-        }
-        return (has, index);
-    }
-
-    function getIndex(address beneficiary_) public view returns(bool, uint256) {
-        bool has = false;
-        uint256 index = 0;
-        for(uint256 i = 0; i < _beneficiaries.length; i++) {
-            if(_beneficiaries[i].beneficiary == beneficiary_) {
+            if(_beneficiaries[i].beneficiary == beneficiary_ 
+                && _beneficiaries[i].participant == Participant(participant_)) {
                 index = i;
                 has = true;
                 break;
@@ -151,31 +138,39 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint8   participant_,
         uint256 genesisTimestamp_,
         uint256 tgeAmountRatio_,
-        uint256 ratioDecimals_,
         uint256 cliff_,
         uint256 duration_,
         uint256 basis_,
         uint256 startTimestamp_,
         uint256 endTimestamp_,
-        uint256 limitation_,
+        uint256 highest_,
         uint256 lowest_,
-        bool    acceptOverCap_
+        bool    acceptOverCap_,
+        bool    allowRedeem_
     ) external onlyOwner {
-        require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale)
-            && genesisTimestamp_ > block.timestamp && tgeAmountRatio_ >= 0 && cliff_ >= 0 && duration_ >=0 && basis_ >= 0
-            && startTimestamp_ > block.timestamp && endTimestamp_ > block.timestamp && endTimestamp_ >= startTimestamp_,
-            "TokensVesting: add invalid params");
+        require(Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale, 
+            "TokensVesting: participant shoud only be PrivateSale or PublicSale");
+        require(tgeAmountRatio_ >= 0 && tgeAmountRatio_ <= 10000, "TokensVesting: tge ratio is more than 10000");
+        require(basis_ <= duration_, "TokensVesting: basis_ smaller than duration_");
+
+        require(endTimestamp_ > startTimestamp_, "TokensVesting: end time is later than start");
+
+        // If dont limit the following, the crowd funding time can be extended event after genesis start
+        // require(genesisTimestamp_ > block.timestamp && startTimestamp_ > block.timestamp && endTimestamp_ > block.timestamp,
+        //     "TokensVesting: time must after now");
+        // require(genesisTimestamp_ > endTimestamp_, "TokensVesting: genesis timestamp must later than end");
+
         _crowdFundingParams[participant_].genesisTimestamp = genesisTimestamp_;
         _crowdFundingParams[participant_].tgeAmountRatio = tgeAmountRatio_;
-        _crowdFundingParams[participant_].ratioDecimals = ratioDecimals_;
         _crowdFundingParams[participant_].cliff = cliff_;
         _crowdFundingParams[participant_].duration = duration_;
         _crowdFundingParams[participant_].basis = basis_;
         _crowdFundingParams[participant_].startTimestamp = startTimestamp_;
         _crowdFundingParams[participant_].endTimestamp = endTimestamp_;
-        _crowdFundingParams[participant_].limitation = limitation_;
+        _crowdFundingParams[participant_].highest = highest_;
         _crowdFundingParams[participant_].lowest = lowest_;
         _crowdFundingParams[participant_].acceptOverCap = acceptOverCap_;
+        _crowdFundingParams[participant_].allowRedeem = allowRedeem_;
     }
 
     /**
@@ -195,8 +190,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     ) external onlyOwner {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
             'TokensVesting: participant shoud only be PrivateSale or PublicSale');
-        require(fromAmount_ >= 0 && price_ > 0,
-            'TokensVesting: price or fromAmount is wrong');
+        require(price_ > 0, 'TokensVesting: price can not be zero');
 
         PriceRange storage priceRange_ = _priceRange[participant_].push();
         priceRange_.fromAmount = fromAmount_;
@@ -224,9 +218,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
              'TokensVesting: participant shoud only be PrivateSale or PublicSale');
         require(index_ >= 0 && index_ < _priceRange[participant_].length, 'TokensVesting: index is out of price range');
-        require(fromAmount_ >= 0 && price_ > 0,
-            'TokensVesting: price or fromAmount is wrong');
-            
+        require(price_ > 0, 'TokensVesting: price can not be zero');
         require(_priceRange[participant_][index_].price > 0, 'TokensVesting: price of index not set');
 
         _priceRange[participant_][index_].fromAmount = fromAmount_;
@@ -242,31 +234,13 @@ contract TokensVesting is Ownable, ITokensVesting {
         (price_, index_) = _getPriceForAmount(participant_, getTotalAmountByParticipant(participant_) + amount_);
     }
 
-    function _getPriceForAmount(uint8 participant_, uint256 amount_) internal view returns(uint256 price_, uint256 index_) {
-        if(Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale) {
-            PriceRange[] memory priceRange_ = _priceRange[participant_];
-            if(amount_ >= priceRange_[priceRange_.length - 1].fromAmount) {
-                price_ = priceRange_[priceRange_.length - 1].price;
-                index_ = priceRange_.length - 1;
-            } else {
-                for(uint256 i = 1; i < priceRange_.length; i++) {
-                    if(priceRange_[i].fromAmount > amount_) {
-                        price_ = priceRange_[i-1].price;
-                        index_ = i - 1;
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
     /**
      * @dev Donator pay ETH/BNB and get quota of token(need donator claim after cliff)
      */
     function crowdFunding(uint8 participant_) external payable {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
             'TokensVesting: crowdFunding participant should only be PrivateSale or PublicSale');
-        require(_crowdFundingParams[participant_].limitation >= msg.value, 'TokensVesting: more than limitation');
+        require(_crowdFundingParams[participant_].highest >= msg.value, 'TokensVesting: more than highest');
         require(_crowdFundingParams[participant_].lowest <= msg.value, 'TokensVesting: less than lowest');
 
         require(_crowdFundingParams[participant_].startTimestamp <= block.timestamp,
@@ -300,7 +274,7 @@ contract TokensVesting is Ownable, ITokensVesting {
             _msgSender(),
             _crowdFundingParams[participant_].genesisTimestamp,
             tokenAmount,
-            tokenAmount * _crowdFundingParams[participant_].tgeAmountRatio / 10 ** _crowdFundingParams[participant_].ratioDecimals,
+            tokenAmount * _crowdFundingParams[participant_].tgeAmountRatio / 10000,
             _crowdFundingParams[participant_].cliff,
             _crowdFundingParams[participant_].duration,
             participant_,
@@ -347,61 +321,6 @@ contract TokensVesting is Ownable, ITokensVesting {
             basis_,
             price_ 
         );
-    }
-
-    function _addBeneficiary(
-        address beneficiary_,
-        uint256 genesisTimestamp_,
-        uint256 totalAmount_,
-        uint256 tgeAmount_,
-        uint256 cliff_,
-        uint256 duration_,
-        uint8   participant_,
-        uint256 basis_,
-        uint256 price_ 
-    ) internal {
-        require(
-            genesisTimestamp_ >= block.timestamp,
-            "TokensVesting: genesis too soon!"
-        );
-        require(
-            beneficiary_ != address(0),
-            "TokensVesting: beneficiary_ is the zero address!"
-        );
-        require(
-            totalAmount_ >= tgeAmount_,
-            "TokensVesting: totalAmount_ must be greater than or equal to tgeAmount_!"
-        );
-        require(
-            Participant(participant_) > Participant.Unknown &&
-                Participant(participant_) < Participant.OutOfRange,
-            "TokensVesting: participant_ out of range!"
-        );
-        require(
-            genesisTimestamp_ + cliff_ + duration_ <= type(uint256).max,
-            "TokensVesting: out of uint256 range!"
-        );
-        require(
-            basis_ > 0,
-            "TokensVesting: basis_ must be greater than 0!"
-        );
-
-        (bool has_, ) = getIndex(participant_, beneficiary_);
-        require(!has_, "TokensVesting: beneficiary exist in this participant");
-
-        VestingInfo storage info = _beneficiaries.push();
-        info.beneficiary = beneficiary_;
-        info.genesisTimestamp = genesisTimestamp_;
-        info.totalAmount = totalAmount_;
-        info.tgeAmount = tgeAmount_;
-        info.cliff = cliff_;
-        info.duration = duration_;
-        info.participant = Participant(participant_);
-        info.status = Status.Inactive;
-        info.basis = basis_;
-        info.price = price_; 
-
-        emit BeneficiaryAdded(beneficiary_, totalAmount_);
     }
 
     /**
@@ -550,8 +469,8 @@ contract TokensVesting is Ownable, ITokensVesting {
     /**
      * @dev Release all releasable amount of tokens
      */
-    function release() public {
-        (bool has_, uint256 index_) = getIndex(_msgSender());
+    function release(uint8 participant_) public {
+        (bool has_, uint256 index_) = getIndex(participant_, _msgSender());
         require(has_, "TokensVesting: user not found in beneficiary list");
         require(index_ >= 0 && index_ < _beneficiaries.length, "TokensVesting: index out of range!");
 
@@ -597,13 +516,13 @@ contract TokensVesting is Ownable, ITokensVesting {
     /**
      * @dev Revoke and return back ETH/BNB to the token buyer from contract
       */
-    function redeem(uint8 participant_, address to_) public {
+    function redeem(uint8 participant_) public {
         require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
             'TokensVesting: redeem participant should only be PrivateSale or PublicSale');
         require(_crowdFundingParams[participant_].allowRedeem, 'TokensVesting: redeem not available');
-        require(to_ != address(0), "TokensVesting: redeem address is the zero address");
         
         // get the public sale price
+        address to_ = _msgSender();
         (bool has_, uint index_) = getIndex(participant_, to_);
         require(has_, "TokensVesting: not beneficiary");
         require(index_ >= 0 && index_ < _beneficiaries.length, "TokensVesting: index out of range!");
@@ -642,6 +561,87 @@ contract TokensVesting is Ownable, ITokensVesting {
         );
         _crowdFundingParams[participant_].allowRedeem = status;
     }
+
+
+    /**
+     * =================================================================
+     * Private methods
+     * =================================================================
+     */
+
+    function _addBeneficiary(
+        address beneficiary_,
+        uint256 genesisTimestamp_,
+        uint256 totalAmount_,
+        uint256 tgeAmount_,
+        uint256 cliff_,
+        uint256 duration_,
+        uint8   participant_,
+        uint256 basis_,
+        uint256 price_ 
+    ) internal {
+        require(
+            genesisTimestamp_ >= block.timestamp,
+            "TokensVesting: genesis too soon!"
+        );
+        require(
+            beneficiary_ != address(0),
+            "TokensVesting: beneficiary_ is the zero address!"
+        );
+        require(
+            totalAmount_ >= tgeAmount_,
+            "TokensVesting: totalAmount_ must be greater than or equal to tgeAmount_!"
+        );
+        require(
+            Participant(participant_) > Participant.Unknown &&
+                Participant(participant_) < Participant.OutOfRange,
+            "TokensVesting: participant_ out of range!"
+        );
+        require(
+            genesisTimestamp_ + cliff_ + duration_ <= type(uint256).max,
+            "TokensVesting: out of uint256 range!"
+        );
+        require(
+            basis_ > 0,
+            "TokensVesting: basis_ must be greater than 0!"
+        );
+
+        (bool has_, ) = getIndex(participant_, beneficiary_);
+        require(!has_, "TokensVesting: beneficiary exist in this participant");
+
+        VestingInfo storage info = _beneficiaries.push();
+        info.beneficiary = beneficiary_;
+        info.genesisTimestamp = genesisTimestamp_;
+        info.totalAmount = totalAmount_;
+        info.tgeAmount = tgeAmount_;
+        info.cliff = cliff_;
+        info.duration = duration_;
+        info.participant = Participant(participant_);
+        info.status = Status.Inactive;
+        info.basis = basis_;
+        info.price = price_; 
+
+        emit BeneficiaryAdded(beneficiary_, totalAmount_);
+    }
+
+    function _getPriceForAmount(uint8 participant_, uint256 amount_) internal view returns(uint256 price_, uint256 index_) {
+        if(Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale) {
+            PriceRange[] memory priceRange_ = _priceRange[participant_];
+            if(amount_ >= priceRange_[priceRange_.length - 1].fromAmount) {
+                price_ = priceRange_[priceRange_.length - 1].price;
+                index_ = priceRange_.length - 1;
+            } else {
+                for(uint256 i = 1; i < priceRange_.length; i++) {
+                    if(priceRange_[i].fromAmount > amount_) {
+                        price_ = priceRange_[i-1].price;
+                        index_ = i - 1;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * @dev Release all releasable amount of tokens for the sepecific beneficiary by index.
      */
