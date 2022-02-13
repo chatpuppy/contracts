@@ -35,6 +35,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     }
 
     struct VestingInfo {
+        uint256 timestamp;
         uint256 genesisTimestamp;
         uint256 totalAmount;
         uint256 tgeAmount;
@@ -195,7 +196,6 @@ contract TokensVesting is Ownable, ITokensVesting {
         PriceRange storage priceRange_ = _priceRange[participant_].push();
         priceRange_.fromAmount = fromAmount_;
         priceRange_.price = price_;
-
     }
 
     /**
@@ -203,6 +203,14 @@ contract TokensVesting is Ownable, ITokensVesting {
      */
     function priceRange(uint256 participant_) public view returns(PriceRange[] memory) {
         return _priceRange[participant_];
+    }
+
+    /**
+     * @dev Get the cap of type of participant
+     */
+    function getCap(uint8 participant_) public view returns(uint256) {
+        PriceRange[] memory priceRanges_ = _priceRange[participant_];
+        return priceRanges_[priceRanges_.length - 1].fromAmount;
     }
 
     /**
@@ -223,7 +231,6 @@ contract TokensVesting is Ownable, ITokensVesting {
 
         _priceRange[participant_][index_].fromAmount = fromAmount_;
         _priceRange[participant_][index_].price = price_;
-
     }
 
     /**
@@ -610,6 +617,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         require(!has_, "TokensVesting: beneficiary exist in this participant");
 
         VestingInfo storage info = _beneficiaries.push();
+        info.timestamp = block.timestamp;
         info.beneficiary = beneficiary_;
         info.genesisTimestamp = genesisTimestamp_;
         info.totalAmount = totalAmount_;

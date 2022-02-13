@@ -219,242 +219,273 @@ marketplace.methods.matchOrder(orderId, price).send();
 
 ----------------------------------------------------------------
 
-# Token vesting managment
+# Donation(crowd funding) and token vesting management
+
+We need 2 pages
+
+* `DONATE` page
+  
+	*show the donation UI and donate.*
+  
+	* Get the donation start time from `data = crowFundingParams(participant)`, get the start and end time from `data.startTimestamp` and `data.endTimestamp`. If the start time is later than now, show `Not start`. If the end time is earlier than now, show `Already End`.
+  * Show the donation details
+    * Total issued: `total()`
+    * Issued amount of current participant type: `getTotalAmountByParticipant(participant)`
+    * Total beneficiary count: `getBeneficiaryCount`
+    * Beneficiary count of current participant type: `getBeneficiaryCountParticipant`
+    * All releasable: `releasable()`
+    * Releasable of current participant type: `participantReleasable(participant)`
+    * Released of current participant type: `participantReleased(participant)`
+    * RevokedAmount of all: `revokedAmount`
+    * Current rate(price) of current participant type: `getPriceForAmount`
+    * CrowdFunding params: `data = crowFundingParams(participant)`
+      * Genesis time: `data.genesisTimestamp`
+      * TGE Amount ratio: `data.tgeAmountRatio / 100`%
+      * Cliff: from `data.genesisTimestamp` to `data.genesisTimestamp + data.cliff`
+      * Duration: from `data.genesisTimestamp` to `data.genesisTimestamp + data.cliff + data.duration`
+      * Era Basis: `data.eraBasis`
+      * Start time: `data.startTimestamp`
+      * End time: `data.endTimestamp`
+      * Higest of each donation: `data.highest`
+      * Lowest of each donation: `data.lowest`
+      * Allow redeem: `data.allowRedeem`
+      * Accept donamtion if amount over cap: `data.acceptOverCap`
+    * Price table for different raising amount range: `priceRange(participant)`
+      * column 1: `fromAmount`
+      * column 2: `price`
+      * Cap: `getCap(participant)`
+  * Input text field: input BNB/ETH amount
+  * Button: 
+    * Donate: `crowFunding(participant)`
+* `DONATED` page
+  
+	*An account can not be more than one in one type of participant.*
+  
+	**Get your own beneficiary data by `data = getBeneficiary(getIndex(participant, address))`**
+
+	* Donated details:
+    	* Genesis time: `data.genesisTimestamp`
+    	* Date and time: `data.timestamp`
+    	* Total token amount: `data.totalAmount`
+      * TGE Amount: `data.tgeAmount`
+      * Cliff: from `data.genesisTimestamp` to `data.genesisTimestamp + data.cliff`
+      * Duration: from `data.genesisTimestamp` to `data.genesisTimestamp + data.cliff + data.duration`
+      * Era Basis: `data.eraBasis`
+      * Status: `data.status`
+      * rate(price): `data.price`
+      * Donation amount(BNB/ETH): `data.totalAmount / data.price`
+      * releasable: `releasable()`
+      * released: `released()`
+  * Buttons:
+      * Release: `release(participant)`
+      * Redeem: `redeem(participant)`
+  
+----------------------------------------------------------------
+
+# Token vesting smart contract
+* [TokensVesting.sol](./contracts/TokensVesting.sol)
+
 ## 1- Only operated by owner
-### Update ERC20 token
+### 1.1 Update ERC20 token
 ```
 updateToken(tokenAddress)
 ```
-OK
 
-### Add beneficiary by owner
+### 1.2 Add beneficiary by owner
+* Normally, the admin will set the crowd funding params and price. The donators will pay BNB/ETH, and get the vesting token. Then the donators will release the token every era. But for the non-donation participants, the admin will add beneficiaries manully.
 ```
-function addBeneficiary(
-		address beneficiary_,
-		uint256 genesisTimestamp_,
-		uint256 totalAmount_,
-		uint256 tgeAmount_,
-		uint256 cliff_,
-		uint256 duration_,
-		uint8   participant_,
-		uint256 basis_
-) external;
+addBeneficiary
 ```
-OK
 
-### Start vesting of a beneficiary by owner
+### 1.3 Start vesting of a beneficiary by owner
+* Before activation, the donator can not release, and can not get the releasable amount.
 ```
 activate(beneficiaryIndex)
 ```
-OK
 
-### Start all beneficiaries' vesting by owner
+### 1.4 Start all beneficiaries' vesting by owner
 ```
 activateAll()
 ```
-OK
 
-### Start a type of participants vesting by owner
+### 1.5 Start a type of participants vesting by owner
 ```
 activeParticipant(participant)
 ```
-Ok
 
-### Release all amount for all beneficiaries by owner
+### 1.6 Release all amount for all beneficiaries by owner
 * Note: make sure the token vesting contract address is authorized by CPT Token
 ```
 releaseAll()
 ```
-OK
 
-### Release all amount for a type of participants by owner
+### 1.7 Release all amount for a type of participants by owner
 ```
 releaseParticipant(participant)
 ```
-OK
 
-### Forbiden a beneficiary to claim by owner
+### 1.8 Forbiden a beneficiary to claim again by owner
+* This operation will not cancel the releasable and released amount.
 ```
 revoke(beneficiaryIndex)
 ```
-OK
 
-### Withdraw all revoked amount from contract by owner
+### 1.9 Withdraw all revoked token from contract by owner
 ```
 withdraw(amount)
 ```
-OK
 
-#### Get all beneficiaries data only by owner
+### 1.10 Get all beneficiaries data only by owner
 ```
 getAllBeneficiaries()
 ```
-OK
 
-### Set croud funding params by owner
+### 1.11 Set croud funding params by owner
 ```
 setCrowdFundingParams
 ```
-OK
 
-### Add price and amount range for each phase by owner
+### 1.12 Add price and amount range for each phase by owner
 ```
 setPriceRange
 ```
-OK OK
 
-### Update price and amount range for each phase by owner
+### 1.13 Update price and amount range for each phase by owner
 ```
 updatePriceRange
 ```
-OK
 
-### Withdraw ETH/BNB from contract by owner
+### 1.14 Withdraw ETH/BNB from contract by owner
 ```
 withdrawCoin(to, amount)
 ```
-OK
 
-### Set redeem status by owner
+### 1.15 Set redeem status by owner
 ```
 setAllowRedeem(participant, status)
 ```
-OK
 
-### Redeem ETH/BNB to the token buyers by owner
+### 1.16 Update redeem fee (ex. 50 means 5%) by owner
 ```
-redeem(participant, to)
+updateRedeemFee(fee)
 ```
-OK
-
-### Update redeem fee (ex. 50 means 5%) by owner
-```
-updateRedeemFee
-```
-OK
 
 ## 2- Operated by all
 ### 2.1- Get methods
-#### Get ERC20 token address
+#### 2.1.1 Get ERC20 token address
 ```
 token
 ```
-OK
 
-#### Get redeem fee rate (500 means 5%)
+#### 2.1.2 Get redeem fee rate (500 means 5%)
 ```
 redeemFee()
 ```
-OK
 
-#### Get total amount
+#### 2.1.3 Get total amount
 ```
 total()
 ```
-OK
 
-#### Get totol amount of all beneficiaries
+#### 2.1.4 Get totol amount of all beneficiaries
 ```
 getTotalAmountByParticipant(participant)
 ```
-OK
 
-#### Get count of all beneficiaries
+#### 2.1.5 Get count of all beneficiaries
 ```
 getBeneficiaryCount()
 ```
-OK
 
-#### Get all releasable amount of all beneficiaries
+#### 2.1.6 Get count of beneficiaries from given participant
+```
+getBeneficiaryCountParticipant
+```
+
+#### 2.1.7 Get all releasable amount of all beneficiaries
 ```
 releasable()
 ```
-OK
 
-#### Get releasable amount of a beneficiary
+#### 2.1.8 Get releasable amount of a beneficiary
 ```
 releasable(beneficiaryIndex)
 ```
-OK
 
-#### Get releasable amount of of a type of participants
+#### 2.1.9 Get releasable amount of of a type of participants
 ```
 participantReleasable(participant)
 ```
-OK
 
-#### Get all released amount of all beneficiaries
+#### 2.1.10 Get all released amount of all beneficiaries
 ```
 released()
 ```
-OK
 
-#### Get all released amount of a type of participants
+#### 2.1.11 Get all released amount of a type of participants
 ```
 participantReleased(participant)
 ```
-OK
 
-#### Get is already in the beneficiaries list
+#### 2.1.12 Get is already in the beneficiaries list
 ```
 getBeneficiaryCount()
 ```
-OK
 
-#### Get beneficiary's index
+#### 2.1.13 Get beneficiary's index
 ```
-getIndex(beneficiaryAddress)
+getIndex(participant, beneficiaryAddress)
 ```
-OK
 
-#### Get beneficiary by index
+#### 2.1.14 Get beneficiary by index
 ```
 getBeneficiary(beneficiaryIndex)
 ```
-OK
 
-#### Get revoked amount
+#### 2.1.15 Get revoked amount
 ```
 revokedAmount
 ```
-OK
 
-#### Get revoked and withdrawed amount
+#### 2.1.16 Get revoked and withdrawed amount
 ```
 revokedAmountWithdrawn
 ```
-OK
 
-#### Get price for phase according to the raised amount
+#### 2.1.17 Get price for phase according to the raised amount
 ```
 getPriceForAmount(participant, amount)
 ```
-OK
 
-#### Get price range data of given participant for crowd funding
+#### 2.1.18 Get price range data of given participant for crowd funding
 ```
 priceRange(participant)
 ```
-OK
 
-#### Get config of crowd funding of given participant
+#### 2.1.19 Get config of crowd funding of given participant
 ```
 crowdFundingParams(participant)
 ```
-OK
+
+#### 2.1.20 Get cap of given participant
+```
+getCap(participant)
+```
 
 ### 2.2- Set methods buy beneficiary or donator
 
-#### Release/claim by the beneficiary himself
+#### 2.2.1 Release/claim by the beneficiary himself
 ```
 release()
 ```
-OK
 
-### CrowdFunding
-This is payable function, pay ETH/BNB and get token benefit, the investor should claim the token then can get real token.
+#### 2.2.2 CrowdFunding
+* This is payable function, pay ETH/BNB and get token benefit, the investor should claim the token then can get real token.
 ```
 crowdFunding(participant)
 ```
-OK
 
+#### 2.2.3 Redeem ETH/BNB to the token buyers by owner
+```
+redeem(participant, to)
+```
