@@ -365,12 +365,6 @@ getBeneficiaryCount()
 ```
 OK
 
-#### Get total amount of a type of participants
-```
-getTotalAmountByParticipant(participant)
-```
-OK
-
 #### Get all releasable amount of all beneficiaries
 ```
 releasable()
@@ -390,7 +384,6 @@ participantReleasable(participant)
 OK
 
 #### Get all released amount of all beneficiaries
-* Note: make sure the token vesting contract address is authorized by CPT Token
 ```
 released()
 ```
@@ -435,12 +428,6 @@ OK
 #### Get price for phase according to the raised amount
 ```
 getPriceForAmount(participant, amount)
-```
-OK
-
-#### Get price for the current phase
-```
-getCurrentPrice(participant)
 ```
 OK
 
