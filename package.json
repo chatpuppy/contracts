@@ -45,7 +45,10 @@
     
     "deploy-cpt-rinkeby": "truffle migrate --network rinkeby -f 2 --to 2",
     "deploy-random-test2": "truffle migrate --network rinkeby -f 12 --to 12",
+    "deploy-nft-manager-v2-rinkeby": "truffle migrate --network rinkeby -f 13 --to 13",
+
     "test-random-test2": "node scripts/12_test_random_test2.js",
+    "test-nft-manager-v2": "node scripts/13_test_nft_manager_v2.js",
     
     "merge-cpt-contract": "sol-merger \"./contracts/CPTToken.sol\" merged-contracts",
     "test": "mocha --exit --recursive --timeout=300000"
