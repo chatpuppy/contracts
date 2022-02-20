@@ -58,9 +58,8 @@ contract RandomTestV2 is VRFConsumerBaseV2, Ownable {
     );
 	}
 
-	function fulfillRandomWords(uint256 requestId_, uint256[] memory randomWords_) internal override {
+	function fulfillRandomWords(uint256, uint256[] memory randomWords_) internal override {
 		_randomWords = randomWords_;
-		requestId = requestId_;
 	}
 
 	function randomWords() public view returns(uint256[] memory) {
