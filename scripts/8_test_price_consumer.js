@@ -21,4 +21,3 @@ const priceConsumerJson = require('../build/contracts/PriceConsumerV3.json');
 // Must run on BSC Mainnet
 const priceConsumer = new web3.eth.Contract(priceConsumerJson.abi, priceConsumerAddress);
 priceConsumer.methods.getLatestPrice().call().then((price) => console.log('last price', price));
-	

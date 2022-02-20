@@ -33,7 +33,7 @@
     "deploy-nft-manager-mainnet": "truffle migrate --network bscMainnet -f 6 --to 6",
     "deploy-marketplace-mainnet": "truffle migrate --network bscMainnet -f 7 --to 7",
     "deploy-price-consumer-mainnet": "truffle migrate --network bscMainnet -f 8 --to 8",
-    
+
     "deploy-cpt-kovan": "truffle migrate --network kovan -f 2 --to 2",
     "deploy-nft-kovan": "truffle migrate --network kovan -f 3 --to 3",
     "deploy-random-generator-kovan": "truffle migrate --network kovan -f 4 --to 4",
@@ -43,9 +43,12 @@
     "deploy-price-consumer-kovan": "truffle migrate --network kovan -f 8 --to 8",
     "deploy-token-vesting-kovan": "truffle migrate --network kovan -f 9 --to 9",
     "deploy-random-test-kovan": "truffle migrate --network kovan -f 11 --to 11",
-
+    
+    "deploy-cpt-rinkeby": "truffle migrate --network rinkeby -f 2 --to 2",
+    "deploy-random-test2": "truffle migrate --network rinkeby -f 12 --to 12",
+    "test-random-test2": "node scripts/12_test_random_test2.js",
+    
     "merge-cpt-contract": "sol-merger \"./contracts/CPTToken.sol\" merged-contracts",
-
     "test": "mocha --exit --recursive --timeout=300000"
   },
   "keywords": [],
@@ -63,6 +66,7 @@
     "truffle-plugin-verify": "^0.5.17"
   },
   "dependencies": {
+    "@chainlink/contracts": "^0.4.0",
     "@openzeppelin/contracts": "^4.3.2",
     "config": "^3.3.6",
     "erc721-balance": "^0.0.2",
