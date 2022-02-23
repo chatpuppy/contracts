@@ -105,20 +105,48 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
  * 2						1644423300				10							2							60*10		60*5			60		1644422400(00:00)			1644425100(00:45)		500000000000000000
  */
 
-const now = new Date().getTime();
-const startTimestamp = Math.floor(now / 1000) + 1 * 24 * 3600;
-const endTimestamp = Math.floor(now / 1000) + 7 * 24 * 3600;
-const genesisTimestamp = Math.floor(now / 1000) + 8 * 24 * 3600;
-const cliff = 0; // 0 minutes
-const duration = 90 * 24 * 3600; // 90 days
-const basis = 24 * 3600; // 1 day
+
+// Set public sale params
+// const now = new Date().getTime();
+// const tgeAmountRatio = 1000; // on genesisTimestamp 10% of total amount will be release
+// const startTimestamp = Math.floor(now / 1000) + 0 * 24 * 3600; // start when deploy the contract
+// const endTimestamp = Math.floor(now / 1000) + 2 * 24 * 3600; // sale will be over 2 days later
+// const genesisTimestamp = Math.floor(now / 1000) + 2.5 * 24 * 3600; // genesisTimestamp is 2.5 days after deploy
+// const cliff = 0; // 0 minutes
+// const duration = 90 * 24 * 3600; // Vesting tokens will be released during 90 days
+// const basis = 0 * 3600; // The buyer can release the releasable tokens every 1 hour
+// const highest = '1000000000000000000'; // highest purchasing amount is 1 BNB/ETH
+// const lowest = '25000000000000000'; // lowest purchasing amount is 0.025 BNB/ETH
 
 // let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
 // 	1, genesisTimestamp, 2000, cliff, duration, basis, startTimestamp, endTimestamp, '50000000000000000000', '25000000000000000000', false, false
 // ).encodeABI();
 
+// Set public sale params
+const now = new Date().getTime();
+const tgeAmountRatio = 1000; // on genesisTimestamp 10% of total amount will be release
+const startTimestamp = Math.floor(now / 1000) + 0 * 24 * 3600; // start when deploy the contract
+const endTimestamp = Math.floor(now / 1000) + 2 * 24 * 3600; // sale will be over 2 days later
+const genesisTimestamp = Math.floor(now / 1000) + 2.5 * 24 * 3600; // genesisTimestamp is 2.5 days after deploy
+const cliff = 0; // 0 minutes
+const duration = 90 * 24 * 3600; // Vesting tokens will be released during 90 days
+const basis = 0 * 3600; // The buyer can release the releasable tokens every 1 hour
+const highest = '1000000000000000000'; // highest purchasing amount is 1 BNB/ETH
+const lowest = '25000000000000000'; // lowest purchasing amount is 0.025 BNB/ETH
+
 // let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
-// 	2, genesisTimestamp, 1000, cliff, duration, basis, startTimestamp, endTimestamp, '1000000000000000000', '25000000000000000', true, true
+// 	2,  // participant
+// 	genesisTimestamp, 
+// 	tgeAmountRatio,
+// 	cliff, 
+// 	duration, 
+// 	basis, 
+// 	startTimestamp, 
+// 	endTimestamp, 
+// 	highest, 
+// 	lowest, 
+// 	true, 
+// 	true
 // ).encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.setPriceRange(2, 0, 10000).encodeABI();
