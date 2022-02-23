@@ -14,8 +14,8 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-// const cptContractAddress = '0x7C4b6E294Fd0ae77B6E1730CBEb1B8491859Ee24'; // kovan
-const cptContractAddress = '0x014Eed0cb456FF95992A79D51ff7169ec44a5cFc'; // rinkeby
+const cptContractAddress = '0x7C4b6E294Fd0ae77B6E1730CBEb1B8491859Ee24'; // kovan
+// const cptContractAddress = '0x014Eed0cb456FF95992A79D51ff7169ec44a5cFc'; // rinkeby
 const cptContractJson = require('../build/contracts/CPTToken.json');
 
 const cptContract = new web3.eth.Contract(cptContractJson.abi, cptContractAddress);
@@ -34,7 +34,7 @@ cptContract.methods.BURNER_ROLE().call().then((response) => console.log('BURNER_
 const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
 let sendEncodeABI = cptContract.methods.mint(
-	'0x569f5199C35D569cb9C4B61Bf1b95152aD941960', 
+	'0x039b3860e73D3578826FfeD35694192e269446a7', 
 	'100000000000000000000000').encodeABI(); 
 // let sendEncodeABI = dareContract.methods.transfer('0x3444E23231619b361c8350F4C83F82BCfAB36F65', '72000000000000000000').encodeABI();
 

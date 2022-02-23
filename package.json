@@ -2,8 +2,10 @@
   "name": "chat-contract",
   "version": "1.0.0",
   "description": "ChatPuppy smart contracts",
+  "type": "module",
   "scripts": {
     "compile": "truffle compile",
+
     "deploy-cpt-testnet": "truffle migrate --network bscTestnet -f 2 --to 2",
     "deploy-nft-testnet": "truffle migrate --network bscTestnet -f 3 --to 3",
     "deploy-random-generator-testnet": "truffle migrate --network bscTestnet -f 4 --to 4",
@@ -42,10 +44,12 @@
     "deploy-price-consumer-kovan": "truffle migrate --network kovan -f 8 --to 8",
     "deploy-token-vesting-kovan": "truffle migrate --network kovan -f 9 --to 9",
     "deploy-random-test-kovan": "truffle migrate --network kovan -f 11 --to 11",
-    
+
     "deploy-cpt-rinkeby": "truffle migrate --network rinkeby -f 2 --to 2",
-    "deploy-random-test2": "truffle migrate --network rinkeby -f 12 --to 12",
+    "deploy-item-factory-rinkeby": "truffle migrate --network rinkeby -f 5 --to 5",
     "deploy-nft-manager-v2-rinkeby": "truffle migrate --network rinkeby -f 13 --to 13",
+    "deploy-marketplace-rinkeby": "truffle migrate --network rinkeby -f 7 --to 7",
+    "deploy-token-vesting-rinkeby": "truffle migrate --network rinkeby -f 9 --to 9",
 
     "test-random-test2": "node scripts/12_test_random_test2.js",
     "test-nft-manager-v2": "node scripts/13_test_nft_manager_v2.js",

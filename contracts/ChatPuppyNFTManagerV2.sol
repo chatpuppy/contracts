@@ -2,13 +2,15 @@
 pragma solidity ^0.8.8;
 
 import "./lib/AccessControlEnumerable.sol";
-import "./lib/RandomConsumerBaseV2.sol";
 import "./lib/ItemFactoryManager.sol";
 import "./ChatPuppyNFTCore.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
+import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 
 contract ChatPuppyNFTManagerV2 is
     AccessControlEnumerable,
-    RandomConsumerBaseV2,
+    VRFConsumerBaseV2,
     ItemFactoryManager
 {
     using EnumerableSet for EnumerableSet.UintSet;
@@ -35,6 +37,17 @@ contract ChatPuppyNFTManagerV2 is
     mapping(uint256 => uint256) private _tokenIds;
     mapping(uint256 => uint256) private _itemNextIds;
 
+    VRFCoordinatorV2Interface public COORDINATOR;
+    LinkTokenInterface LINKTOKEN;
+    uint256 public randomFee = 0;
+    address public feeAccount;
+    address private _vrfCoordinator = 0x6168499c0cFfCaCD319c818142124B7A15E857ab;
+    address private _link = 0x01BE23585060835E02B77ef475b0Cc51aA1e0709;
+    bytes32 private _keyHash = 0xd89b2bf150e3b9e13446986e571fb9cab24b13cea0a43ea20a6049a85cc807cc;
+    uint32 private _callbackGasLimit = 700000;
+    uint16 private _requestConfirmations = 3; // Minimum confirmatons is 3
+    uint64 private _subscriptionId;
+
     event UnboxToken(uint256 indexed tokenId, uint256 indexed requestId,  uint256 boxType);
     event TokenFulfilled(uint256 indexed tokenId);
 
@@ -44,15 +57,14 @@ contract ChatPuppyNFTManagerV2 is
         string memory baseTokenURI_,
         uint256 initialCap_,
         address itemFactory_,
-        // uint256 projectId_, // ######
+        // uint256 projectId_,
         uint256 boxPrice_,
         uint64  subscriptionId_,
         address vrfCoordinator_,
         bytes32 keyHash_,
         address link_,
         uint32  callbackGasLimit_
-    )
-        RandomConsumerBaseV2(subscriptionId_, vrfCoordinator_, keyHash_, link_, callbackGasLimit_)
+    )   VRFConsumerBaseV2(vrfCoordinator_)
         ItemFactoryManager(itemFactory_)
     {
         require(boxPrice_ > 0, "ChatPuppyNFTManager: box price can not be zero");
@@ -81,6 +93,13 @@ contract ChatPuppyNFTManagerV2 is
         _setupRole(MANAGER_ROLE, _msgSender());
         _setupRole(CONTRACT_UPGRADER, _msgSender());
         _setupRole(NFT_UPGRADER, _msgSender());
+
+        // Initialize VRFRandomGenerator
+		COORDINATOR = VRFCoordinatorV2Interface(vrfCoordinator_);
+        LINKTOKEN = LinkTokenInterface(link_);
+        _subscriptionId = subscriptionId_;
+		_keyHash = keyHash_;
+		_callbackGasLimit = callbackGasLimit_;
     }
 
     modifier onlySupportedBoxType(uint256 boxType_) {
@@ -204,16 +223,16 @@ contract ChatPuppyNFTManagerV2 is
      */
     function updateVRFCoordinatorV2(address vrfCoordinator_) public onlyRole(CONTRACT_UPGRADER) {
         require(vrfCoordinator_ != address(0), "ChatPuppyNFTManager: vrfCoordinator_ is the zero address");
-        _updateVRFCoordinator(vrfCoordinator_);        
+        COORDINATOR = VRFCoordinatorV2Interface(vrfCoordinator_);
     }
 
     function updateSubscriptionId(uint64 subscriptionId_) public onlyRole(CONTRACT_UPGRADER) {
-        _updateSubscriptionId(subscriptionId_);
+        _subscriptionId = subscriptionId_;
     }
 
     function updateCallbackGasLimit(uint32 callbackGasLimit_) public onlyRole(CONTRACT_UPGRADER) {
         require(callbackGasLimit_ >= 100000, "ChatPuppyNFTManager: Suggest to set 100000 mimimum");
-        _updateCallbackGasLimit(callbackGasLimit_);
+        _callbackGasLimit = callbackGasLimit_;
     }
 
     /**
@@ -320,8 +339,15 @@ contract ChatPuppyNFTManagerV2 is
 
             _takeRandomFee();
 
-            uint32 numWords_ = 8; // maximum 7 artifacts, plus rarity, need 8 random words
-            uint256 requestId_ = _requestRandomWords(numWords_);
+            uint32 numWords_ = 1; // maximum 7 artifacts, plus rarity, need 8 random words
+
+            uint256 requestId_ = COORDINATOR.requestRandomWords(
+                _keyHash,
+                _subscriptionId,
+                _requestConfirmations,
+                _callbackGasLimit,
+                numWords_
+            );
             _requestIds[tokenId_] = requestId_;
             _tokenIds[requestId_] = tokenId_;
 
@@ -353,50 +379,69 @@ contract ChatPuppyNFTManagerV2 is
      * dna = bytes32(keccak256(abi.encodePacked(tokenId_, randomness_)));
      * 
      */
+    function randomWords(uint256 tokenId_) public view returns(uint256, uint256[] memory) {
+        return (_requestIds[tokenId_], _randomWords[tokenId_]);
+    }
+
     function fulfillRandomWords(uint256 requestId_, uint256[] memory randomWords_) internal override {
-        // tokenId_ = tokenId_ - projectId;
         uint256 tokenId_ = _tokenIds[requestId_];
         (bytes32 _dna, uint256 _artifacts, ) = nftCore.tokenMetaData(tokenId_);
         _dna = bytes32(keccak256(abi.encodePacked(tokenId_, randomWords_[0])));
 
         uint256 _boxType = _getArtifactValue(_artifacts, 0, 8);
+
+        // ###### 这里有问题，打了注释后可以运行，否则错误。
         (uint256 _itemId, uint256 _itemType) = itemFactory.getRandomItem(
             randomWords_[0],
             _boxType
         );
 
-        _itemNextIds[_itemId] = _itemNextIds[_itemId] + 1;
-        _artifacts = _addArtifactValue(_artifacts, 8, 8, _itemType); // add itemType
-        _artifacts = _addArtifactValue(_artifacts, 16, 16, _itemId); // add itemId
-        _artifacts = _addArtifactValue(_artifacts, 32, 16, itemFactory.getItemInitialLevel(_itemType, _itemId)); // add level
-        _artifacts = _addArtifactValue(_artifacts, 48, 16, itemFactory.getItemInitialExperience(_itemType, _itemId)); // add exeperience
-        _artifacts = _addArtifactValue(_artifacts, 64, 24, _itemNextIds[_itemId]); // add item NextId, this is for pic image id
+        // _itemNextIds[_itemId] = _itemNextIds[_itemId] + 1;
+        // _artifacts = _addArtifactValue(_artifacts, 8, 8, _itemType); // add itemType
+        // _artifacts = _addArtifactValue(_artifacts, 16, 16, _itemId); // add itemId
+        // _artifacts = _addArtifactValue(_artifacts, 32, 16, itemFactory.getItemInitialLevel(_itemType, _itemId)); // add level
+        // _artifacts = _addArtifactValue(_artifacts, 48, 16, itemFactory.getItemInitialExperience(_itemType, _itemId)); // add exeperience
+        // _artifacts = _addArtifactValue(_artifacts, 64, 24, _itemNextIds[_itemId]); // add item NextId, this is for pic image id
 
-        uint256 _artifactsLength = itemFactory.artifactsLength(_itemType);
+        // uint256 _artifactsLength = itemFactory.artifactsLength(_itemType);
 
-        for (uint256 i = 0; i < _artifactsLength; i++) {
-            // add artifact id
-            uint256 _artifactId = itemFactory.artifactIdAt(_itemType, i);
+        // for (uint256 i = 0; i < _artifactsLength; i++) {
+        //     // add artifact id
+        //     uint256 _artifactId = itemFactory.artifactIdAt(_itemType, i);
 
-            _artifacts = _addArtifactValue(
-                _artifacts,
-                88 + i * 24,
-                8,
-                _artifactId
-            );
+        //     _artifacts = _addArtifactValue(
+        //         _artifacts,
+        //         88 + i * 24,
+        //         8,
+        //         _artifactId
+        //     );
 
-            // add artifact value
-            uint256 _artifactValue = itemFactory.getRandomArtifactValue(
-                randomWords_[i + 1],
-                _artifactId
-            );
-            _artifacts = _addArtifactValue(
-                _artifacts,
-                96 + i * 24,
-                16,
-                _artifactValue
-            );
-        }
+        //     // Randome seed for artifact, it'll be same if in the same block, same item type and same item id
+        //     uint256 _randomness = uint256(
+        //         keccak256(
+        //             abi.encodePacked(
+        //                 randomWords_[0],
+        //                 block.number,
+        //                 _itemType,
+        //                 _itemId,
+        //                 _artifactId,
+        //                 i
+        //             )
+        //         )
+        //     );
+
+        //     // add artifact value
+        //     uint256 _artifactValue = itemFactory.getRandomArtifactValue(
+        //         _randomness,
+        //         _artifactId
+        //     );
+        //     _artifacts = _addArtifactValue(
+        //         _artifacts,
+        //         96 + i * 24,
+        //         16,
+        //         _artifactValue
+        //     );
+        // }
 
         _randomWords[tokenId_] = randomWords_;
 
@@ -432,12 +477,21 @@ contract ChatPuppyNFTManagerV2 is
     }
 
     function updateRandomFee(uint256 randomFee_) public onlyRole(MANAGER_ROLE) {
-        _updateRandomFee(randomFee_);
+        randomFee = randomFee_;
     }
 
     function updateFeeAccount(address feeAccount_) public onlyRole(MANAGER_ROLE) {
         require(feeAccount_ != address(0), "ChatPuppyNFTManager: feeAccount can not be zero address");
-        _updateFeeAccount(feeAccount_);
+        feeAccount = feeAccount_;
+    }
+
+    function _takeRandomFee() internal {
+        if (randomFee > 0) {
+            require(msg.value >= randomFee, "ChatPuppyNFTManager: insufficient fee");
+            require(feeAccount != address(0), "ChatPuppyNFTManager: feeAccount is the zero address");
+            (bool success, ) = address(feeAccount).call{value: msg.value}(new bytes(0));
+            require(success, "ChatPuppyNFTManager: fee required");
+        }
     }
 
 }

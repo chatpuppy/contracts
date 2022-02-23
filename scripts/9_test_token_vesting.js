@@ -17,7 +17,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 const senderAddress = (web3.eth.accounts.privateKeyToAccount('0x' + priKey)).address;
 console.log('发起地址', senderAddress);
 
-const tokensVestingAddress = '0xe948C608027F18bE72E3193B094dF5D398A197b0';
+const tokensVestingAddress = '0xe948C608027F18bE72E3193B094dF5D398A197b0'; // kovan
 const tokensVestingJson = require('../build/contracts/TokensVesting.json');
 const tokensVesting = new web3.eth.Contract(tokensVestingJson.abi, tokensVestingAddress);
 

@@ -67,6 +67,14 @@ abstract contract RandomConsumerBaseV2 is VRFConsumerBaseV2, Context {
         feeAccount = feeAccount_;
     }
 
+    // function fulfillRandomWords(uint256 requestId_, uint256[] memory randomWords_) internal virtual;
+
+    function rawFulfillRandomness(uint256 requestId_, uint256[] memory randomWords_)
+        external
+    {
+        fulfillRandomWords(requestId_, randomWords_);
+    }
+
     function _requestRandomWords(uint32 numWords_) internal returns(uint256 requestId_) {
         requestId_ = COORDINATOR.requestRandomWords(
             _keyHash,
