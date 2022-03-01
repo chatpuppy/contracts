@@ -134,20 +134,20 @@ const basis = 1 * 3600; // The buyer can release the releasable tokens every 1 h
 const highest = '1000000000000000000'; // highest purchasing amount is 1 BNB/ETH
 const lowest = '25000000000000000'; // lowest purchasing amount is 0.025 BNB/ETH
 
-let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
-	2,  // participant
-	genesisTimestamp, 
-	tgeAmountRatio,
-	cliff, 
-	duration, 
-	basis, 
-	startTimestamp, 
-	endTimestamp, 
-	highest, 
-	lowest, 
-	true, 
-	true
-).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
+// 	2,  // participant
+// 	genesisTimestamp, 
+// 	tgeAmountRatio,
+// 	cliff, 
+// 	duration, 
+// 	basis, 
+// 	startTimestamp, 
+// 	endTimestamp, 
+// 	highest, 
+// 	lowest, 
+// 	true, 
+// 	true
+// ).encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.setPriceRange(2, 0, 10000).encodeABI();
 // let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '100000000000000000000000', 9000).encodeABI();
@@ -167,5 +167,5 @@ let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
 // callContract(sendEncodeABI, tokensVestingAddress);
 
 // let sendEncodeABI = tokensVesting.methods.crowdFunding(2).encodeABI();
-// callContract(sendEncodeABI, tokensVestingAddress, '30000000000000000');
+// callContract(sendEncodeABI, tokensVestingAddress, '31000000000000000');
 
