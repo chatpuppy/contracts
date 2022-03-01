@@ -398,7 +398,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     /**
      * @dev See {ITokensVesting-releasable}.
      */
-    function releasable() public view returns (uint256) {
+    function releasableAll() public view returns (uint256) {
         uint256 _releasable = 0;
 
         for (uint256 i = 0; i < _beneficiaries.length; i++) {
@@ -458,7 +458,7 @@ contract TokensVesting is Ownable, ITokensVesting {
      * @dev See {ITokensVesting-releaseAll}.
      */
     function releaseAll() public onlyOwner {
-        uint256 _releasable = releasable();
+        uint256 _releasable = releasableAll();
         require(_releasable > 0, "TokensVesting: no tokens are due!");
 
         for (uint256 i = 0; i < _beneficiaries.length; i++) {

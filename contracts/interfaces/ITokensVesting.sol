@@ -13,7 +13,12 @@ interface ITokensVesting {
     /**
      * @dev Returns the total releasable amount of tokens.
      */
-    function releasable() external view returns (uint256);
+    function releasableAll() external view returns (uint256);
+
+    /**
+     * @dev Returns the releasable of given index
+     */
+    function releasable(uint256 index_) external view returns (uint256);
 
     /**
      * @dev Returns the total released amount of tokens.

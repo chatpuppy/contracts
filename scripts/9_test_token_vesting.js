@@ -17,7 +17,10 @@ const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 const senderAddress = (web3.eth.accounts.privateKeyToAccount('0x' + priKey)).address;
 console.log('发起地址', senderAddress);
 
-const tokensVestingAddress = '0xe948C608027F18bE72E3193B094dF5D398A197b0'; // kovan
+// const tokensVestingAddress = '0xe948C608027F18bE72E3193B094dF5D398A197b0'; // kovan1
+// const tokensVestingAddress = '0x5fD9E1d42eCdAE89777F6d94254395e097aF7A4a'; // kovan2
+// const tokensVestingAddress = '0x89d6a017dd6E04d7CDE721BE3E71D911C4e82D72'; // kovan3
+const tokensVestingAddress = '0x7b1Fba1Af4FCB13A5225E2Ffd09CcCCd5d23D721'; // kovan4
 const tokensVestingJson = require('../build/contracts/TokensVesting.json');
 const tokensVesting = new web3.eth.Contract(tokensVestingJson.abi, tokensVestingAddress);
 
@@ -25,7 +28,7 @@ const participant = 2;
 tokensVesting.methods.total().call().then((total) => console.log('已发行量', total / 1e18));
 tokensVesting.methods.getBeneficiaryCount().call().then((total) => console.log('受益人数量', total));
 
-tokensVesting.methods.releasable().call().then((releasable) => console.log('总可提现', releasable/1e18));
+tokensVesting.methods.releasableAll().call().then((releasable) => console.log('总可提现', releasable/1e18));
 tokensVesting.methods.participantReleasable(participant).call().then((participantReleasable) => console.log('participantReleasable', participantReleasable / 1e18));
 tokensVesting.methods.token().call().then((token) => console.log('CPT token', token));
 
@@ -37,7 +40,7 @@ tokensVesting.methods.getIndex(participant, senderAddress).call().then((response
 	}
 })
 
-tokensVesting.methods.getAllBeneficiaries().call({from: senderAddress}).then((all) => console.log('所有受益人', all));
+// tokensVesting.methods.getAllBeneficiaries().call({from: senderAddress}).then((all) => console.log('所有受益人', all));
 tokensVesting.methods.getTotalAmountByParticipant(participant).call({from: senderAddress}).then((all) => console.log('类型总金额', all/1e18));
 
 tokensVesting.methods.participantReleased(participant).call({from: senderAddress}).then((all) => console.log('类型已提现', all/1e18));
@@ -79,7 +82,10 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 // 	(60).toString()
 // ).encodeABI();
 
+// !!!!!!!!!!!!!!
 // let sendEncodeABI = tokensVesting.methods.activateAll().encodeABI();
+// !!!!!!!!!!!!!!
+
 // let sendEncodeABI = tokensVesting.methods.updateToken('0x7C4b6E294Fd0ae77B6E1730CBEb1B8491859Ee24').encodeABI();
 
 // 确保TokenVesting合约已经获取CPT代币的 MINTER_ROLE 权限
@@ -126,13 +132,13 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 const now = new Date().getTime();
 const tgeAmountRatio = 1000; // on genesisTimestamp 10% of total amount will be release
 const startTimestamp = Math.floor(now / 1000) + 0 * 24 * 3600; // start when deploy the contract
-const endTimestamp = Math.floor(now / 1000) + 4 * 3600; // sale will be over 2 days later
-const genesisTimestamp = Math.floor(now / 1000) + 4 * 3600; // genesisTimestamp is 2.5 days after deploy
+const endTimestamp = Math.floor(now / 1000) + 0.25 * 3600; // sale will be over 2 days later
+const genesisTimestamp = Math.floor(now / 1000) + 0.25 * 3600; // genesisTimestamp is 2.5 days after deploy
 const cliff = 0; // 0 minutes
 const duration = 24 * 3600; // Vesting tokens will be released during 90 days
-const basis = 1 * 3600; // The buyer can release the releasable tokens every 1 hour
-const highest = '1000000000000000000'; // highest purchasing amount is 1 BNB/ETH
-const lowest = '25000000000000000'; // lowest purchasing amount is 0.025 BNB/ETH
+const basis = 1/60 * 3600; // The buyer can release the releasable tokens every 1 hour
+const highest = '60000000000000000'; // highest purchasing amount is 1 BNB/ETH
+const lowest =  '40000000000000000'; // lowest purchasing amount is 0.025 BNB/ETH
 
 // let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
 // 	2,  // participant
