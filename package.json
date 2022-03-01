@@ -16,7 +16,7 @@
     "deploy-token-vesting-testnet": "truffle migrate --network bscTestnet -f 9 --to 9",
     "deploy-random-test-testnet": "truffle migrate --network bscTestnet -f 11 --to 11",
 
-    "test-sign": "node scripts/sign.js",
+    "test-sign": "node scripts/sign_message.js",
     "test-cpt": "node scripts/2_test_cpt_token.js",
     "test-nft": "node scripts/3_test_nft_core.js",
     "test-random-generator": "node scripts/4_test_random_generator.js",

@@ -126,28 +126,28 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 const now = new Date().getTime();
 const tgeAmountRatio = 1000; // on genesisTimestamp 10% of total amount will be release
 const startTimestamp = Math.floor(now / 1000) + 0 * 24 * 3600; // start when deploy the contract
-const endTimestamp = Math.floor(now / 1000) + 2 * 24 * 3600; // sale will be over 2 days later
-const genesisTimestamp = Math.floor(now / 1000) + 2.5 * 24 * 3600; // genesisTimestamp is 2.5 days after deploy
+const endTimestamp = Math.floor(now / 1000) + 4 * 3600; // sale will be over 2 days later
+const genesisTimestamp = Math.floor(now / 1000) + 4 * 3600; // genesisTimestamp is 2.5 days after deploy
 const cliff = 0; // 0 minutes
-const duration = 90 * 24 * 3600; // Vesting tokens will be released during 90 days
-const basis = 0 * 3600; // The buyer can release the releasable tokens every 1 hour
+const duration = 24 * 3600; // Vesting tokens will be released during 90 days
+const basis = 1 * 3600; // The buyer can release the releasable tokens every 1 hour
 const highest = '1000000000000000000'; // highest purchasing amount is 1 BNB/ETH
 const lowest = '25000000000000000'; // lowest purchasing amount is 0.025 BNB/ETH
 
-// let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
-// 	2,  // participant
-// 	genesisTimestamp, 
-// 	tgeAmountRatio,
-// 	cliff, 
-// 	duration, 
-// 	basis, 
-// 	startTimestamp, 
-// 	endTimestamp, 
-// 	highest, 
-// 	lowest, 
-// 	true, 
-// 	true
-// ).encodeABI();
+let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
+	2,  // participant
+	genesisTimestamp, 
+	tgeAmountRatio,
+	cliff, 
+	duration, 
+	basis, 
+	startTimestamp, 
+	endTimestamp, 
+	highest, 
+	lowest, 
+	true, 
+	true
+).encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.setPriceRange(2, 0, 10000).encodeABI();
 // let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '100000000000000000000000', 9000).encodeABI();
