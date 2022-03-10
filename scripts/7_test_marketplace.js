@@ -15,7 +15,8 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const marketplaceAddress = '0xc60a6AE3a85838D3bAAf359219131B1e33103560';
+// const marketplaceAddress = '0xc60a6AE3a85838D3bAAf359219131B1e33103560'; // kovan
+const marketplaceAddress = '0x29a1D6404aa907a53b07eFdf0F70cC2A8815EC60'; // bscTestnet
 const marketplaceJson = require('../build/contracts/ChatPuppyNFTMarketplace.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 
@@ -59,7 +60,7 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 
 	// let sendEncodeABI = marketplace.methods.addPaymentToken('0x7C4b6E294Fd0ae77B6E1730CBEb1B8491859Ee24').encodeABI();
 
-	const tokenId = 4;
+	const tokenId = 1;
 
 	// Approve marketplace to the NFT
 	// let sendEncodeABI = nft.methods.approve(marketplaceAddress, tokenId).encodeABI();

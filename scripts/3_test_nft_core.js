@@ -15,7 +15,8 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const nftAddress = '0xAb50F84DC1c8Ef1464b6F29153E06280b38fA754'; // Issued by nft core
+// const nftAddress = '0xAb50F84DC1c8Ef1464b6F29153E06280b38fA754'; // Issued by nft core
+const nftAddress = '0x1BE54fdAF59d369f8d7bE296C227F208CF5FF7AF'; // bscTestnet
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 
 const nft = new web3.eth.Contract(nftJson.abi, nftAddress);

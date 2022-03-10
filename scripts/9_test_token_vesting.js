@@ -17,10 +17,8 @@ const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 const senderAddress = (web3.eth.accounts.privateKeyToAccount('0x' + priKey)).address;
 console.log('发起地址', senderAddress);
 
-// const tokensVestingAddress = '0xe948C608027F18bE72E3193B094dF5D398A197b0'; // kovan1
-// const tokensVestingAddress = '0x5fD9E1d42eCdAE89777F6d94254395e097aF7A4a'; // kovan2
-// const tokensVestingAddress = '0x89d6a017dd6E04d7CDE721BE3E71D911C4e82D72'; // kovan3
-const tokensVestingAddress = '0x7b1Fba1Af4FCB13A5225E2Ffd09CcCCd5d23D721'; // kovan4
+// const tokensVestingAddress = '0x76624c221287b1552a379e597166CA8fAA06dF9D'; // kovan
+const tokensVestingAddress = '0xF886e6336f752F7c4aA496c33A5F77079fcc7a0E'; // bscTestnet
 const tokensVestingJson = require('../build/contracts/TokensVesting.json');
 const tokensVesting = new web3.eth.Contract(tokensVestingJson.abi, tokensVestingAddress);
 
@@ -49,12 +47,12 @@ tokensVesting.methods.revokedAmount().call({from: senderAddress}).then((all) => 
 tokensVesting.methods.revokedAmountWithdrawn().call({from: senderAddress}).then((all) => console.log('revokedAmountWithdrawn', all/1e18));
 
 console.log('======================================================');
-tokensVesting.methods.crowdFundingParams(participant).call({from: senderAddress}).then((res) => console.log('crowdFundingParams', res));
-tokensVesting.methods.priceRange(participant).call({from: senderAddress}).then((res) => console.log('price range', res));
+// tokensVesting.methods.crowdFundingParams(participant).call({from: senderAddress}).then((res) => console.log('crowdFundingParams', res));
+// tokensVesting.methods.priceRange(participant).call({from: senderAddress}).then((res) => console.log('price range', res));
 
-tokensVesting.methods.getPriceForAmount(2, 300000).call({from: senderAddress}).then((res) => console.log('price', res));
+// tokensVesting.methods.getPriceForAmount(2, 300000).call({from: senderAddress}).then((res) => console.log('price', res));
 
-tokensVesting.methods.redeemFee().call().then((res) => console.log('redeemFee', res));
+// tokensVesting.methods.redeemFee().call().then((res) => console.log('redeemFee', res));
 
 /**
  * ==== Following testing methods is Send Tx ====
@@ -89,7 +87,7 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 // let sendEncodeABI = tokensVesting.methods.updateToken('0x7C4b6E294Fd0ae77B6E1730CBEb1B8491859Ee24').encodeABI();
 
 // 确保TokenVesting合约已经获取CPT代币的 MINTER_ROLE 权限
-// let sendEncodeABI = tokensVesting.methods.release().encodeABI();
+// let sendEncodeABI = tokensVesting.methods.release(2).encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.releaseAll().encodeABI();
 
@@ -131,11 +129,11 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 // Set public sale params
 const now = new Date().getTime();
 const tgeAmountRatio = 1000; // on genesisTimestamp 10% of total amount will be release
-const startTimestamp = Math.floor(now / 1000) + 0 * 24 * 3600; // start when deploy the contract
-const endTimestamp = Math.floor(now / 1000) + 0.25 * 3600; // sale will be over 2 days later
-const genesisTimestamp = Math.floor(now / 1000) + 0.25 * 3600; // genesisTimestamp is 2.5 days after deploy
+const startTimestamp = Math.floor(now / 1000) + 0.5 * 24 * 3600; // start when deploy the contract
+const endTimestamp = Math.floor(now / 1000) + 1 * 24 * 3600; // sale will be over 2 days later
+const genesisTimestamp = Math.floor(now / 1000) + 1 * 24 * 3600; // genesisTimestamp is 2.5 days after deploy
 const cliff = 0; // 0 minutes
-const duration = 24 * 3600; // Vesting tokens will be released during 90 days
+const duration = 2 * 24 * 3600; // Vesting tokens will be released during 90 days
 const basis = 1/60 * 3600; // The buyer can release the releasable tokens every 1 hour
 const highest = '60000000000000000'; // highest purchasing amount is 1 BNB/ETH
 const lowest =  '40000000000000000'; // lowest purchasing amount is 0.025 BNB/ETH
@@ -170,7 +168,7 @@ const lowest =  '40000000000000000'; // lowest purchasing amount is 0.025 BNB/ET
 // let sendEncodeABI = tokensVesting.methods.redeem(2, '0x3444E23231619b361c8350F4C83F82BCfAB36F65').encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.setAllowRedeem(2, true).encodeABI();
-// callContract(sendEncodeABI, tokensVestingAddress);
+callContract(sendEncodeABI, tokensVestingAddress);
 
 // let sendEncodeABI = tokensVesting.methods.crowdFunding(2).encodeABI();
 // callContract(sendEncodeABI, tokensVestingAddress, '31000000000000000');

@@ -653,7 +653,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     /**
      * @dev Release all releasable amount of tokens for the sepecific beneficiary by index.
      */
-    function _release(VestingInfo memory info) private {
+    function _release(VestingInfo storage info) private {
         uint256 unreleased = _releasableAmount(
             info.genesisTimestamp,
             info.totalAmount,

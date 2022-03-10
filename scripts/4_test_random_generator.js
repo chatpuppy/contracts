@@ -15,7 +15,8 @@ const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
 // 必须将一定数量的LINK打到RandomGenerator合约
-const randomGeneratorAddress = '0xA28D90320005C8c043Ee79ae59e82fDd5f983f30';
+const randomGeneratorAddress = '0x9961A816d34981f9556873bf006b99D6780B946F'; // bscTestnet
+// const randomGeneratorAddress = '0xA28D90320005C8c043Ee79ae59e82fDd5f983f30'; // kovan
 const randomGeneratorJson = require('../build/contracts/ChainLinkRandomGenerator.json');
 
 const randomGenerator = new web3.eth.Contract(randomGeneratorJson.abi, randomGeneratorAddress);
@@ -41,7 +42,9 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 
 // let sendEncodeABI = randomGenerator.methods.requestRandomNumber(1).encodeABI(); // 等待NFTManager合约部署完毕
 
+// const NFTManager = '0x0528E41841b8BEdD4293463FAa061DdFCC5E41bd'; // kovan
+const NFTManager = '0xd3eE8844847403a3160A4b1a9322F5CdebDF7F4c'; // bscTestnet
 let sendEncodeABI = randomGenerator.methods.grantRole(
 	'0x9d56108290ea0bc9c5c59c3ad357dca9d1b29ed7f3ae1443bef2fa2159bdf5e8', 
-	'0x0528E41841b8BEdD4293463FAa061DdFCC5E41bd').encodeABI();
+	NFTManager).encodeABI();
 callContract(sendEncodeABI, randomGeneratorAddress);

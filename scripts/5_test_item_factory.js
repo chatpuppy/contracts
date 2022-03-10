@@ -16,7 +16,8 @@ const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
 // const itemFactoryAddress = '0xFd3250eCDb1D067a9f0A4453b3BFB92e66f6f7ca'; // kovan
-const itemFactoryAddress = '0xE10A746fa43010237F28F970896248192A0348eE'; // rinkeby
+// const itemFactoryAddress = '0xE10A746fa43010237F28F970896248192A0348eE'; // rinkeby
+const itemFactoryAddress = '0xB9323Be650ABD32D4321ED4B8D8010Ca89ABd8E0'; // bscTestnet
 const itemFactoryJson = require('../build/contracts/ItemFactory.json');
 
 const itemFactory = new web3.eth.Contract(itemFactoryJson.abi, itemFactoryAddress);

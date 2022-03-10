@@ -15,14 +15,15 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const nftManagerAddress = '0x0528E41841b8BEdD4293463FAa061DdFCC5E41bd';
+// const nftManagerAddress = '0x0528E41841b8BEdD4293463FAa061DdFCC5E41bd'; // kovan
+const nftManagerAddress = '0xd3eE8844847403a3160A4b1a9322F5CdebDF7F4c'; // bscTestnet
 const nftManagerJson = require('../build/contracts/ChatPuppyNFTManager.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 
 const nftManager = new web3.eth.Contract(nftManagerJson.abi, nftManagerAddress);
 const user = '0x615b80388E3D3CaC6AA3a904803acfE7939f0399';
 
-const tokenId = 8;
+const tokenId = 2;
 nftManager.methods.boxStatus(tokenId).call().then((result) => console.log('boxStatus ' + result));
 nftManager.methods.boxPrice().call().then((result) => console.log('boxPrice ' + result));
 
@@ -68,6 +69,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	// callContract(sendEncodeABI, nftAddress, 0)
 
 	// let sendEncodeABI = nftManager.methods.updateBoxPrice('10000000000000000').encodeABI();//set price 0.01ETH
+
 	/**
 	 * Transfer nft manager contract address to super account as owner to nft token, to manager the NFT
 	 * This step is very important and sencitive !!!
@@ -81,7 +83,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	// let sendEncodeABI = nftManager.methods.updateProjectId(120).encodeABI();
 
 	// Withdraw from contract
-	// const withdrawAmount = (0.008 * 1e18).toString();
+	// const withdrawAmount = (0.02 * 1e18).toString();
 	// let sendEncodeABI = nftManager.methods.withdraw('0xC4BFA07776D423711ead76CDfceDbE258e32474A', withdrawAmount).encodeABI();
 
 	// Mint mystery box NFT
@@ -100,7 +102,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	// let sendEncodeABI = nftManager.methods.mintBatch(user, 1, 3).encodeABI();
 	
 	// Unbox mystery box
-	// let sendEncodeABI = nftManager.methods.unbox(3).encodeABI();
+	// let sendEncodeABI = nftManager.methods.unbox(1).encodeABI();
 	// callContract(sendEncodeABI, nftManagerAddress);
 
 	// Batch buy and mint mystery box NFT
