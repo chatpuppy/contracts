@@ -53,5 +53,7 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
  * kov#3 0x3444E23231619b361c8350F4C83F82BCfAB36F65 
  */
 // let sendEncodeABI = nft.methods.safeTransferFrom('0xC4BFA07776D423711ead76CDfceDbE258e32474A', '0x3444E23231619b361c8350F4C83F82BCfAB36F65', 2).encodeABI();
+
+// ATTN. Update the owner of the NFTCore to NFTManager contract.
 // let sendEncodeABI = nft.methods.transferOwnership('0x0D84C154D3E063D0E70bde29BC997ee605ABEc35').encodeABI();
 // callContract(sendEncodeABI, nftAddress);

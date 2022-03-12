@@ -20,7 +20,7 @@ contract ChatPuppyNFTManager is
     bytes32 public constant CONTRACT_UPGRADER = keccak256("CONTRACT_UPGRADER");
     bytes32 public constant NFT_UPGRADER = keccak256("NFT_UPGRADER");
 
-    ChatPuppyNFTCore public immutable nftCore;
+    ChatPuppyNFTCore public nftCore;
     uint256 private projectId = 0;
     uint256 public boxPrice = 0;
 
@@ -38,10 +38,7 @@ contract ChatPuppyNFTManager is
     event TokenFulfilled(uint256 indexed tokenId);
 
     constructor(
-        string memory name_,
-        string memory symbol_,
-        string memory baseTokenURI_,
-        uint256 initialCap_,
+        address nftAddress_,
         address itemFactory_,
         address randomGenerator_,
         uint256 randomFee_,
@@ -56,12 +53,8 @@ contract ChatPuppyNFTManager is
         projectId = projectId_;
         boxPrice = boxPrice_;
 
-        nftCore = new ChatPuppyNFTCore(
-            name_,
-            symbol_,
-            baseTokenURI_,
-            initialCap_
-        );
+        nftCore = ChatPuppyNFTCore(nftAddress_);
+        // ATTN. Deploy the NFTCore first, then update NFTCore's owner to deployed NFTManager contract
 
         _supportedBoxTypes.add(1); // Mystery Box Type#1, Dragon
         _supportedBoxTypes.add(2); // Mystery Box Type#2, Weapon

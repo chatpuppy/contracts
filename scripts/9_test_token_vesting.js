@@ -81,7 +81,7 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 // ).encodeABI();
 
 // !!!!!!!!!!!!!!
-// let sendEncodeABI = tokensVesting.methods.activateAll().encodeABI();
+let sendEncodeABI = tokensVesting.methods.activateAll().encodeABI();
 // !!!!!!!!!!!!!!
 
 // let sendEncodeABI = tokensVesting.methods.updateToken('0x7C4b6E294Fd0ae77B6E1730CBEb1B8491859Ee24').encodeABI();
