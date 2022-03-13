@@ -83,11 +83,6 @@ contract ChatPuppyNFTManagerV2 is
         _requestConfirmations = requestConfirmations_;
     }
 
-    modifier onlySupportedBoxType(uint256 boxType_) {
-        require(_supportedBoxTypes.contains(boxType_), "ChatPuppyNFTManager: unsupported box type");
-        _;
-    }
-
     modifier onlyTokenOwner(uint256 tokenId_) {
         require(nftCore.ownerOf(tokenId_) == _msgSender(), "ChatPuppyNFTManager: caller is not owner");
         _;
@@ -219,7 +214,7 @@ contract ChatPuppyNFTManagerV2 is
     /**
      * Buy and mint
      */
-    function buyAndMint(uint256 boxType_) public payable onlySupportedBoxType(boxType_) {
+    function buyAndMint() public payable {
         require(msg.value >= boxPrice, "ChatPuppyNFTManager: payment is not enough");
         _mint(_msgSender());
     }
@@ -227,19 +222,19 @@ contract ChatPuppyNFTManagerV2 is
     /**
      * Buy set of mystery box and mint
      */
-    function buyAndMintBatch(uint256 boxType_, uint256 amount_) public payable onlySupportedBoxType(boxType_) {
+    function buyAndMintBatch(uint256 amount_) public payable {
         require(amount_ > 0, "ChatPuppyNFTManager: amount_ is 0");
         require(msg.value >= boxPrice * amount_, "ChatPuppyNFTManager: Batch purchase payment is not enough");
         
         for (uint256 i = 0; i < amount_; i++) {
-            buyAndMint(boxType_);
+            buyAndMint();
         }
     }
 
     /**
      * Buy, mint and unbox
      */
-    function buyMintAndUnbox(uint256 boxType_) public payable onlySupportedBoxType(boxType_) {
+    function buyMintAndUnbox() public payable {
         require(msg.value >= boxPrice, "ChatPuppyNFTManager: payment is not enough");
         uint256 _tokenId = _mint(_msgSender());
         unbox(_tokenId);
@@ -350,12 +345,6 @@ contract ChatPuppyNFTManagerV2 is
 
         nftCore.updateTokenMetaData(tokenId_, _artifacts, _dna);
         emit TokenFulfilled(tokenId_);
-    }
-
-    // Box type and NFT metadata manager
-    function addBoxType(uint256 boxType_) external onlyRole(MANAGER_ROLE) {
-        bool success = _supportedBoxTypes.add(boxType_);
-        require(success, "ChatPuppyNFTManager: box type is already supported");
     }
 
     function supportedBoxTypes() external view returns (uint256[] memory) {
