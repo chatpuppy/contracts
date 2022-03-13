@@ -22,7 +22,7 @@ const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 const nftManager = new web3.eth.Contract(nftManagerJson.abi, nftManagerAddress);
 const user = '0x615b80388E3D3CaC6AA3a904803acfE7939f0399';
 
-const tokenId = 17; // can not be zero
+const tokenId = 18; // can not be zero
 nftManager.methods.boxStatus(tokenId).call().then((result) => console.log('boxStatus ' + result));
 nftManager.methods.boxPrice().call().then((result) => console.log('boxPrice ' + result));
 nftManager.methods.randomWords(tokenId).call().then((words) => {
@@ -47,6 +47,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	// Token Id 12: 03 05 0a 01 01 05
 	// Token Id 16: 0x 0384 0006 04 03 0b 03 01 05
 	// Token Id 17: 0x 0488 0006 02 06 02 04 05 04
+	// Token Id 18: 0x 04b5 0006 03 03 07 03 01 02
 	/**
 	* ==== Following testing methods is Send Tx ====
 	*/
