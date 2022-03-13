@@ -2,6 +2,7 @@
   "name": "chat-contract",
   "version": "1.0.0",
   "description": "ChatPuppy smart contracts",
+  "type": "module",
   "scripts": {
     "compile": "truffle compile",
 
@@ -10,6 +11,7 @@
     "deploy-random-generator-testnet": "truffle migrate --network bscTestnet -f 4 --to 4",
     "deploy-item-factory-testnet": "truffle migrate --network bscTestnet -f 5 --to 5",
     "deploy-nft-manager-testnet": "truffle migrate --network bscTestnet -f 6 --to 6",
+    "deploy-nft-manager-v2-testnet": "truffle migrate --network bscTestnet -f 13 --to 13",
     "deploy-marketplace-testnet": "truffle migrate --network bscTestnet -f 7 --to 7",
     "deploy-price-consumer-testnet": "truffle migrate --network bscTestnet -f 8 --to 8",
     "deploy-token-vesting-testnet": "truffle migrate --network bscTestnet -f 9 --to 9",

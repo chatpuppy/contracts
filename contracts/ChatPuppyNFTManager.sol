@@ -348,64 +348,64 @@ contract ChatPuppyNFTManager is
         (bytes32 _dna, uint256 _artifacts, ) = nftCore.tokenMetaData(tokenId_);
         _dna = bytes32(keccak256(abi.encodePacked(tokenId_, randomness_)));
 
-        uint256 _boxType = _getArtifactValue(_artifacts, 0, 8);
-        (uint256 _itemId, uint256 _itemType) = itemFactory.getRandomItem(
-            randomness_,
-            _boxType
-        );
+        // uint256 _boxType = _getArtifactValue(_artifacts, 0, 8);
+        // (uint256 _itemId) = itemFactory.getRandomItem(
+        //     randomness_,
+        //     _boxType
+        // );
 
-        _itemNextIds[_itemId] = _itemNextIds[_itemId] + 1;
-        _artifacts = _addArtifactValue(_artifacts, 8, 8, _itemType); // add itemType
-        _artifacts = _addArtifactValue(_artifacts, 16, 16, _itemId); // add itemId
-        _artifacts = _addArtifactValue(_artifacts, 32, 16, itemFactory.getItemInitialLevel(_itemType, _itemId)); // add level
-        _artifacts = _addArtifactValue(_artifacts, 48, 16, itemFactory.getItemInitialExperience(_itemType, _itemId)); // add exeperience
-        _artifacts = _addArtifactValue(_artifacts, 64, 24, _itemNextIds[_itemId]); // add item NextId, this is for pic image id
+        // _itemNextIds[_itemId] = _itemNextIds[_itemId] + 1;
+        // _artifacts = _addArtifactValue(_artifacts, 8, 8, _itemType); // add itemType
+        // _artifacts = _addArtifactValue(_artifacts, 16, 16, _itemId); // add itemId
+        // _artifacts = _addArtifactValue(_artifacts, 32, 16, itemFactory.getItemInitialLevel(_itemType, _itemId)); // add level
+        // _artifacts = _addArtifactValue(_artifacts, 48, 16, itemFactory.getItemInitialExperience(_itemType, _itemId)); // add exeperience
+        // _artifacts = _addArtifactValue(_artifacts, 64, 24, _itemNextIds[_itemId]); // add item NextId, this is for pic image id
 
-        uint256 _artifactsLength = itemFactory.artifactsLength(_itemType);
+        // uint256 _artifactsLength = itemFactory.artifactsLength(_itemType);
 
-        for (uint256 i = 0; i < _artifactsLength; i++) {
-            // add artifact id
-            uint256 _artifactId = itemFactory.artifactIdAt(_itemType, i);
+        // for (uint256 i = 0; i < _artifactsLength; i++) {
+        //     // add artifact id
+        //     uint256 _artifactId = itemFactory.artifactIdAt(_itemType, i);
 
-            _artifacts = _addArtifactValue(
-                _artifacts,
-                88 + i * 24,
-                8,
-                _artifactId
-            );
+        //     _artifacts = _addArtifactValue(
+        //         _artifacts,
+        //         88 + i * 24,
+        //         8,
+        //         _artifactId
+        //     );
 
-            // Randome seed for artifact, it'll be same if in the same block, same item type and same item id
-            uint256 _randomness = uint256(
-                keccak256(
-                    abi.encodePacked(
-                        randomness_,
-                        block.number,
-                        _itemType,
-                        _itemId,
-                        _artifactId,
-                        i
-                    )
-                )
-            );
+        //     // Randome seed for artifact, it'll be same if in the same block, same item type and same item id
+        //     uint256 _randomness = uint256(
+        //         keccak256(
+        //             abi.encodePacked(
+        //                 randomness_,
+        //                 block.number,
+        //                 // _itemType,
+        //                 _itemId,
+        //                 _artifactId,
+        //                 i
+        //             )
+        //         )
+        //     );
 
-            // add artifact value
-            uint256 _artifactValue = itemFactory.getRandomArtifactValue(
-                _randomness,
-                _artifactId
-            );
-            _artifacts = _addArtifactValue(
-                _artifacts,
-                96 + i * 24,
-                16,
-                _artifactValue
-            );
-        }
+        //     add artifact value
+        //     uint256 _artifactValue = itemFactory.getRandomArtifactValue(
+        //         _randomness,
+        //         _artifactId
+        //     );
+        //     _artifacts = _addArtifactValue(
+        //         _artifacts,
+        //         96 + i * 24,
+        //         16,
+        //         _artifactValue
+        //     );
+        // }
 
-        delete _tokenIdToUnboxBlockNumber[tokenId_];
-        _randomnesses[tokenId_] = randomness_;
+        // delete _tokenIdToUnboxBlockNumber[tokenId_];
+        // _randomnesses[tokenId_] = randomness_;
 
-        nftCore.updateTokenMetaData(tokenId_, _artifacts, _dna);
-        emit TokenFulfilled(tokenId_);
+        // nftCore.updateTokenMetaData(tokenId_, _artifacts, _dna);
+        // emit TokenFulfilled(tokenId_);
     }
 
     // Box type and NFT metadata manager

@@ -77,7 +77,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	 * IMPORTANT:
 	 * If you want to manager NFT as mystery box, the owner of nft must be nft-manager contract address, and use mint method to add mystery box
 	 */
-	// let sendEncodeABI = nftManager.methods.upgradeContract('0x615b80388E3D3CaC6AA3a904803acfE7939f0399').encodeABI();
+	// let sendEncodeABI = nftManager.methods.upgradeContract('0x8d3fc53883d89f359dE81c90bb26A729a01FdE09').encodeABI();
 
 	// Update projectId if meet: random number for token is already exist
 	// let sendEncodeABI = nftManager.methods.updateProjectId(120).encodeABI();

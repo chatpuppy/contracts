@@ -9,46 +9,29 @@ interface IItemFactory {
 
     function addItem(
         uint256 boxType,
-        uint256 itemType,
         uint256 itemId,
         uint256 rarity,
         uint256 itemInitialLevel,
         uint256 itemInitialExperience
     ) external;
 
-    function artifactsLength(uint256 itemType_)
-        external
-        view
-        returns (uint256);
-
-    function artifactIdAt(uint256 itemType_, uint256 index_)
-        external
-        view
-        returns (uint256);
-
-    function getRandomArtifactValue(uint256 randomness_, uint256 artifactId_)
-        external
-        view
-        returns (uint256);
-
     function getRandomItem(uint256 randomness, uint256 boxType)
         external
         view
-        returns (uint256 itemId, uint256 itemType);
+        returns (uint256 itemId);
 
-    function getItemInitialLevel(uint256 itemType, uint256 itemId)
+    function getItemInitialLevel(uint256[] memory boxTypes, uint256[] memory itemIds)
         external
         view
         returns (uint256);
 
-    function getItemInitialExperience(uint256 itemType, uint256 itemId)
+    function getItemInitialExperience(uint256[] memory boxTypes, uint256[] memory itemIds)
         external
         view
         returns (uint256);
 
     event ItemAdded(
         uint256 indexed boxType,
-        uint256 indexed itemType,
         uint256 indexed itemId,
         uint256 rarity,
         uint256 itemInitialLevel,

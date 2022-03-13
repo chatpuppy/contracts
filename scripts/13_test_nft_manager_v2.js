@@ -4,7 +4,6 @@
 
 import {execContract} from './web3.js';
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
-import {getTokensOfOwner} from 'erc721-balance';
 import dotenv from 'dotenv';
 dotenv.config();
 const require = createRequire(import.meta.url); // construct the require method
@@ -15,8 +14,7 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-// const nftManagerAddress = '0xE446F5537D2b6c8CC2277F49Ddecd5d242945744'; // kovan
-const nftManagerAddress = '0xA8a0A89eCA949Eb6D3296D572d408c2D378A4b97';// rinkeby
+const nftManagerAddress = '0x23Fa84d83E5D571807E9624E53fd331d4b48188f'; // bscTestnet
 
 const nftManagerJson = require('../build/contracts/ChatPuppyNFTManagerV2.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
@@ -24,14 +22,14 @@ const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 const nftManager = new web3.eth.Contract(nftManagerJson.abi, nftManagerAddress);
 const user = '0x615b80388E3D3CaC6AA3a904803acfE7939f0399';
 
-const tokenId = 1; // can not be zero
+const tokenId = 17; // can not be zero
 nftManager.methods.boxStatus(tokenId).call().then((result) => console.log('boxStatus ' + result));
 nftManager.methods.boxPrice().call().then((result) => console.log('boxPrice ' + result));
 nftManager.methods.randomWords(tokenId).call().then((words) => {
+	console.log('随机数');
 	console.log(words);
-	// console.log('request id', words[0]);
-	// console.log('random words', words[1]);
 });
+nftManager.methods.boxTypes(5).call().then((result) => console.log('Box Types', result));
 
 nftManager.methods.nftCore().call().then((nftAddress) => {
 	console.log('nft Address', nftAddress);
@@ -46,7 +44,9 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	nft.methods.ownerOf(tokenId).call().then((owner) => console.log('owner of nft ' + tokenId, owner));
 	nft.methods.tokenMetaData(tokenId).call().then((metaData) => console.log('metadata of nft ' + tokenId, metaData));
 
-	// TokenId 5: 0x26 07 001f 06 0017 05 0011 04 000f 03 0008 02 0000 01 000001 003c 0006 0005 01 01
+	// Token Id 12: 03 05 0a 01 01 05
+	// Token Id 16: 0x 0384 0006 04 03 0b 03 01 05
+	// Token Id 17: 0x 0488 0006 02 06 02 04 05 04
 	/**
 	* ==== Following testing methods is Send Tx ====
 	*/
@@ -78,8 +78,11 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	 * IMPORTANT:
 	 * If you want to manager NFT as mystery box, the owner of nft must be nft-manager contract address, and use mint method to add mystery box
 	 */
-	// let sendEncodeABI = nftManager.methods.upgradeContract('0x615b80388E3D3CaC6AA3a904803acfE7939f0399').encodeABI();
+	// let sendEncodeABI = nftManager.methods.upgradeContract('0x23Fa84d83E5D571807E9624E53fd331d4b48188f').encodeABI();
 
+	// Update boxTypes
+	// let sendEncodeABI = nftManager.methods.updateBoxTypes([2,3,4,5,6,7,8,9]).encodeABI();
+	
 	// Update projectId if meet: random number for token is already exist
 	// let sendEncodeABI = nftManager.methods.updateProjectId(120).encodeABI();
 
@@ -99,13 +102,13 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	// callContract(sendEncodeABI, nftManagerAddress, '10000000000000000');
 
 	// Batch mint mystery box NFT
-	// BUG: Can only batch mint 3 nfts one time.
-	// let sendEncodeABI = nftManager.methods.mintBatch(user, 1, 3).encodeABI();
+	// BUG: Can only batch mint 3 nfts one time. BoxType 2
+	// let sendEncodeABI = nftManager.methods.mintBatch(user, 3).encodeABI();
 	
 	// let sendEncodeABI = nftManager.methods.updateCallbackGasLimit(700000).encodeABI();
 
 	// Unbox mystery box
-	// let sendEncodeABI = nftManager.methods.unbox(1).encodeABI();
+	// let sendEncodeABI = nftManager.methods.unbox(tokenId).encodeABI();
 	// callContract(sendEncodeABI, nftManagerAddress);
 
 	// Batch buy and mint mystery box NFT
