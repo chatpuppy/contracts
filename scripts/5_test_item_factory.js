@@ -15,7 +15,7 @@ const chainId = process.env.CHAIN_ID * 1;
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const itemFactoryAddress = '0x4b0964d7DB4409578fA7935f32713dAf82E53393'; // bscTestnet
+const itemFactoryAddress = '0x8187e7708a43f60C93Da037F10Cfccd100635585'; // bscTestnet
 const itemFactoryJson = require('../build/contracts/ItemFactory.json');
 
 const itemFactory = new web3.eth.Contract(itemFactoryJson.abi, itemFactoryAddress);
@@ -32,40 +32,25 @@ itemFactory.methods.getItemInitialLevel(boxTypes, [5,1,3,11,3,4]).call().then((r
 itemFactory.methods.getItemInitialExperience(boxTypes, [5,1,3,11,3,4]).call().then((response) => console.log('experience', response));
 
 // Testing getRandomItem, verifying the params of item is right or not.
-// const num = 1000;
-// let randomResult = [0,0,0,0,0,0,0,0,0,0,0,0];
-// let count = 0;
-// for(let r = 0; r < num; r++) {
-// 	const randomSeed = Math.floor(Math.random() * 10000000);
-// 	itemFactory.methods.getRandomItem(randomSeed, boxType).call().then((result) => {
-// 		randomResult[result] = randomResult[result] + 1;
-// 		count++;
-// 		if(num === count) {
-// 			console.log(randomResult);
-// 		}
-// 	});
-// }
+const num = 1000;
+let randomResult = [0,0,0,0,0,0,0,0,0,0,0,0];
+let count = 0;
+for(let r = 0; r < num; r++) {
+	const randomSeed = Math.floor(Math.random() * 10000000);
+	itemFactory.methods.getRandomItem(randomSeed, boxType).call().then((result) => {
+		randomResult[result] = randomResult[result] + 1;
+		count++;
+		if(num === count) {
+			console.log(randomResult);
+		}
+	});
+}
 
 /**
  * ==== Following testing methods is Send Tx ====
  */
-const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
-
-/**
- * Testing
- * Add box#1, ItemType#1
- * item Id#1: name=PunkPuppy, rarity=3000, level=10, experience=100
- * item Id#2: name=MuskPuppy, rarity=9000, level=9, experience=90
- * item Id#3: name=AlienPuppy, rarity=36000, level=8, experience=80
- * item Id#4: name=DogePuppy, rarity=270000, level=7, experience=70
- * item Id#5: name=ChatPuppy, rarity=682000, level=6, experience=60
- */
-// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 1, 3000, 10, 100).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 2, 9000, 9, 90).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 3, 36000, 8, 80).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 4, 270000, 7, 70).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(1, 1, 5, 682000, 6, 60).encodeABI();
-// callContract(sendEncodeABI, itemFactoryAddress);
+const callContract = (encodeABI, contractAddress, onConfirmedFunc, onErrorFunc) => 
+	execContract(web3, chainId, priKey, encodeABI, 0, contractAddress, null, onConfirmedFunc, null, onErrorFunc);	
 
 /**
  * Chatpuppy rarity list
@@ -123,67 +108,295 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
  * item Id#64: name=Beard,   rarity=150000, level=1, experience=110
  * item Id#65: name=Mask,    rarity= 80000, level=1, experience=290
  * item Id#66: name=Gold,    rarity=120000, level=1, experience=160
- * 
- * 
  */
 
-// Background
-// let sendEncodeABI = itemFactory.methods.addItem(2, 1, 280000, 1, 0).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(2, 2, 230000, 1, 20).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(2, 3, 190000, 1, 50).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(2, 4, 150000, 1, 85).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(2, 5, 100000, 1, 180).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(2, 6,  50000, 1, 460).encodeABI();
-
-// Body
 // let sendEncodeABI = itemFactory.methods.addBoxType(3).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(3, 1, 330000, 1, 0).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(3, 2, 120000, 1, 175).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(3, 3, 150000, 1, 120).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(3, 4, 140000, 1, 135).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(3, 5, 100000, 1, 230).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(3, 6, 160000, 1, 110).encodeABI();
-
-// Eye
 // let sendEncodeABI = itemFactory.methods.addBoxType(4).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(4, 1, 300000, 1, 0).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(4, 2, 130000, 1, 130).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(4, 3,  60000, 1, 400).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(4, 4,  90000, 1, 235).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(4, 5, 110000, 1, 170).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(4, 6, 160000, 1, 90).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(4, 7, 150000, 1, 100).encodeABI();
-
-// Hat
 // let sendEncodeABI = itemFactory.methods.addBoxType(5).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(5, 1,  60000, 1, 530).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(5, 2,  65000, 1, 480).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(5, 3,  70000, 1, 440).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(5, 4,  90000, 1, 320).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(5, 5,  95000, 1, 300).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(5, 6,  75000, 1, 400).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(5, 7,  65000, 1, 480).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(5, 8,  25000, 1, 1420).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(5, 9,  40000, 1, 850).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(5, 10, 35000, 1, 1000).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(5, 11,380000, 1, 0).encodeABI();
-
-// Fur
 // let sendEncodeABI = itemFactory.methods.addBoxType(6).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(6, 1, 370000, 1, 0).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(6, 2, 160000, 1, 130).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(6, 3, 120000, 1, 210).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(6, 4,  60000, 1, 520).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(6, 5, 130000, 1, 180).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(6, 6, 160000, 1, 130).encodeABI();
-
-// Mouth
 // let sendEncodeABI = itemFactory.methods.addBoxType(7).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(7, 1, 180000, 1, 70).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(7, 2, 310000, 1, 0).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(7, 3, 160000, 1, 95).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(7, 4, 150000, 1, 110).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(7, 5,  80000, 1, 290).encodeABI();
-// let sendEncodeABI = itemFactory.methods.addItem(7, 6, 120000, 1, 160).encodeABI();
-
 // callContract(sendEncodeABI, itemFactoryAddress);
+
+const itemParams = [
+	{
+		boxType: 2,
+		itemId:  1,
+		rarity:  280000,
+		level:   1,
+		experience: 0,
+	}, 
+	{
+		boxType: 2,
+		itemId:  2,
+		rarity:  230000,
+		level:   1,
+		experience: 20,
+	}, 
+	{
+		boxType: 2,
+		itemId:  3,
+		rarity:  190000,
+		level:   1,
+		experience: 50,
+	}, 
+	{
+		boxType: 2,
+		itemId:  4,
+		rarity:  150000,
+		level:   1,
+		experience: 85,
+	}, {
+		boxType: 2,
+		itemId:  5,
+		rarity:  100000,
+		level:   1,
+		experience: 180,
+	}, {
+		boxType: 2,
+		itemId:  6,
+		rarity:  50000,
+		level:   1,
+		experience: 460,
+	}, {
+		boxType: 3,
+		itemId:  1,
+		rarity:  330000,
+		level:   1,
+		experience: 0,
+	}, {
+		boxType: 3,
+		itemId:  2,
+		rarity:  120000,
+		level:   1,
+		experience: 175,
+	}, {
+		boxType: 3,
+		itemId:  3,
+		rarity:  150000,
+		level:   1,
+		experience: 120,
+	}, {
+		boxType: 3,
+		itemId:  4,
+		rarity:  140000,
+		level:   1,
+		experience: 135,
+	}, {
+		boxType: 3,
+		itemId:  5,
+		rarity:  100000,
+		level:   1,
+		experience: 230,
+	}, {
+		boxType: 3,
+		itemId:  6,
+		rarity:  160000,
+		level:   1,
+		experience: 110,
+	}, {
+		boxType: 4, // ===
+		itemId:  1,
+		rarity:  300000,
+		level:   1,
+		experience: 0,
+	}, {
+		boxType: 4,
+		itemId:  2,
+		rarity:  130000,
+		level:   1,
+		experience: 130,
+	}, {
+		boxType: 4,
+		itemId:  3,
+		rarity:  60000,
+		level:   1,
+		experience: 400,
+	}, {
+		boxType: 4,
+		itemId:  4,
+		rarity:  90000,
+		level:   1,
+		experience: 235,
+	}, {
+		boxType: 4,
+		itemId:  5,
+		rarity:  110000,
+		level:   1,
+		experience: 170,
+	}, {
+		boxType: 4,
+		itemId:  6,
+		rarity:  160000,
+		level:   1,
+		experience: 90,
+	}, {
+		boxType: 4,
+		itemId:  7,
+		rarity:  150000,
+		level:   1,
+		experience: 100,
+	}, {
+		boxType: 5,
+		itemId:  1,
+		rarity:  60000,
+		level:   1,
+		experience: 530,
+	}, {
+		boxType: 5,
+		itemId:  2,
+		rarity:  65000,
+		level:   1,
+		experience: 480,
+	}, {
+		boxType: 5,
+		itemId:  3,
+		rarity:  70000,
+		level:   1,
+		experience: 440,
+	}, {
+		boxType: 5,
+		itemId:  4,
+		rarity:  90000,
+		level:   1,
+		experience: 320,
+	}, {
+		boxType: 5,
+		itemId:  5,
+		rarity:  95000,
+		level:   1,
+		experience: 300,
+	}, {
+		boxType: 5,
+		itemId:  6,
+		rarity:  75000,
+		level:   1,
+		experience: 400,
+	}, {
+		boxType: 5,
+		itemId:  7,
+		rarity:  65000,
+		level:   1,
+		experience: 480,
+	}, {
+		boxType: 5,
+		itemId:  8,
+		rarity:  25000,
+		level:   1,
+		experience: 1420,
+	}, {
+		boxType: 5,
+		itemId:  9,
+		rarity:  40000,
+		level:   1,
+		experience: 850,
+	}, {
+		boxType: 5,
+		itemId:  10,
+		rarity:  35000,
+		level:   1,
+		experience: 1000,
+	}, {
+		boxType: 5,
+		itemId:  11,
+		rarity:  380000,
+		level:   1,
+		experience: 0,
+	}, {
+		boxType: 6,
+		itemId:  1,
+		rarity:  370000,
+		level:   1,
+		experience: 0,
+	}, {
+		boxType: 6,
+		itemId:  2,
+		rarity:  160000,
+		level:   1,
+		experience: 130,
+	}, {
+		boxType: 6,
+		itemId:  3,
+		rarity:  120000,
+		level:   1,
+		experience: 210,
+	}, {
+		boxType: 6,
+		itemId:  4,
+		rarity:  60000,
+		level:   1,
+		experience: 520,
+	}, {
+		boxType: 6,
+		itemId:  5,
+		rarity:  130000,
+		level:   1,
+		experience: 180,
+	}, {
+		boxType: 6,
+		itemId:  6,
+		rarity:  160000,
+		level:   1,
+		experience: 130,
+	}, {
+		boxType: 7,
+		itemId:  1,
+		rarity:  180000,
+		level:   1,
+		experience: 70,
+	}, {
+		boxType: 7,
+		itemId:  2,
+		rarity:  310000,
+		level:   1,
+		experience: 0,
+	}, {
+		boxType: 7,
+		itemId:  3,
+		rarity:  160000,
+		level:   1,
+		experience: 95,
+	}, {
+		boxType: 7,
+		itemId:  4,
+		rarity:  150000,
+		level:   1,
+		experience: 110,
+	}, {
+		boxType: 7,
+		itemId:  5,
+		rarity:  80000,
+		level:   1,
+		experience: 290,
+	}, {
+		boxType: 7,
+		itemId:  6,
+		rarity:  120000,
+		level:   1,
+		experience: 160,
+	}
+];
+
+function addItems(id) {
+	const params = itemParams[id];
+	const sendEncodeABI = itemFactory.methods.addItem(
+		params.boxType,
+		params.itemId,
+		params.rarity,
+		params.level,
+		params.experience
+	).encodeABI();
+
+	callContract(sendEncodeABI, itemFactoryAddress, (confirmationNumber, receipt) => {
+		// onConfirmedFunc
+		console.log(`#${id} BoxType ${params.boxType}, item ${params.itemId} is done...`);
+		if(id + 1 < itemParams.length) addItems(id + 1);
+		else console.log(`All items are added...`);
+	}, (error) => {
+		// onError
+		console.log(`#${id} BoxType ${params.boxType}, item ${params.itemId} is error...`);
+		if(id + 1 < itemParams.length) addItems(id + 1);
+		else console.log(`All items are added...`);
+	});
+}
+
+// addItems(0);

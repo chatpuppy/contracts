@@ -52,7 +52,7 @@ export const execContract = (web3, chainId, priKey, sendEncodeABI, value, contra
 						if(confirmationNumber >=1 && confirmationNumber < 2) {
 							console.log('confirmations:', confirmationNumber);
 							if(onConfirmedFunc !== null) onConfirmedFunc(confirmationNumber, receipt);
-							exit(0);
+							// exit(0);
 						}
 					})
 					.on('error:', error => {

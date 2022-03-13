@@ -14,7 +14,7 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const nftManagerAddress = '0xE9174275Fd982bd2107EF2f347aCa72D814ED56D'; // bscTestnet
+const nftManagerAddress = '0x094430f67dd7ed60c585754dc561e6be887aeeba'; // bscTestnet
 
 const nftManagerJson = require('../build/contracts/ChatPuppyNFTManagerV2.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
@@ -56,6 +56,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	// Token Id 25: 0x 0438 0006 01 05 04 07 05 05
 	// Token Id 26: 0x 06a9 0006 04 04 04 03 02 05
 	// Token Id 27: 0x 0389 0006 04 06 04 04 06 01
+	// Token Id 28: 
 	/**
 	* ==== Following testing methods is Send Tx ====
 	*/
@@ -87,7 +88,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	 * IMPORTANT:
 	 * If you want to manager NFT as mystery box, the owner of nft must be nft-manager contract address, and use mint method to add mystery box
 	 */
-	// let sendEncodeABI = nftManager.methods.upgradeContract('0xE9174275Fd982bd2107EF2f347aCa72D814ED56D').encodeABI();
+	// let sendEncodeABI = nftManager.methods.upgradeContract('0x094430F67DD7eD60c585754DC561E6BE887aeeba').encodeABI();
 
 	// Update boxTypes
 	// let sendEncodeABI = nftManager.methods.updateBoxTypes([2,3,4,5,6,7,8,9]).encodeABI();
