@@ -2,7 +2,6 @@
   "name": "chat-contract",
   "version": "1.0.0",
   "description": "ChatPuppy smart contracts",
-  "type": "module",
   "scripts": {
     "compile": "truffle compile",
 

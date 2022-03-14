@@ -24,12 +24,17 @@ contract ItemFactory is Ownable, IItemFactory {
         mapping(uint256 => uint256) itemInitialLevel;
         mapping(uint256 => uint256) itemInitialExperience;
     }
-    mapping(uint256 => Items) public _items;
+    mapping(uint256 => Items) private _items;
 
     constructor() {
         // Mystery Box
         _supportedBoxTypes.add(1); // #1
         _supportedBoxTypes.add(2); // #2
+        _supportedBoxTypes.add(3); // #3
+        _supportedBoxTypes.add(4); // #4
+        _supportedBoxTypes.add(5); // #5
+        _supportedBoxTypes.add(6); // #6
+        _supportedBoxTypes.add(7); // #7
     }
 
     modifier onlySupportedBoxType(uint256 boxType_) {
@@ -54,6 +59,14 @@ contract ItemFactory is Ownable, IItemFactory {
 
     function getItemRarity(uint256 boxType_, uint256 itemId_) external view returns(uint256) {
         return _items[boxType_].itemIdToRarity[itemId_].rarity;
+    }
+
+    function getItemIds(uint256 boxType_) external view returns (uint256[] memory) {
+        return _items[boxType_].itemIds;
+    }
+
+    function getItemProperties(uint256 boxType_, uint256 itemId_) external view returns(uint256, uint256) {
+        return(_items[boxType_].itemInitialLevel[itemId_], _items[boxType_].itemInitialExperience[itemId_]);
     }
 
     function getItemTotalRarity(uint256 boxType_) external view returns(uint256) {

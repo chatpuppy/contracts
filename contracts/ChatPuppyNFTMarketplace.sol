@@ -29,6 +29,7 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
         uint256 tokenId;
         address paymentToken;
         uint256 price;
+        uint256 timestamp;
     }
 
     EnumerableSet.AddressSet private _supportedPaymentTokens;
@@ -47,7 +48,8 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
         address indexed seller,
         uint256 indexed tokenId,
         address paymentToken,
-        uint256 price
+        uint256 price,
+        uint256 timestamp
     );
     event PriceUpdated(uint256 indexed orderId, uint256 price);
     event OrderCancelled(uint256 indexed orderId);
@@ -57,7 +59,8 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
         address indexed buyer,
         uint256 tokenId,
         address paymentToken,
-        uint256 price
+        uint256 price,
+        uint256 timestamp
     );
     event feeRateUpdated(uint256 feeDecimal, uint256 feeRate);
 
@@ -246,6 +249,7 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
         _order.tokenId = tokenId_;
         _order.paymentToken = paymentToken_;
         _order.price = price_;
+        _order.timestamp = block.timestamp;
         _orderIdTracker.increment();
 
         _onSaleOrders.add(_orderId);
@@ -258,7 +262,8 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
             _msgSender(),
             tokenId_,
             paymentToken_,
-            price_
+            price_,
+            block.timestamp
         );
     }
 
@@ -334,7 +339,8 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
             _order.buyer,
             _order.tokenId,
             _order.paymentToken,
-            _order.price
+            _order.price,
+            block.timestamp
         );
     }
 }

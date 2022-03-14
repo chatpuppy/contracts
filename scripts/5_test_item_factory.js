@@ -15,7 +15,7 @@ const chainId = process.env.CHAIN_ID * 1;
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const itemFactoryAddress = '0x8187e7708a43f60C93Da037F10Cfccd100635585'; // bscTestnet
+const itemFactoryAddress = '0xda667485BBd5D72Ad60F286110Db24F34Afe9714'; // bscTestnet
 const itemFactoryJson = require('../build/contracts/ItemFactory.json');
 
 const itemFactory = new web3.eth.Contract(itemFactoryJson.abi, itemFactoryAddress);
@@ -30,6 +30,12 @@ itemFactory.methods.getItemTotalRarity(boxType).call().then((response) => consol
 
 itemFactory.methods.getItemInitialLevel(boxTypes, [5,1,3,11,3,4]).call().then((response) => console.log('level', response));
 itemFactory.methods.getItemInitialExperience(boxTypes, [5,1,3,11,3,4]).call().then((response) => console.log('experience', response));
+
+itemFactory.methods.getItemIds(3).call().then((response) => console.log('items ids', response));
+itemFactory.methods.getItemProperties(3, 3).call().then((response) => {
+	console.log('item level', response[0] * 1);
+	console.log('item experience', response[1] * 1)
+});
 
 // Testing getRandomItem, verifying the params of item is right or not.
 const num = 1000;

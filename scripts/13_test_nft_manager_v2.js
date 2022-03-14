@@ -14,7 +14,7 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const nftManagerAddress = '0x094430f67dd7ed60c585754dc561e6be887aeeba'; // bscTestnet
+const nftManagerAddress = '0x2010f362A6378D75C7E4AaB521A882450BffB5A1'; // bscTestnet
 
 const nftManagerJson = require('../build/contracts/ChatPuppyNFTManagerV2.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
@@ -22,7 +22,7 @@ const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 const nftManager = new web3.eth.Contract(nftManagerJson.abi, nftManagerAddress);
 const user = '0x615b80388E3D3CaC6AA3a904803acfE7939f0399';
 
-const tokenId = 27; // can not be zero
+const tokenId = 28; // can not be zero
 nftManager.methods.boxStatus(tokenId).call().then((result) => console.log('boxStatus ' + result));
 nftManager.methods.boxPrice().call().then((result) => console.log('boxPrice ' + result));
 nftManager.methods.randomWords(tokenId).call().then((words) => {
@@ -56,7 +56,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	// Token Id 25: 0x 0438 0006 01 05 04 07 05 05
 	// Token Id 26: 0x 06a9 0006 04 04 04 03 02 05
 	// Token Id 27: 0x 0389 0006 04 06 04 04 06 01
-	// Token Id 28: 
+	// Token Id 28: 0x 028f 0006 04 03 0b 02 03 04
 	/**
 	* ==== Following testing methods is Send Tx ====
 	*/
@@ -88,7 +88,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	 * IMPORTANT:
 	 * If you want to manager NFT as mystery box, the owner of nft must be nft-manager contract address, and use mint method to add mystery box
 	 */
-	// let sendEncodeABI = nftManager.methods.upgradeContract('0x094430F67DD7eD60c585754DC561E6BE887aeeba').encodeABI();
+	// let sendEncodeABI = nftManager.methods.upgradeContract('0x2010f362A6378D75C7E4AaB521A882450BffB5A1').encodeABI();
 
 	// Update boxTypes
 	// let sendEncodeABI = nftManager.methods.updateBoxTypes([2,3,4,5,6,7,8,9]).encodeABI();
