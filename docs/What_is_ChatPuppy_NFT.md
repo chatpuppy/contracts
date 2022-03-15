@@ -1,3 +1,4 @@
+
 我们在设计`ChatPuppy NFT`时，考虑需要解决以下几个问题：
 
 * 如何让NFT的特征更有趣，随机性更强，更好玩
@@ -223,7 +224,19 @@ export const itemParams = [{
 |||概率：0.001208204|Exp：0|
 
 ### 4.4 稀有度与Exp概率分布
-笔者根据上述特征值，进行一亿次模拟，得出如下概率分布曲线：
+笔者根据上述特征值，进行16000多次模拟，得出如下分布频率曲线：
+
+![](https://tva1.sinaimg.cn/large/e6c9d24egy1h0b22tru6aj20yy0m8dhb.jpg)
+上图是Experience的分布频率。
+
+![](https://tva1.sinaimg.cn/large/e6c9d24egy1h0b29c46fnj20yy0m8gmz.jpg)
+上图是Experience的分布频率帕累托图，Exp: 350-1300之间站到80%左右。
+
+![](https://tva1.sinaimg.cn/large/e6c9d24egy1h0b24e3skqj20yy0m8abl.jpg)
+上图是稀有度Rarity的分布频率。
+
+![](https://tva1.sinaimg.cn/large/e6c9d24egy1h0b2crmuz5j20yw0m8dh5.jpg)
+上图是稀有度Rarity的分布频率帕累托图，66%的落在0-500之间，即百万次重复次数0-500。
 
 ## 5. 关于链上随机数机制
 上述实现方案的关键步骤是如何在合约中生成随机数，产生元数据属性。感谢`ChainLink`为我们提供了基于`VRF`（可验证随机函数）的随机数方案，让我们能直接链上产生随机数，从而让NFT的铸造变得更有趣，更可信，真正实现了去中心化。
