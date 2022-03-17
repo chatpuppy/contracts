@@ -22,7 +22,7 @@ const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 const nftManager = new web3.eth.Contract(nftManagerJson.abi, nftManagerAddress);
 const user = '0x615b80388E3D3CaC6AA3a904803acfE7939f0399';
 
-const tokenId = 28; // can not be zero
+const tokenId = 51; // can not be zero
 nftManager.methods.boxStatus(tokenId).call().then((result) => console.log('boxStatus ' + result));
 nftManager.methods.boxPrice().call().then((result) => console.log('boxPrice ' + result));
 nftManager.methods.randomWords(tokenId).call().then((words) => {
@@ -90,6 +90,8 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	 */
 	// let sendEncodeABI = nftManager.methods.upgradeContract('0x2010f362A6378D75C7E4AaB521A882450BffB5A1').encodeABI();
 
+	let sendEncodeABI = nftManager.methods.updateItemFactory('0x93E138E8B9E4f034A6c05C3380606109b8b58D5f').encodeABI();
+
 	// Update boxTypes
 	// let sendEncodeABI = nftManager.methods.updateBoxTypes([2,3,4,5,6,7,8,9]).encodeABI();
 	
@@ -121,7 +123,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 
 	// Unbox mystery box
 	// let sendEncodeABI = nftManager.methods.unbox(tokenId).encodeABI();
-	// callContract(sendEncodeABI, nftManagerAddress);
+	callContract(sendEncodeABI, nftManagerAddress);
 
 	// Batch buy and mint mystery box NFT
 	// let sendEncodeABI = nftManager.methods.buyAndMintBatch(1, 3).encodeABI();

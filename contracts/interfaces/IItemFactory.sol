@@ -37,4 +37,13 @@ interface IItemFactory {
         uint256 itemInitialLevel,
         uint256 itemInitialExperience
     );
+
+    event ItemUpdated(
+        uint256 indexed boxType,
+        uint256 indexed itemId,
+        uint256 rarity,
+        uint256 itemInitialLevel,
+        uint256 itemInitialExperience
+    );
+
 }

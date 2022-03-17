@@ -39,9 +39,9 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.8+commit.dddeac2f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"itemFactory_\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"itemFactory_\",\"type\":\"address\"}],\"name\":\"ItemFactoryUpdated\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"itemFactory\",\"outputs\":[{\"internalType\":\"contract IItemFactory\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/lib/ItemFactoryManager.sol\":\"ItemFactoryManager\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/interfaces/IItemFactory.sol\":{\"keccak256\":\"0xcc178ec1c5a853c14c7fc38ec19ce5a3676ae64a272a4c8929008c2497c91643\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d6a84e3e498d07ca02870d4149c97e228122e77feb69804e00a7d18f5edf86ad\",\"dweb:/ipfs/QmUZKj3sHwaHeNwDQhXb2sNM54K9or1T3xdUyK6BidDHMQ\"]},\"project:/contracts/lib/ItemFactoryManager.sol\":{\"keccak256\":\"0x2d0c46ce65c3b0687f1b50056fca5ff2b705a9ff84bca7ce4ebf2a4adf2abf7d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9567b9ce80722ff6ec3da65195a4b95dc2639521a4574684816ae78b0fd4424f\",\"dweb:/ipfs/Qma6CXfEqUVsVbBERUfrjfNEMG3jr2sZdqejLM2z7kFYWk\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b5060405161016138038061016183398101604081905261002f91610092565b6100388161003e565b506100c2565b600080546001600160a01b0319166001600160a01b0383169081179091556040519081527fb559d8170ace02c3952e61b0283069cbd855873809630a54f2ca448cca7c7b1c9060200160405180910390a150565b6000602082840312156100a457600080fd5b81516001600160a01b03811681146100bb57600080fd5b9392505050565b6091806100d06000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c80636bac719414602d575b600080fd5b600054603f906001600160a01b031681565b6040516001600160a01b03909116815260200160405180910390f3fea264697066735822122054ece7552ec5d7469c6ed5429a5d19d4418f4ce10948a7d40be9f14592297a2f64736f6c63430008080033",
-  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c80636bac719414602d575b600080fd5b600054603f906001600160a01b031681565b6040516001600160a01b03909116815260200160405180910390f3fea264697066735822122054ece7552ec5d7469c6ed5429a5d19d4418f4ce10948a7d40be9f14592297a2f64736f6c63430008080033",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.8+commit.dddeac2f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"itemFactory_\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"itemFactory_\",\"type\":\"address\"}],\"name\":\"ItemFactoryUpdated\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"itemFactory\",\"outputs\":[{\"internalType\":\"contract IItemFactory\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/lib/ItemFactoryManager.sol\":\"ItemFactoryManager\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/interfaces/IItemFactory.sol\":{\"keccak256\":\"0x7c055e5c5ddde13a8f3d0db2ea0abe63eff25b7bce4baba8a76246fc96315cda\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://db1f585fe49f28c58a4e10b6a10303f72e965a4340f1268b0e647a5caf084800\",\"dweb:/ipfs/QmUtMQ68bDDDD95p2Fj5QmgM7erFJSWQa8yScjSUgGFXwa\"]},\"project:/contracts/lib/ItemFactoryManager.sol\":{\"keccak256\":\"0x2d0c46ce65c3b0687f1b50056fca5ff2b705a9ff84bca7ce4ebf2a4adf2abf7d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9567b9ce80722ff6ec3da65195a4b95dc2639521a4574684816ae78b0fd4424f\",\"dweb:/ipfs/Qma6CXfEqUVsVbBERUfrjfNEMG3jr2sZdqejLM2z7kFYWk\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5060405161016138038061016183398101604081905261002f91610092565b6100388161003e565b506100c2565b600080546001600160a01b0319166001600160a01b0383169081179091556040519081527fb559d8170ace02c3952e61b0283069cbd855873809630a54f2ca448cca7c7b1c9060200160405180910390a150565b6000602082840312156100a457600080fd5b81516001600160a01b03811681146100bb57600080fd5b9392505050565b6091806100d06000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c80636bac719414602d575b600080fd5b600054603f906001600160a01b031681565b6040516001600160a01b03909116815260200160405180910390f3fea2646970667358221220b73048f238ef1e1727a41bb70c10ab42f71028b7db5f68c639fae9bea2c8ecf564736f6c63430008080033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c80636bac719414602d575b600080fd5b600054603f906001600160a01b031681565b6040516001600160a01b03909116815260200160405180910390f3fea2646970667358221220b73048f238ef1e1727a41bb70c10ab42f71028b7db5f68c639fae9bea2c8ecf564736f6c63430008080033",
   "immutableReferences": {},
   "generatedSources": [
     {
@@ -619,7 +619,7 @@
                 }
               ]
             },
-            "name": "abi_encode_tuple_t_contract$_IItemFactory_$3290__to_t_address__fromStack_reversed",
+            "name": "abi_encode_tuple_t_contract$_IItemFactory_$3276__to_t_address__fromStack_reversed",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -647,7 +647,7 @@
           }
         ]
       },
-      "contents": "{\n    { }\n    function abi_encode_tuple_t_contract$_IItemFactory_$3290__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n}",
+      "contents": "{\n    { }\n    function abi_encode_tuple_t_contract$_IItemFactory_$3276__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n}",
       "id": 33,
       "language": "Yul",
       "name": "#utility.yul"
@@ -661,18 +661,18 @@
     "absolutePath": "project:/contracts/lib/ItemFactoryManager.sol",
     "exportedSymbols": {
       "IItemFactory": [
-        3290
+        3276
       ],
       "ItemFactoryManager": [
-        5223
+        5434
       ]
     },
-    "id": 5224,
+    "id": 5435,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 5188,
+        "id": 5399,
         "literals": [
           "solidity",
           "^",
@@ -685,11 +685,11 @@
       {
         "absolutePath": "project:/contracts/interfaces/IItemFactory.sol",
         "file": "../interfaces/IItemFactory.sol",
-        "id": 5189,
+        "id": 5400,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 5224,
-        "sourceUnit": 3291,
+        "scope": 5435,
+        "sourceUnit": 3277,
         "src": "57:40:18",
         "symbolAliases": [],
         "unitAlias": ""
@@ -700,9 +700,9 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 5223,
+        "id": 5434,
         "linearizedBaseContracts": [
-          5223
+          5434
         ],
         "name": "ItemFactoryManager",
         "nameLocation": "108:18:18",
@@ -711,33 +711,33 @@
           {
             "constant": false,
             "functionSelector": "6bac7194",
-            "id": 5192,
+            "id": 5403,
             "mutability": "mutable",
             "name": "itemFactory",
             "nameLocation": "153:11:18",
             "nodeType": "VariableDeclaration",
-            "scope": 5223,
+            "scope": 5434,
             "src": "133:31:18",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IItemFactory_$3290",
+              "typeIdentifier": "t_contract$_IItemFactory_$3276",
               "typeString": "contract IItemFactory"
             },
             "typeName": {
-              "id": 5191,
+              "id": 5402,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 5190,
+                "id": 5401,
                 "name": "IItemFactory",
                 "nodeType": "IdentifierPath",
-                "referencedDeclaration": 3290,
+                "referencedDeclaration": 3276,
                 "src": "133:12:18"
               },
-              "referencedDeclaration": 3290,
+              "referencedDeclaration": 3276,
               "src": "133:12:18",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IItemFactory_$3290",
+                "typeIdentifier": "t_contract$_IItemFactory_$3276",
                 "typeString": "contract IItemFactory"
               }
             },
@@ -745,23 +745,23 @@
           },
           {
             "anonymous": false,
-            "id": 5196,
+            "id": 5407,
             "name": "ItemFactoryUpdated",
             "nameLocation": "177:18:18",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 5195,
+              "id": 5406,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5194,
+                  "id": 5405,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "itemFactory_",
                   "nameLocation": "204:12:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5196,
+                  "scope": 5407,
                   "src": "196:20:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -770,7 +770,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5193,
+                    "id": 5404,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "196:7:18",
@@ -789,7 +789,7 @@
           },
           {
             "body": {
-              "id": 5205,
+              "id": 5416,
               "nodeType": "Block",
               "src": "258:49:18",
               "statements": [
@@ -797,11 +797,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 5202,
+                        "id": 5413,
                         "name": "itemFactory_",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5198,
+                        "referencedDeclaration": 5409,
                         "src": "287:12:18",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -816,18 +816,18 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 5201,
+                      "id": 5412,
                       "name": "_updateItemFactory",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5222,
+                      "referencedDeclaration": 5433,
                       "src": "268:18:18",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$returns$__$",
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 5203,
+                    "id": 5414,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -842,13 +842,13 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5204,
+                  "id": 5415,
                   "nodeType": "ExpressionStatement",
                   "src": "268:32:18"
                 }
               ]
             },
-            "id": 5206,
+            "id": 5417,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
@@ -856,17 +856,17 @@
             "nameLocation": "-1:-1:-1",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5199,
+              "id": 5410,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5198,
+                  "id": 5409,
                   "mutability": "mutable",
                   "name": "itemFactory_",
                   "nameLocation": "244:12:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5206,
+                  "scope": 5417,
                   "src": "236:20:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -875,7 +875,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5197,
+                    "id": 5408,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "236:7:18",
@@ -891,12 +891,12 @@
               "src": "235:22:18"
             },
             "returnParameters": {
-              "id": 5200,
+              "id": 5411,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "258:0:18"
             },
-            "scope": 5223,
+            "scope": 5434,
             "src": "224:83:18",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -904,26 +904,26 @@
           },
           {
             "body": {
-              "id": 5221,
+              "id": 5432,
               "nodeType": "Block",
               "src": "372:104:18",
               "statements": [
                 {
                   "expression": {
-                    "id": 5215,
+                    "id": 5426,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 5211,
+                      "id": 5422,
                       "name": "itemFactory",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5192,
+                      "referencedDeclaration": 5403,
                       "src": "382:11:18",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IItemFactory_$3290",
+                        "typeIdentifier": "t_contract$_IItemFactory_$3276",
                         "typeString": "contract IItemFactory"
                       }
                     },
@@ -932,11 +932,11 @@
                     "rightHandSide": {
                       "arguments": [
                         {
-                          "id": 5213,
+                          "id": 5424,
                           "name": "itemFactory_",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 5208,
+                          "referencedDeclaration": 5419,
                           "src": "409:12:18",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -951,18 +951,18 @@
                             "typeString": "address"
                           }
                         ],
-                        "id": 5212,
+                        "id": 5423,
                         "name": "IItemFactory",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3290,
+                        "referencedDeclaration": 3276,
                         "src": "396:12:18",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_IItemFactory_$3290_$",
+                          "typeIdentifier": "t_type$_t_contract$_IItemFactory_$3276_$",
                           "typeString": "type(contract IItemFactory)"
                         }
                       },
-                      "id": 5214,
+                      "id": 5425,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -973,17 +973,17 @@
                       "src": "396:26:18",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IItemFactory_$3290",
+                        "typeIdentifier": "t_contract$_IItemFactory_$3276",
                         "typeString": "contract IItemFactory"
                       }
                     },
                     "src": "382:40:18",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IItemFactory_$3290",
+                      "typeIdentifier": "t_contract$_IItemFactory_$3276",
                       "typeString": "contract IItemFactory"
                     }
                   },
-                  "id": 5216,
+                  "id": 5427,
                   "nodeType": "ExpressionStatement",
                   "src": "382:40:18"
                 },
@@ -991,11 +991,11 @@
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 5218,
+                        "id": 5429,
                         "name": "itemFactory_",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5208,
+                        "referencedDeclaration": 5419,
                         "src": "456:12:18",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -1010,18 +1010,18 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 5217,
+                      "id": 5428,
                       "name": "ItemFactoryUpdated",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5196,
+                      "referencedDeclaration": 5407,
                       "src": "437:18:18",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 5219,
+                    "id": 5430,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1036,13 +1036,13 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5220,
+                  "id": 5431,
                   "nodeType": "EmitStatement",
                   "src": "432:37:18"
                 }
               ]
             },
-            "id": 5222,
+            "id": 5433,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -1050,17 +1050,17 @@
             "nameLocation": "322:18:18",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5209,
+              "id": 5420,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5208,
+                  "id": 5419,
                   "mutability": "mutable",
                   "name": "itemFactory_",
                   "nameLocation": "349:12:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5222,
+                  "scope": 5433,
                   "src": "341:20:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1069,7 +1069,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5207,
+                    "id": 5418,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "341:7:18",
@@ -1085,19 +1085,19 @@
               "src": "340:22:18"
             },
             "returnParameters": {
-              "id": 5210,
+              "id": 5421,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "372:0:18"
             },
-            "scope": 5223,
+            "scope": 5434,
             "src": "313:163:18",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           }
         ],
-        "scope": 5224,
+        "scope": 5435,
         "src": "99:379:18",
         "usedErrors": []
       }
@@ -1108,18 +1108,18 @@
     "absolutePath": "project:/contracts/lib/ItemFactoryManager.sol",
     "exportedSymbols": {
       "IItemFactory": [
-        3290
+        3276
       ],
       "ItemFactoryManager": [
-        5223
+        5434
       ]
     },
-    "id": 5224,
+    "id": 5435,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 5188,
+        "id": 5399,
         "literals": [
           "solidity",
           "^",
@@ -1132,11 +1132,11 @@
       {
         "absolutePath": "project:/contracts/interfaces/IItemFactory.sol",
         "file": "../interfaces/IItemFactory.sol",
-        "id": 5189,
+        "id": 5400,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 5224,
-        "sourceUnit": 3291,
+        "scope": 5435,
+        "sourceUnit": 3277,
         "src": "57:40:18",
         "symbolAliases": [],
         "unitAlias": ""
@@ -1147,9 +1147,9 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 5223,
+        "id": 5434,
         "linearizedBaseContracts": [
-          5223
+          5434
         ],
         "name": "ItemFactoryManager",
         "nameLocation": "108:18:18",
@@ -1158,33 +1158,33 @@
           {
             "constant": false,
             "functionSelector": "6bac7194",
-            "id": 5192,
+            "id": 5403,
             "mutability": "mutable",
             "name": "itemFactory",
             "nameLocation": "153:11:18",
             "nodeType": "VariableDeclaration",
-            "scope": 5223,
+            "scope": 5434,
             "src": "133:31:18",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IItemFactory_$3290",
+              "typeIdentifier": "t_contract$_IItemFactory_$3276",
               "typeString": "contract IItemFactory"
             },
             "typeName": {
-              "id": 5191,
+              "id": 5402,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 5190,
+                "id": 5401,
                 "name": "IItemFactory",
                 "nodeType": "IdentifierPath",
-                "referencedDeclaration": 3290,
+                "referencedDeclaration": 3276,
                 "src": "133:12:18"
               },
-              "referencedDeclaration": 3290,
+              "referencedDeclaration": 3276,
               "src": "133:12:18",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IItemFactory_$3290",
+                "typeIdentifier": "t_contract$_IItemFactory_$3276",
                 "typeString": "contract IItemFactory"
               }
             },
@@ -1192,23 +1192,23 @@
           },
           {
             "anonymous": false,
-            "id": 5196,
+            "id": 5407,
             "name": "ItemFactoryUpdated",
             "nameLocation": "177:18:18",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 5195,
+              "id": 5406,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5194,
+                  "id": 5405,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "itemFactory_",
                   "nameLocation": "204:12:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5196,
+                  "scope": 5407,
                   "src": "196:20:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1217,7 +1217,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5193,
+                    "id": 5404,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "196:7:18",
@@ -1236,7 +1236,7 @@
           },
           {
             "body": {
-              "id": 5205,
+              "id": 5416,
               "nodeType": "Block",
               "src": "258:49:18",
               "statements": [
@@ -1244,11 +1244,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 5202,
+                        "id": 5413,
                         "name": "itemFactory_",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5198,
+                        "referencedDeclaration": 5409,
                         "src": "287:12:18",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -1263,18 +1263,18 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 5201,
+                      "id": 5412,
                       "name": "_updateItemFactory",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5222,
+                      "referencedDeclaration": 5433,
                       "src": "268:18:18",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$returns$__$",
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 5203,
+                    "id": 5414,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1289,13 +1289,13 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5204,
+                  "id": 5415,
                   "nodeType": "ExpressionStatement",
                   "src": "268:32:18"
                 }
               ]
             },
-            "id": 5206,
+            "id": 5417,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
@@ -1303,17 +1303,17 @@
             "nameLocation": "-1:-1:-1",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5199,
+              "id": 5410,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5198,
+                  "id": 5409,
                   "mutability": "mutable",
                   "name": "itemFactory_",
                   "nameLocation": "244:12:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5206,
+                  "scope": 5417,
                   "src": "236:20:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1322,7 +1322,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5197,
+                    "id": 5408,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "236:7:18",
@@ -1338,12 +1338,12 @@
               "src": "235:22:18"
             },
             "returnParameters": {
-              "id": 5200,
+              "id": 5411,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "258:0:18"
             },
-            "scope": 5223,
+            "scope": 5434,
             "src": "224:83:18",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1351,26 +1351,26 @@
           },
           {
             "body": {
-              "id": 5221,
+              "id": 5432,
               "nodeType": "Block",
               "src": "372:104:18",
               "statements": [
                 {
                   "expression": {
-                    "id": 5215,
+                    "id": 5426,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 5211,
+                      "id": 5422,
                       "name": "itemFactory",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5192,
+                      "referencedDeclaration": 5403,
                       "src": "382:11:18",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IItemFactory_$3290",
+                        "typeIdentifier": "t_contract$_IItemFactory_$3276",
                         "typeString": "contract IItemFactory"
                       }
                     },
@@ -1379,11 +1379,11 @@
                     "rightHandSide": {
                       "arguments": [
                         {
-                          "id": 5213,
+                          "id": 5424,
                           "name": "itemFactory_",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 5208,
+                          "referencedDeclaration": 5419,
                           "src": "409:12:18",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -1398,18 +1398,18 @@
                             "typeString": "address"
                           }
                         ],
-                        "id": 5212,
+                        "id": 5423,
                         "name": "IItemFactory",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3290,
+                        "referencedDeclaration": 3276,
                         "src": "396:12:18",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_IItemFactory_$3290_$",
+                          "typeIdentifier": "t_type$_t_contract$_IItemFactory_$3276_$",
                           "typeString": "type(contract IItemFactory)"
                         }
                       },
-                      "id": 5214,
+                      "id": 5425,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1420,17 +1420,17 @@
                       "src": "396:26:18",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IItemFactory_$3290",
+                        "typeIdentifier": "t_contract$_IItemFactory_$3276",
                         "typeString": "contract IItemFactory"
                       }
                     },
                     "src": "382:40:18",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IItemFactory_$3290",
+                      "typeIdentifier": "t_contract$_IItemFactory_$3276",
                       "typeString": "contract IItemFactory"
                     }
                   },
-                  "id": 5216,
+                  "id": 5427,
                   "nodeType": "ExpressionStatement",
                   "src": "382:40:18"
                 },
@@ -1438,11 +1438,11 @@
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 5218,
+                        "id": 5429,
                         "name": "itemFactory_",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5208,
+                        "referencedDeclaration": 5419,
                         "src": "456:12:18",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -1457,18 +1457,18 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 5217,
+                      "id": 5428,
                       "name": "ItemFactoryUpdated",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5196,
+                      "referencedDeclaration": 5407,
                       "src": "437:18:18",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 5219,
+                    "id": 5430,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1483,13 +1483,13 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5220,
+                  "id": 5431,
                   "nodeType": "EmitStatement",
                   "src": "432:37:18"
                 }
               ]
             },
-            "id": 5222,
+            "id": 5433,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -1497,17 +1497,17 @@
             "nameLocation": "322:18:18",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5209,
+              "id": 5420,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5208,
+                  "id": 5419,
                   "mutability": "mutable",
                   "name": "itemFactory_",
                   "nameLocation": "349:12:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5222,
+                  "scope": 5433,
                   "src": "341:20:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1516,7 +1516,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5207,
+                    "id": 5418,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "341:7:18",
@@ -1532,19 +1532,19 @@
               "src": "340:22:18"
             },
             "returnParameters": {
-              "id": 5210,
+              "id": 5421,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "372:0:18"
             },
-            "scope": 5223,
+            "scope": 5434,
             "src": "313:163:18",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           }
         ],
-        "scope": 5224,
+        "scope": 5435,
         "src": "99:379:18",
         "usedErrors": []
       }
@@ -1557,7 +1557,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-03-12T16:23:17.835Z",
+  "updatedAt": "2022-03-17T10:04:16.959Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

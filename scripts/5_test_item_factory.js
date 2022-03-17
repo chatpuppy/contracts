@@ -15,24 +15,25 @@ const chainId = process.env.CHAIN_ID * 1;
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const itemFactoryAddress = '0xda667485BBd5D72Ad60F286110Db24F34Afe9714'; // bscTestnet
+const itemFactoryAddress = '0x93E138E8B9E4f034A6c05C3380606109b8b58D5f'; // bscTestnet
 const itemFactoryJson = require('../build/contracts/ItemFactory.json');
 
 const itemFactory = new web3.eth.Contract(itemFactoryJson.abi, itemFactoryAddress);
 
-const boxType = 7;
+const boxType = 2;
+const itemId = 1;
 const boxTypes = [2,3,4,5,6,7];
 itemFactory.methods.owner().call().then((owner) => console.log('owner of contract', owner));
 itemFactory.methods.supportedBoxTypes().call().then((types) => console.log('box types', types));
 itemFactory.methods.totalSupply(1).call().then((response) => console.log('total supply', response));
-itemFactory.methods.getItemRarity(boxType, 4).call().then((response) => console.log('item rarity', response));
+itemFactory.methods.getItemRarity(boxType, itemId).call().then((response) => console.log('item rarity', response));
 itemFactory.methods.getItemTotalRarity(boxType).call().then((response) => console.log('item total rarity', response));
 
 itemFactory.methods.getItemInitialLevel(boxTypes, [5,1,3,11,3,4]).call().then((response) => console.log('level', response));
 itemFactory.methods.getItemInitialExperience(boxTypes, [5,1,3,11,3,4]).call().then((response) => console.log('experience', response));
 
-itemFactory.methods.getItemIds(3).call().then((response) => console.log('items ids', response));
-itemFactory.methods.getItemProperties(3, 3).call().then((response) => {
+itemFactory.methods.getItemIds(boxTypes).call().then((response) => console.log('items ids', response));
+itemFactory.methods.getItemProperties(boxType, itemId).call().then((response) => {
 	console.log('item level', response[0] * 1);
 	console.log('item experience', response[1] * 1)
 });
@@ -62,7 +63,7 @@ const callContract = (encodeABI, contractAddress, onConfirmedFunc, onErrorFunc) 
  * Chatpuppy rarity list
  * 
  * BoxType: 2, background
- * item Id#1: name=Blue,   rarity=280000, level=1, experience=0
+ * item Id#1: name=Blue,   rarity=280000, level=1, experience=1
  * item Id#2: name=Orange, rarity=230000, level=1, experience=20
  * item Id#3: name=Purple, rarity=190000, level=1, experience=50
  * item Id#4: name=Red,    rarity=150000, level=1, experience=85
@@ -70,7 +71,7 @@ const callContract = (encodeABI, contractAddress, onConfirmedFunc, onErrorFunc) 
  * item Id#6: name=Grey,   rarity=50000,  level=1, experience=460
  * 
  * BoxType: 3, body
- * item Id#11: name=Gakuran,	rarity=330000, level=1, experience=0
+ * item Id#11: name=Gakuran,	rarity=330000, level=1, experience=1
  * item Id#12: name=Bandana, rarity=120000, level=1, experience=175
  * item Id#13: name=Tropical, rarity=150000, level=1, experience=120
  * item Id#14: name=Hoodie,  rarity=140000, level=1, experience=135
@@ -78,7 +79,7 @@ const callContract = (encodeABI, contractAddress, onConfirmedFunc, onErrorFunc) 
  * item Id#16: name=Business, rarity=160000, level=1, experience=110
  * 
  * BoxType: 4, eyes
- * item Id#21: name=Normal,  rarity=300000, level=1, experience=0
+ * item Id#21: name=Normal,  rarity=300000, level=1, experience=1
  * item Id#22: name=Bored, 	rarity=130000, level=1, experience=130
  * item Id#23: name=Laser, 	rarity= 60000, level=1, experience=400
  * item Id#24: name=Class1, 	rarity= 90000, level=1, experience=235
@@ -97,10 +98,10 @@ const callContract = (encodeABI, contractAddress, onConfirmedFunc, onErrorFunc) 
  * item Id#38: name=Crown,   rarity= 25000, level=1, experience=1420
  * item Id#39: name=Pirate,  rarity= 40000, level=1, experience=850
  * item Id#40:name=Space,   rarity= 35000, level=1, experience=1000
- * item Id#41:name=None,    rarity=380000, level=1, experience=0
+ * item Id#41:name=None,    rarity=380000, level=1, experience=1
  * 
  * BoxType: 6, fur
- * item Id#51: name=Grey,    rarity=370000, level=1, experience=0
+ * item Id#51: name=Grey,    rarity=370000, level=1, experience=1
  * item Id#52: name=Green,   rarity=160000, level=1, experience=130
  * item Id#53: name=Brown,   rarity=120000, level=1, experience=210
  * item Id#54: name=Gold,    rarity= 60000, level=1, experience=520
@@ -109,7 +110,7 @@ const callContract = (encodeABI, contractAddress, onConfirmedFunc, onErrorFunc) 
  * 
  * BoxType: 7, mouth
  * item Id#61: name=Bone,    rarity=180000, level=1, experience=70
- * item Id#62: name=Grrrrr,  rarity=310000, level=1, experience=0
+ * item Id#62: name=Grrrrr,  rarity=310000, level=1, experience=1
  * item Id#63: name=Soother, rarity=160000, level=1, experience=95
  * item Id#64: name=Beard,   rarity=150000, level=1, experience=110
  * item Id#65: name=Mask,    rarity= 80000, level=1, experience=290
@@ -121,6 +122,8 @@ const callContract = (encodeABI, contractAddress, onConfirmedFunc, onErrorFunc) 
 // let sendEncodeABI = itemFactory.methods.addBoxType(5).encodeABI();
 // let sendEncodeABI = itemFactory.methods.addBoxType(6).encodeABI();
 // let sendEncodeABI = itemFactory.methods.addBoxType(7).encodeABI();
+
+// let sendEncodeABI = itemFactory.methods.updateItem(2, 1, 280000, 1, 1).encodeABI();
 // callContract(sendEncodeABI, itemFactoryAddress);
 
 const itemParams = [
@@ -129,7 +132,7 @@ const itemParams = [
 		itemId:  1,
 		rarity:  280000,
 		level:   1,
-		experience: 0,
+		experience: 1,
 	}, 
 	{
 		boxType: 2,
@@ -168,7 +171,7 @@ const itemParams = [
 		itemId:  1,
 		rarity:  330000,
 		level:   1,
-		experience: 0,
+		experience: 1,
 	}, {
 		boxType: 3,
 		itemId:  2,
@@ -204,7 +207,7 @@ const itemParams = [
 		itemId:  1,
 		rarity:  300000,
 		level:   1,
-		experience: 0,
+		experience: 1,
 	}, {
 		boxType: 4,
 		itemId:  2,
@@ -306,13 +309,13 @@ const itemParams = [
 		itemId:  11,
 		rarity:  380000,
 		level:   1,
-		experience: 0,
+		experience: 1,
 	}, {
 		boxType: 6,
 		itemId:  1,
 		rarity:  370000,
 		level:   1,
-		experience: 0,
+		experience: 1,
 	}, {
 		boxType: 6,
 		itemId:  2,
@@ -354,7 +357,7 @@ const itemParams = [
 		itemId:  2,
 		rarity:  310000,
 		level:   1,
-		experience: 0,
+		experience: 1,
 	}, {
 		boxType: 7,
 		itemId:  3,

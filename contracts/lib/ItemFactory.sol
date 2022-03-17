@@ -89,6 +89,53 @@ contract ItemFactory is Ownable, IItemFactory {
         return totalExperience;
     }
 
+    function updateItem(
+        uint256 boxType_,
+        uint256 itemId_,
+        uint256 rarity_,
+        uint256 itemInitialLevel_,
+        uint256 itemInitialExperience_
+    ) external
+        onlyOwner
+        onlySupportedBoxType(boxType_)
+    {
+        require(itemId_ > uint256(0), "ItemFactory::updateItem itemId_ is 0");
+        require(rarity_ > uint256(0), "ItemFactory::updateItem rarity_ is 0");
+
+        Items storage _itemsForSpecificType = _items[boxType_];
+        require(
+            _itemsForSpecificType.itemIdToRarity[itemId_].rarity > uint256(0),
+            "ItemFactory::updateItem itemId_ is not existed"
+        );
+        
+        // Update total rarity
+        _itemsForSpecificType.totalRarity =
+            _itemsForSpecificType.totalRarity - _itemsForSpecificType.itemIdToRarity[itemId_].rarity + rarity_;
+
+        // Update initial level and experience
+        _itemsForSpecificType.itemInitialLevel[itemId_] = itemInitialLevel_;
+        _itemsForSpecificType.itemInitialExperience[itemId_] = itemInitialExperience_;
+
+        // Update rarity info for item
+        _itemsForSpecificType.itemIdToRarity[itemId_].rarity = rarity_;
+
+        if(_itemsForSpecificType.itemIds.length > 1) {
+            uint256 totalRarity_ = 0;
+            for(uint256 i = 1; i < _itemsForSpecificType.itemIds.length; i++) {
+                totalRarity_ = totalRarity_ + _itemsForSpecificType.itemIdToRarity[_itemsForSpecificType.itemIds[i - 1]].rarity;
+                _itemsForSpecificType.itemIdToRarity[_itemsForSpecificType.itemIds[i]].zeroIndex = totalRarity_;
+            }
+        }
+
+        emit ItemUpdated(
+            boxType_,
+            itemId_,
+            rarity_,
+            itemInitialLevel_,
+            itemInitialExperience_
+        );
+    }
+
     function addItem(
         uint256 boxType_,
         uint256 itemId_,
