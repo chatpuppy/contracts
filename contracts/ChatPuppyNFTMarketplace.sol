@@ -42,6 +42,7 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
     mapping(uint256 => Order) public orders;
     EnumerableSet.UintSet private _onSaleOrders;
     mapping(address => EnumerableSet.UintSet) private _onSaleOrdersOfOwner;
+    bool public isPause = false;
 
     event OrderAdded(
         uint256 indexed orderId,
@@ -264,6 +265,7 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
         uint256 price_
     ) public onlySupportedPaymentToken(paymentToken_)
     {
+        require(!isPause, "ChatPuppyNFTMarketplace: addOrder is paused");
         require(
             nftCore.ownerOf(tokenId_) == _msgSender(),
             "ChatPuppyNFTMarketplace: sender is not owner of token"
@@ -325,6 +327,22 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
 
         nftCore.transferFrom(address(this), _msgSender(), _order.tokenId);
         emit OrderCancelled(orderId_);
+    }
+
+    function cancelAllOrders() external onlyRole(MAINTAINER_ROLE) {
+        for(uint256 i = 0; i < _onSaleOrders.length(); i++) {
+            uint256 orderId_ = uint256(_onSaleOrders.at(i));
+            Order storage _order = orders[orderId_];
+            _onSaleOrders.remove(orderId_);
+            _onSaleOrdersOfOwner[_msgSender()].remove(orderId_);
+
+            nftCore.transferFrom(address(this), _order.seller, _order.tokenId);
+            emit OrderCancelled(orderId_);
+        }
+    }
+
+    function pause(bool pause_) external onlyRole(MAINTAINER_ROLE) {
+        isPause = pause_;
     }
 
     function matchOrder(uint256 orderId_, uint256 price_)

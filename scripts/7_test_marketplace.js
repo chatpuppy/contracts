@@ -17,7 +17,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
 // const marketplaceAddress = '0xc60a6AE3a85838D3bAAf359219131B1e33103560'; // kovan
 // const marketplaceAddress = '0x29a1D6404aa907a53b07eFdf0F70cC2A8815EC60'; // bscTestnet
-const marketplaceAddress = '0xE2B9a933AF056FbfD2DF30406c9c007a1B5476E7'; // bscTestnet
+const marketplaceAddress = '0x22e42fea04f12de858Ce807FE863227486dCE9c3'; // bscTestnet
 const marketplaceJson = require('../build/contracts/ChatPuppyNFTMarketplace.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 
@@ -42,15 +42,15 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 	marketplace.methods.nextOrderId().call().then((orderId) => console.log('nextOrderId', orderId));
 
 	// Get all onsale list
-	marketplace.methods.onSaleOrderCount().call().then((orderAccount) => { 
-		console.log('onSaleOrderCount', orderAccount);
-		for(let i = 0; i < orderAccount; i++) {
-			marketplace.methods.onSaleOrderAt(i).call().then((orderId) => {
-				console.log('orderId', orderId);
-				marketplace.methods.orders(orderId).call().then((orderDetails) => console.log('orderId', orderId, 'details', orderDetails));
-			});
-		}
-	});
+	// marketplace.methods.onSaleOrderCount().call().then((orderAccount) => { 
+	// 	console.log('onSaleOrderCount', orderAccount);
+	// 	for(let i = 0; i < orderAccount; i++) {
+	// 		marketplace.methods.onSaleOrderAt(i).call().then((orderId) => {
+	// 			console.log('orderId', orderId);
+	// 			marketplace.methods.orders(orderId).call().then((orderDetails) => console.log('orderId', orderId, 'details', orderDetails));
+	// 		});
+	// 	}
+	// });
 
 	// marketplace.methods.isSeller(1, address).call().then((isSeller) => console.log('isSeller', isSeller));
 
@@ -82,6 +82,9 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 	// let sendEncodeABI = erc20.methods.approve(marketplaceAddress, '1200000000000000000000').encodeABI();
 	// callContract(sendEncodeABI, paymentToken);
 
-	let sendEncodeABI = marketplace.methods.matchOrder(3, '15000000000000000000').encodeABI();
+	// let sendEncodeABI = marketplace.methods.matchOrder(3, '15000000000000000000').encodeABI();
+
+	let sendEncodeABI = marketplace.methods.cancelAllOrders().encodeABI();
+	// let sendEncodeABI = marketplace.methods.pause(false).encodeABI();
 	callContract(sendEncodeABI, marketplaceAddress);
 });
