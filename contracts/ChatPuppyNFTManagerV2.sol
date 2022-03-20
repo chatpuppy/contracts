@@ -22,7 +22,7 @@ contract ChatPuppyNFTManagerV2 is
     bytes32 public constant CONTRACT_UPGRADER = keccak256("CONTRACT_UPGRADER");
     bytes32 public constant NFT_UPGRADER = keccak256("NFT_UPGRADER");
 
-    ChatPuppyNFTCore public immutable nftCore;
+    ChatPuppyNFTCore public nftCore;
     // uint256 private projectId = 0;
     uint256 public boxPrice = 0;
 
@@ -124,10 +124,16 @@ contract ChatPuppyNFTManagerV2 is
 
     /**
      * @dev Transfer the ownership of NFT
-     * @param newContract_ new owner address
      */
-    function upgradeContract(address newContract_) external onlyRole(CONTRACT_UPGRADER) {
-        nftCore.transferOwnership(newContract_);
+    function upgradeNFTCoreOwner(address newOwner_) external onlyRole(CONTRACT_UPGRADER) {
+        nftCore.transferOwnership(newOwner_);
+    }
+
+    /**
+     * @dev update nft core contract
+     */
+    function updateNFTCoreContract(address newAddress_) external onlyRole(CONTRACT_UPGRADER) {
+        nftCore = ChatPuppyNFTCore(newAddress_);
     }
 
     /**
@@ -135,13 +141,6 @@ contract ChatPuppyNFTManagerV2 is
      */
     function increaseCap(uint256 amount_) external onlyRole(CAP_MANAGER_ROLE) {
         nftCore.increaseCap(amount_);
-    }
-
-    /**
-     * @dev update NFT BaseURI
-     */
-    function updateBaseTokenURI(string memory baseTokenURI_) external onlyRole(MANAGER_ROLE) {
-        nftCore.updateBaseTokenURI(baseTokenURI_);
     }
 
     /**
@@ -366,6 +365,10 @@ contract ChatPuppyNFTManagerV2 is
 
     function updateBoxTypes(uint256[] calldata boxTypes_) external onlyRole(MANAGER_ROLE) {
         boxTypes = boxTypes_;
+    }
+
+    function updateTokenURI(uint256 tokenId_, string calldata uri_) external onlyRole(NFT_UPGRADER) {
+        nftCore.updateTokenURI(tokenId_, uri_);
     }
 
     function _takeRandomFee() internal {

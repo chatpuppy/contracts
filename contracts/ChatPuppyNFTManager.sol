@@ -152,13 +152,6 @@ contract ChatPuppyNFTManager is
     }
 
     /**
-     * @dev update NFT BaseURI
-     */
-    function updateBaseTokenURI(string memory baseTokenURI_) external onlyRole(MANAGER_ROLE) {
-        nftCore.updateBaseTokenURI(baseTokenURI_);
-    }
-
-    /**
      * @dev update project id, while fetching random data, the input will be `projectId + tokenId`
      * to avoid same tokenId can not be duplicated in ChainlinkRandomGenerator contract
      */

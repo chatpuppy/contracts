@@ -16,7 +16,8 @@ const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
 // const nftAddress = '0xAb50F84DC1c8Ef1464b6F29153E06280b38fA754'; // Issued by nft core
-const nftAddress = '0x1BE54fdAF59d369f8d7bE296C227F208CF5FF7AF'; // bscTestnet
+// const nftAddress = '0x1BE54fdAF59d369f8d7bE296C227F208CF5FF7AF'; // bscTestnet
+const nftAddress = '0x87Be7a62d608d29003ec1Ec292F65Df3913C8E34'; // bscTestnet
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 
 const nft = new web3.eth.Contract(nftJson.abi, nftAddress);
@@ -27,9 +28,9 @@ nft.methods.cap().call().then((cap) => console.log('cap', cap * 1));
 
 nft.methods.balanceOf('0xC4BFA07776D423711ead76CDfceDbE258e32474A').call().then((response) => console.log('balanceOf', response / 1));
 // nft.methods.owner().call().then((owner) => console.log('owner of contract', owner));
-nft.methods.tokenURI(2).call().then((res) => console.log('tokenUri', res));
+// nft.methods.tokenURI(2).call().then((res) => console.log('tokenUri', res));
 // getTokensOfOwner(web3, '0xAb50F84DC1c8Ef1464b6F29153E06280b38fA754', '0xC4BFA07776D423711ead76CDfceDbE258e32474A').then((res) => console.log('getTokensOfOwner', res));
-nft.methods.ownerOf(2).call().then((owner) => console.log('owner of nft', owner));
+// nft.methods.ownerOf(2).call().then((owner) => console.log('owner of nft', owner));
 
 /**
  * ==== Following testing methods is Send Tx ====
@@ -55,5 +56,5 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 // let sendEncodeABI = nft.methods.safeTransferFrom('0xC4BFA07776D423711ead76CDfceDbE258e32474A', '0x3444E23231619b361c8350F4C83F82BCfAB36F65', 2).encodeABI();
 
 // ATTN. Update the owner of the NFTCore to NFTManager contract.
-// let sendEncodeABI = nft.methods.transferOwnership('0x0D84C154D3E063D0E70bde29BC997ee605ABEc35').encodeABI();
-// callContract(sendEncodeABI, nftAddress);
+let sendEncodeABI = nft.methods.transferOwnership('0x2c192A66eB075Ae1D93C15e38eCD5a0673d32168').encodeABI();
+callContract(sendEncodeABI, nftAddress);

@@ -170,8 +170,25 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
         return _onSaleOrders.at(index_);
     }
 
+    function onSaleOrdersByTokenId(uint256 tokenId_) public view returns (uint256 orderId_) {
+        for(uint256 i = 0; i < _onSaleOrders.length(); i++) {
+            uint256 _orderId = uint256(_onSaleOrders.at(i));
+            Order memory _order = orders[_orderId];
+            if(_order.tokenId == tokenId_) {
+                orderId_ = _orderId;
+                break;
+            }
+        }
+    }
+
     function onSaleOrders() public view returns (uint256[] memory) {
         return _onSaleOrders.values();
+    }
+
+    function onSaleOrderLimit(uint256 from_, uint256 length_) public view returns (uint256[] memory) {
+        uint256[] memory orders_ = new uint256[](length_);
+        for(uint256 i = from_; i < from_ + length_; i++) orders_[i - from_] = uint256(_onSaleOrders.at(i));
+        return orders_;
     }
 
     function onSaleOrderOfOwnerCount(address owner_)
@@ -196,6 +213,23 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
         returns (uint256[] memory)
     {
         return _onSaleOrdersOfOwner[owner_].values();
+    }
+
+    function onSaleOrdersOfOwnerByTokenId(address owner_, uint256 tokenId_) public view returns (uint256 orderId_) {
+        for(uint256 i = 0; i < _onSaleOrdersOfOwner[owner_].length(); i++) {
+            uint256 _orderId = uint256(_onSaleOrdersOfOwner[owner_].at(i));
+            Order memory _order = orders[_orderId];
+            if(_order.tokenId == tokenId_) {
+                orderId_ = _orderId;
+                break;
+            }
+        }
+    }
+
+    function onSaleOrdersOfOwnerLimit(address owner_, uint256 from_, uint256 length_) public view returns (uint256[] memory) {
+        uint256[] memory orders_ = new uint256[](length_);
+        for(uint256 i = from_; i < from_ + length_; i++) orders_[i - from_] = uint256(_onSaleOrdersOfOwner[owner_].at(i));
+        return orders_;
     }
 
     function nextOrderId() public view returns (uint256) {
@@ -306,30 +340,17 @@ contract ChatPuppyNFTMarketplace is AccessControlEnumerable {
 
         uint256 _feeAmount = _calculateFee(orderId_);
         if (_feeAmount > 0) {
-            // if(_order.paymentToken == address(0)) {
-            //     // Don't do anything cause the chain token has been in the contract,
-            //     // The fee will store in the contract untill the owner withdraw from contract
-            // } else {
-                // paid by ERC20
-                IERC20(_order.paymentToken).safeTransferFrom(
-                    _msgSender(),
-                    feeRecipient,
-                    _feeAmount
-                );
-            // }
-        }
-        // if(_order.paymentToken == address(0)) {
-        //     // paid from contract to the seller by chain token
-        //     (bool sent, ) = _order.seller.call{value: _order.price - _feeAmount}("");
-        //     require(sent, "ChatPuppyNFTMarketplace: Failed to send to seller by Ether");
-        // } else {
-            // paid by ERC20
             IERC20(_order.paymentToken).safeTransferFrom(
                 _msgSender(),
-                _order.seller,
-                _order.price - _feeAmount
+                feeRecipient,
+                _feeAmount
             );
-        // }
+        }
+        IERC20(_order.paymentToken).safeTransferFrom(
+            _msgSender(),
+            _order.seller,
+            _order.price - _feeAmount
+        );
 
         nftCore.transferFrom(address(this), _msgSender(), _order.tokenId);
 

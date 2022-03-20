@@ -6,7 +6,7 @@ module.exports = function (deployer) {
         ChatPuppyNFTCore, 
         Env.get('NFT_NAME'),
         Env.get('NFT_SYMBOL'),
-        Env.get('BASE_TOKEN_URI'),
+        // Env.get('BASE_TOKEN_URI'),
         Env.get('INITIAL_CAP')
     );
 };

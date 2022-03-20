@@ -16,7 +16,8 @@ const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
 // const marketplaceAddress = '0xc60a6AE3a85838D3bAAf359219131B1e33103560'; // kovan
-const marketplaceAddress = '0x29a1D6404aa907a53b07eFdf0F70cC2A8815EC60'; // bscTestnet
+// const marketplaceAddress = '0x29a1D6404aa907a53b07eFdf0F70cC2A8815EC60'; // bscTestnet
+const marketplaceAddress = '0xE2B9a933AF056FbfD2DF30406c9c007a1B5476E7'; // bscTestnet
 const marketplaceJson = require('../build/contracts/ChatPuppyNFTMarketplace.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 
@@ -51,7 +52,7 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 		}
 	});
 
-	marketplace.methods.isSeller(1, address).call().then((isSeller) => console.log('isSeller', isSeller));
+	// marketplace.methods.isSeller(1, address).call().then((isSeller) => console.log('isSeller', isSeller));
 
 	/**
 	 * ==== Following testing methods is Send Tx ====
@@ -59,6 +60,8 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 	const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
 	// let sendEncodeABI = marketplace.methods.addPaymentToken('0x7C4b6E294Fd0ae77B6E1730CBEb1B8491859Ee24').encodeABI();
+
+	// let sendEncodeABI = marketplace.methods.updateNftCore('0x87Be7a62d608d29003ec1Ec292F65Df3913C8E34').encodeABI();
 
 	const tokenId = 1;
 
@@ -79,6 +82,6 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 	// let sendEncodeABI = erc20.methods.approve(marketplaceAddress, '1200000000000000000000').encodeABI();
 	// callContract(sendEncodeABI, paymentToken);
 
-	// let sendEncodeABI = marketplace.methods.matchOrder(8, '120000000000000000000').encodeABI();
-	// callContract(sendEncodeABI, marketplaceAddress);
+	let sendEncodeABI = marketplace.methods.matchOrder(3, '15000000000000000000').encodeABI();
+	callContract(sendEncodeABI, marketplaceAddress);
 });

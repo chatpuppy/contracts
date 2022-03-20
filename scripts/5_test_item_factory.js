@@ -20,8 +20,8 @@ const itemFactoryJson = require('../build/contracts/ItemFactory.json');
 
 const itemFactory = new web3.eth.Contract(itemFactoryJson.abi, itemFactoryAddress);
 
-const boxType = 2;
-const itemId = 1;
+const boxType = 5;
+const itemId = 11;
 const boxTypes = [2,3,4,5,6,7];
 itemFactory.methods.owner().call().then((owner) => console.log('owner of contract', owner));
 itemFactory.methods.supportedBoxTypes().call().then((types) => console.log('box types', types));

@@ -14,7 +14,8 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const nftManagerAddress = '0x2010f362A6378D75C7E4AaB521A882450BffB5A1'; // bscTestnet
+// const nftManagerAddress = '0x2010f362A6378D75C7E4AaB521A882450BffB5A1'; // bscTestnet
+const nftManagerAddress = '0x2c192A66eB075Ae1D93C15e38eCD5a0673d32168'; // bscTestnet
 
 const nftManagerJson = require('../build/contracts/ChatPuppyNFTManagerV2.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
@@ -22,14 +23,16 @@ const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 const nftManager = new web3.eth.Contract(nftManagerJson.abi, nftManagerAddress);
 const user = '0x615b80388E3D3CaC6AA3a904803acfE7939f0399';
 
-const tokenId = 51; // can not be zero
-nftManager.methods.boxStatus(tokenId).call().then((result) => console.log('boxStatus ' + result));
-nftManager.methods.boxPrice().call().then((result) => console.log('boxPrice ' + result));
-nftManager.methods.randomWords(tokenId).call().then((words) => {
-	console.log('随机数');
-	console.log(words);
-});
-nftManager.methods.boxTypes(5).call().then((result) => console.log('Box Types', result));
+const tokenId = 15; // can not be zero
+if(tokenId > 0) {
+	nftManager.methods.boxStatus(tokenId).call().then((result) => console.log('boxStatus ' + result));
+	nftManager.methods.boxPrice().call().then((result) => console.log('boxPrice ' + result));
+	nftManager.methods.randomWords(tokenId).call().then((words) => {
+		console.log('随机数');
+		console.log(words);
+	});
+	nftManager.methods.boxTypes(5).call().then((result) => console.log('Box Types', result));
+}
 
 nftManager.methods.nftCore().call().then((nftAddress) => {
 	console.log('nft Address', nftAddress);
@@ -40,9 +43,11 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	nft.methods.balanceOf(user).call().then((response) => console.log('balanceOf ' + user, response / 1));
 	nft.methods.cap().call().then((cap) => console.log('cap', cap * 1));
 	
-	nft.methods.tokenURI(tokenId).call().then((res) => console.log('tokenUri of ' + tokenId, res));
-	nft.methods.ownerOf(tokenId).call().then((owner) => console.log('owner of nft ' + tokenId, owner));
-	nft.methods.tokenMetaData(tokenId).call().then((metaData) => console.log('metadata of nft ' + tokenId, metaData));
+	if(tokenId > 0) {
+		nft.methods.tokenURI(tokenId).call().then((res) => console.log('tokenUri of ' + tokenId, res));
+		nft.methods.ownerOf(tokenId).call().then((owner) => console.log('owner of nft ' + tokenId, owner));
+		nft.methods.tokenMetaData(tokenId).call().then((metaData) => console.log('metadata of nft ' + tokenId, metaData));
+	}
 
 	// Token Id 12: 03 05 0a 01 01 05
 	// Token Id 16: 0x 0384 0006 04 03 0b 03 01 05
@@ -90,7 +95,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	 */
 	// let sendEncodeABI = nftManager.methods.upgradeContract('0x2010f362A6378D75C7E4AaB521A882450BffB5A1').encodeABI();
 
-	let sendEncodeABI = nftManager.methods.updateItemFactory('0x93E138E8B9E4f034A6c05C3380606109b8b58D5f').encodeABI();
+	// let sendEncodeABI = nftManager.methods.updateItemFactory('0x93E138E8B9E4f034A6c05C3380606109b8b58D5f').encodeABI();
 
 	// Update boxTypes
 	// let sendEncodeABI = nftManager.methods.updateBoxTypes([2,3,4,5,6,7,8,9]).encodeABI();
@@ -123,7 +128,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 
 	// Unbox mystery box
 	// let sendEncodeABI = nftManager.methods.unbox(tokenId).encodeABI();
-	callContract(sendEncodeABI, nftManagerAddress);
+	// callContract(sendEncodeABI, nftManagerAddress);
 
 	// Batch buy and mint mystery box NFT
 	// let sendEncodeABI = nftManager.methods.buyAndMintBatch(1, 3).encodeABI();
