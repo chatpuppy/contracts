@@ -15,7 +15,8 @@ const chainId = process.env.CHAIN_ID * 1;
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const itemFactoryAddress = '0x93E138E8B9E4f034A6c05C3380606109b8b58D5f'; // bscTestnet
+// const itemFactoryAddress = '0x93E138E8B9E4f034A6c05C3380606109b8b58D5f'; // bscTestnet
+const itemFactoryAddress = '0xc251D7C3726AF2Cf20e86C17F1E59fC7042657b6'; // mumbai
 const itemFactoryJson = require('../build/contracts/ItemFactory.json');
 
 const itemFactory = new web3.eth.Contract(itemFactoryJson.abi, itemFactoryAddress);
@@ -26,32 +27,33 @@ const boxTypes = [2,3,4,5,6,7];
 itemFactory.methods.owner().call().then((owner) => console.log('owner of contract', owner));
 itemFactory.methods.supportedBoxTypes().call().then((types) => console.log('box types', types));
 itemFactory.methods.totalSupply(1).call().then((response) => console.log('total supply', response));
-itemFactory.methods.getItemRarity(boxType, itemId).call().then((response) => console.log('item rarity', response));
-itemFactory.methods.getItemTotalRarity(boxType).call().then((response) => console.log('item total rarity', response));
 
-itemFactory.methods.getItemInitialLevel(boxTypes, [5,1,3,11,3,4]).call().then((response) => console.log('level', response));
-itemFactory.methods.getItemInitialExperience(boxTypes, [5,1,3,11,3,4]).call().then((response) => console.log('experience', response));
+// itemFactory.methods.getItemRarity(boxType, itemId).call().then((response) => console.log('item rarity', response));
+// itemFactory.methods.getItemTotalRarity(boxType).call().then((response) => console.log('item total rarity', response));
 
-itemFactory.methods.getItemIds(boxTypes).call().then((response) => console.log('items ids', response));
-itemFactory.methods.getItemProperties(boxType, itemId).call().then((response) => {
-	console.log('item level', response[0] * 1);
-	console.log('item experience', response[1] * 1)
-});
+// itemFactory.methods.getItemInitialLevel(boxTypes, [5,1,3,11,3,4]).call().then((response) => console.log('level', response));
+// itemFactory.methods.getItemInitialExperience(boxTypes, [5,1,3,11,3,4]).call().then((response) => console.log('experience', response));
+
+// itemFactory.methods.getItemIds(boxTypes).call().then((response) => console.log('items ids', response));
+// itemFactory.methods.getItemProperties(boxType, itemId).call().then((response) => {
+// 	console.log('item level', response[0] * 1);
+// 	console.log('item experience', response[1] * 1)
+// });
 
 // Testing getRandomItem, verifying the params of item is right or not.
-const num = 1000;
-let randomResult = [0,0,0,0,0,0,0,0,0,0,0,0];
-let count = 0;
-for(let r = 0; r < num; r++) {
-	const randomSeed = Math.floor(Math.random() * 10000000);
-	itemFactory.methods.getRandomItem(randomSeed, boxType).call().then((result) => {
-		randomResult[result] = randomResult[result] + 1;
-		count++;
-		if(num === count) {
-			console.log(randomResult);
-		}
-	});
-}
+// const num = 1000;
+// let randomResult = [0,0,0,0,0,0,0,0,0,0,0,0];
+// let count = 0;
+// for(let r = 0; r < num; r++) {
+// 	const randomSeed = Math.floor(Math.random() * 10000000);
+// 	itemFactory.methods.getRandomItem(randomSeed, boxType).call().then((result) => {
+// 		randomResult[result] = randomResult[result] + 1;
+// 		count++;
+// 		if(num === count) {
+// 			console.log(randomResult);
+// 		}
+// 	});
+// }
 
 /**
  * ==== Following testing methods is Send Tx ====
@@ -408,4 +410,4 @@ function addItems(id) {
 	});
 }
 
-// addItems(0);
+addItems(0);

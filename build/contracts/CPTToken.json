@@ -35808,10 +35808,16 @@
       "links": {},
       "address": "0x6adb30205dd2D2902f32E40e0f2CE15c728F9492",
       "transactionHash": "0xe04aab3b9d2b938f61f6147262c2c1413a9ec73ba4541adc42e5c4bb092d43e7"
+    },
+    "80001": {
+      "events": {},
+      "links": {},
+      "address": "0x5F9d7Dc9e56f7d182f3eFb1b48874C0512b4c40d",
+      "transactionHash": "0xf4823b144e88865adf00b2479470c0a6046420b4d52cd5b528362fc3d013ef78"
     }
   },
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-03-10T13:53:02.592Z",
+  "updatedAt": "2022-03-23T05:00:37.857Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

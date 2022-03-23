@@ -2,7 +2,6 @@
   "name": "chat-contract",
   "version": "1.0.0",
   "description": "ChatPuppy smart contracts",
-  "type": "module",
   "scripts": {
     "compile": "truffle compile",
 
@@ -45,6 +44,11 @@
     "deploy-price-consumer-kovan": "truffle migrate --network kovan -f 8 --to 8",
     "deploy-token-vesting-kovan": "truffle migrate --network kovan -f 9 --to 9",
     "deploy-random-test-kovan": "truffle migrate --network kovan -f 11 --to 11",
+
+    "deploy-cpt-mumbai": "truffle migrate --network mumbai -f 2 --to 2",
+    "deploy-nft-mumbai": "truffle migrate --network mumbai -f 3 --to 3",
+    "deploy-random-generator-mumbai": "truffle migrate --network mumbai -f 4 --to 4",
+    "deploy-item-factory-mumbai": "truffle migrate --network mumbai -f 5 --to 5",
 
     "deploy-cpt-rinkeby": "truffle migrate --network rinkeby -f 2 --to 2",
     "deploy-item-factory-rinkeby": "truffle migrate --network rinkeby -f 5 --to 5",

@@ -81,7 +81,7 @@ module.exports = {
             timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
             skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
         },
-        matic: {
+        mumbai: {
             provider: () => new HDWalletProvider(
                 Env.get("MNEMONIC"), 
                 `https://rpc-mumbai.maticvigil.com`

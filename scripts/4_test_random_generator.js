@@ -15,8 +15,10 @@ const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
 // 必须将一定数量的LINK打到RandomGenerator合约
-const randomGeneratorAddress = '0x9961A816d34981f9556873bf006b99D6780B946F'; // bscTestnet
+// const randomGeneratorAddress = '0x9961A816d34981f9556873bf006b99D6780B946F'; // bscTestnet
 // const randomGeneratorAddress = '0xA28D90320005C8c043Ee79ae59e82fDd5f983f30'; // kovan
+const randomGeneratorAddress = '0xa4DA62F388723DBC1764d1daC7971702A1D03a66'; // mumbai
+
 const randomGeneratorJson = require('../build/contracts/ChainLinkRandomGenerator.json');
 
 const randomGenerator = new web3.eth.Contract(randomGeneratorJson.abi, randomGeneratorAddress);

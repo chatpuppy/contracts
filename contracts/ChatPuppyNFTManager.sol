@@ -21,20 +21,18 @@ contract ChatPuppyNFTManager is
     bytes32 public constant NFT_UPGRADER = keccak256("NFT_UPGRADER");
 
     ChatPuppyNFTCore public nftCore;
-    uint256 private projectId = 0;
+    // uint256 private projectId = 0;
     uint256 public boxPrice = 0;
+    address public feeAccount;
 
     // Mystery Box type
     EnumerableSet.UintSet private _supportedBoxTypes;
+    // mapping(uint256 => uint256) private _requestIds;
+    // mapping(uint256 => uint256) private _tokenIds;
+    mapping(uint256 => uint256[]) private _randomWords;
+    uint256[] public boxTypes = [2, 3, 4, 5, 6, 7]; // NFT Trait types
 
-    mapping(uint256 => uint256[]) private _comboToBoxes;
-
-    uint256 constant MAX_UNBOX_BLOCK_COUNT = 100;
-    mapping(uint256 => uint256) private _tokenIdToUnboxBlockNumber;
-    mapping(uint256 => uint256) private _randomnesses;
-    mapping(uint256 => uint256) private _itemNextIds;
-
-    event UnboxToken(uint256 indexed tokenId, uint256 boxType);
+    event UnboxToken(uint256 indexed tokenId);
     event TokenFulfilled(uint256 indexed tokenId);
 
     constructor(
@@ -42,26 +40,21 @@ contract ChatPuppyNFTManager is
         address itemFactory_,
         address randomGenerator_,
         uint256 randomFee_,
-        uint256 projectId_,
+        // uint256 projectId_,
         uint256 boxPrice_
     )
         RandomConsumerBase(randomGenerator_, randomFee_)
         ItemFactoryManager(itemFactory_)
     {
         require(boxPrice_ > 0, "ChatPuppyNFTManager: box price can not be zero");
-        require(projectId_ > 0, "ChatPuppyNFTManager: projectId must bigger than zero");
-        projectId = projectId_;
+        // require(projectId_ > 0, "ChatPuppyNFTManager: projectId must bigger than zero");
+        // projectId = projectId_;
         boxPrice = boxPrice_;
 
         nftCore = ChatPuppyNFTCore(nftAddress_);
-        // ATTN. Deploy the NFTCore first, then update NFTCore's owner to deployed NFTManager contract
 
         _supportedBoxTypes.add(1); // Mystery Box Type#1, Dragon
         _supportedBoxTypes.add(2); // Mystery Box Type#2, Weapon
-
-        _addComboType(101); // Combo Box Type#101 (combo box's type must > 100)
-        _addBoxTypeToCombo(101, 1); // Add box type#1 to comboBox#101
-        _addBoxTypeToCombo(101, 2); // Add box type#2 to comboBox#101
 
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
         _setupRole(MINTER_ROLE, _msgSender());
@@ -105,14 +98,6 @@ contract ChatPuppyNFTManager is
         return data_ & (~_getBitMask(lsbIndex_, length_));
     }
 
-    function _getArtifactValue(
-        uint256 artifacts_,
-        uint256 lsbIndex_,
-        uint256 length_
-    ) private pure returns (uint256) {
-        return (artifacts_ & _getBitMask(lsbIndex_, length_)) >> lsbIndex_;
-    }
-
     function _addArtifactValue(
         uint256 artifacts_,
         uint256 lsbIndex_,
@@ -124,24 +109,18 @@ contract ChatPuppyNFTManager is
             _clearBits(artifacts_, lsbIndex_, length_);
     }
 
-    function _addComboType(uint256 comboType_) private {
-        require(comboType_ > 100);
-        require(_supportedBoxTypes.add(comboType_));
-    }
-
-    function _addBoxTypeToCombo(uint256 comboType_, uint256 boxType_) private {
-        require(comboType_ > 100);
-        require(_supportedBoxTypes.contains(comboType_) && _supportedBoxTypes.contains(boxType_));
-        require(comboType_ != boxType_);
-        _comboToBoxes[comboType_].push(boxType_);
+    /**
+     * @dev Transfer the ownership of NFT
+     */
+    function upgradeNFTCoreOwner(address newOwner_) external onlyRole(CONTRACT_UPGRADER) {
+        nftCore.transferOwnership(newOwner_);
     }
 
     /**
-     * @dev Transfer the ownership of NFT
-     * @param newContract_ new owner address
+     * @dev update nft core contract
      */
-    function upgradeContract(address newContract_) external onlyRole(CONTRACT_UPGRADER) {
-        nftCore.transferOwnership(newContract_);
+    function updateNFTCoreContract(address newAddress_) external onlyRole(CONTRACT_UPGRADER) {
+        nftCore = ChatPuppyNFTCore(newAddress_);
     }
 
     /**
@@ -155,9 +134,9 @@ contract ChatPuppyNFTManager is
      * @dev update project id, while fetching random data, the input will be `projectId + tokenId`
      * to avoid same tokenId can not be duplicated in ChainlinkRandomGenerator contract
      */
-    function updateProjectId(uint256 projectId_) external onlyRole(MANAGER_ROLE) {
-        projectId = projectId_;
-    }
+    // function updateProjectId(uint256 projectId_) external onlyRole(MANAGER_ROLE) {
+    //     projectId = projectId_;
+    // }
 
     /**
      * @dev update mystery box price
@@ -219,97 +198,106 @@ contract ChatPuppyNFTManager is
     /**
      * Buy and mint
      */
-    function buyAndMint(uint256 boxType_) public payable onlySupportedBoxType(boxType_) {
+    function buyAndMint() public payable {
         require(msg.value >= boxPrice, "ChatPuppyNFTManager: payment is not enough");
-        _mint(_msgSender(), boxType_);
+        _mint(_msgSender());
     }
 
     /**
      * Buy set of mystery box and mint
      */
-    function buyAndMintBatch(uint256 boxType_, uint256 amount_) public payable onlySupportedBoxType(boxType_) {
+    function buyAndMintBatch(uint256 amount_) public payable {
         require(amount_ > 0, "ChatPuppyNFTManager: amount_ is 0");
         require(msg.value >= boxPrice * amount_, "ChatPuppyNFTManager: Batch purchase payment is not enough");
         
         for (uint256 i = 0; i < amount_; i++) {
-            buyAndMint(boxType_);
+            buyAndMint();
         }
     }
 
     /**
      * Buy, mint and unbox
      */
-    function buyMintAndUnbox(uint256 boxType_) public payable onlySupportedBoxType(boxType_) {
+    function buyMintAndUnbox() public payable {
         require(msg.value >= boxPrice, "ChatPuppyNFTManager: payment is not enough");
-        uint256 _tokenId = _mint(_msgSender(), boxType_);
+        uint256 _tokenId = _mint(_msgSender());
         unbox(_tokenId);
     }
 
     /**
      * @dev Mint NFT with boxType
      */
-    function mint(address to_, uint256 boxType_) public onlyRole(MINTER_ROLE) onlySupportedBoxType(boxType_) {
-        _mint(to_, boxType_);
+    function mint(address to_) public onlyRole(MINTER_ROLE) {
+        _mint(to_);
     }
 
     /**
      * @dev Batch mint
      */
-    function mintBatch(address to_, uint256 boxType_, uint256 amount_) external onlyRole(MINTER_ROLE) onlySupportedBoxType(boxType_) {
+    function mintBatch(address to_, uint256 amount_) external onlyRole(MINTER_ROLE) {
         require(amount_ > 0, "ChatPuppyNFTManager: amount_ is 0");
         require(nftCore.totalSupply() + amount_ <= nftCore.cap(), "cap exceeded");
 
         for (uint256 i = 0; i < amount_; i++) {
-            _mint(to_, boxType_);
+            _mint(to_);
         }
     }
 
-    function _mint(address to_, uint256 boxType_) private returns(uint256) {
-        uint256 _tokenId = nftCore.mint(to_);
-        (, uint256 _artifacts, ) = nftCore.tokenMetaData(_tokenId);
-
-        // Add box type: size 1 byte
-        _artifacts = _addArtifactValue(_artifacts, 0, 8, boxType_);
-
-        nftCore.updateTokenMetaData(_tokenId, _artifacts);
-
-        return(_tokenId);
+    function _mint(address to_) private returns(uint256) {
+        return nftCore.mint(to_);
     }
 
-    function boxStatus(uint256 tokenId_) external view returns(uint8) {
-        if(_tokenIdToUnboxBlockNumber[tokenId_] > uint256(0) && _tokenIdToUnboxBlockNumber[tokenId_] >= block.number - MAX_UNBOX_BLOCK_COUNT) return 2; // unboxing
-        else if(_randomnesses[tokenId_] > uint256(0)) return 1; //unboxed
-        else return 0; // can unbox
+    function boxStatus(uint256 tokenId_) public view returns(uint8) {
+        // ######
+        // if(_requestIds[tokenId_] > uint256(0) && _randomWords[tokenId_].length == 0) return 2; // unboxing
+        // else if(_requestIds[tokenId_] > uint256(0) && _randomWords[tokenId_].length > 0) return 1; //unboxed
+        // else return 0; // can unbox
+    }
+
+    function places(uint256 num) internal pure returns(uint256){
+        uint32 maxPlaces = 50; // tokenId can not be more than 10**51 - 1
+        uint256 _places = 0;
+        for(uint32 i = 1; i <= maxPlaces; i++) {
+            if(num >= 10**(i-1) && num <= 10**i - 1) {
+                _places = i;
+                break;
+            }
+        }
+        return _places;
+    }
+    function getRequestId(uint8 index, uint256 tokenId) internal pure returns (uint256 requestId_) {
+        requestId_ = index * 10**(places(tokenId)) + tokenId; 
+    }
+
+    function getIndexTokenId(uint256 requestId_) internal pure returns(uint8 index_, uint256 tokenId_) {
+        index_ = uint8(requestId_ / 10**(places(requestId_) - 1));
+        tokenId_ = requestId_ % 10**(places(requestId_) - 1);
     }
 
     /**
      * @dev Unbox mystery box
      * This is a payable function
      */
-    function unbox(uint256 tokenId_) public payable onlyExistedToken(tokenId_) onlyTokenOwner(tokenId_) onlyMysteryBox(tokenId_) {
-        (, uint256 _artifacts, ) = nftCore.tokenMetaData(tokenId_);
-        uint256 _boxType = _getArtifactValue(_artifacts, 0, 8);
+    function unbox(uint256 tokenId_) public payable 
+        onlyExistedToken(tokenId_) 
+        onlyTokenOwner(tokenId_) 
+        onlyMysteryBox(tokenId_) 
+    {
+        require(boxStatus(tokenId_) == 0, "ChatPuppyNFTManager: token is unboxing or unboxed");
+        require(boxTypes.length > 0, "ChatPuppyNFTManager: boxTypes is not set");        
+       
+        _takeRandomFee();
+        
+        uint8 numWords_ = uint8(boxTypes.length); // maximum 6 traits
 
-        // Check if box is combo
-        if (_boxType > 100) {
-            uint256[] storage boxTypes = _comboToBoxes[_boxType];
-            _boxType = boxTypes[0];
-            _artifacts = _addArtifactValue(_artifacts, 0, 8, _boxType);
-            nftCore.updateTokenMetaData(tokenId_, _artifacts);
-            for (uint256 i = 1; i < boxTypes.length; i++) {
-                _mint(_msgSender(), boxTypes[i]);
-            }
-        } else {
-            require(
-                _tokenIdToUnboxBlockNumber[tokenId_] == uint256(0) || _tokenIdToUnboxBlockNumber[tokenId_] < block.number - MAX_UNBOX_BLOCK_COUNT,
-                "NFT: token is unboxing"
-            );
-            _tokenIdToUnboxBlockNumber[tokenId_] = block.number;
+        for(uint8 i = 1; i <= numWords_; i++)
+            randomGenerator.requestRandomNumber(getRequestId(i, tokenId_));
 
-            _takeRandomFee();
-            randomGenerator.requestRandomNumber(projectId + tokenId_);
-            emit UnboxToken(tokenId_, _boxType);
-        }
+        // _requestIds[tokenId_] = requestId_;
+        // _tokenIds[requestId_] = tokenId_;
+        _randomWords[tokenId_] = new uint256[](6);
+
+        emit UnboxToken(tokenId_);
     }
 
     /**
@@ -319,105 +307,51 @@ contract ChatPuppyNFTManager is
      * For getting random number by ChainLink VRF, refer to: https://docs.chain.link/docs/intermediates-tutorial/ 
      * 
      * ArtifactValue format:
-     * 0~7: boxType, len=8, 0-255
-     * 8~15: itemType, len=8, 0-255
-     * 16~31: itemId, len=16, 0-65535
-     * 32~47: Initial level, len=16, 0-65535
-     * 48~63: Initial experience, len=16, 0-65535
-     * 64~87: picId, len=24, the picture will save as itemId_picId.png, such as `3_12.png` it is the 12th pic in item#3
-     * 88~95: artifactId_1, len=8
-     * 96~111: artifactValue_1, len=16
-     * 112~119: artifactId_2, len=8
-     * 120~135: artifactValue_2, len=16
-     * ...
-     * Max store: (256 - 88) / 24 = 7 artifacts
+     * 0~7: boxType#1(trait#1), len=8, 0-255
+     * 8~15: boxType#2, len=8, 0-255
+     * 16~23: boxType#3, len=8, 0-255
+     * 24~31: boxType#4, len=8, 0-255
+     * 32~39: boxType#5, len=8, 0-255
+     * 40~47: boxType#6, len=8, 0-255
+     * 48~63: level, len=16, 0-65535
+     * 64~79: experience, len=16, 0-65535
      * 
      * dna format: 
      * dna = bytes32(keccak256(abi.encodePacked(tokenId_, randomness_)));
      * 
      */
-    function fulfillRandomness(uint256 tokenId_, uint256 randomness_) internal override(RandomConsumerBase) {
-        tokenId_ = tokenId_ - projectId;
+    // ###### DEBUG
+    function randomWords(uint256 tokenId_) public view returns(uint256[] memory) {
+        return (_randomWords[tokenId_]);
+    }
+
+    function fulfillRandomness(uint256 requestId_, uint256 randomness_) internal override(RandomConsumerBase) {
+        (uint8 index_, uint256 tokenId_) = getIndexTokenId(requestId_);
+
+        // Check if all 6 randomness is got
+        _randomWords[tokenId_][index_ - 1] = randomness_;
+
+        uint8 count = 0;
+        for(uint8 i = 0; i < uint8(boxTypes.length); i ++) if(_randomWords[tokenId_][i] > 0) count++;
+        if(count < uint8(boxTypes.length)) return; // Don't do anythin
+
         (bytes32 _dna, uint256 _artifacts, ) = nftCore.tokenMetaData(tokenId_);
-        _dna = bytes32(keccak256(abi.encodePacked(tokenId_, randomness_)));
+        _dna = bytes32(keccak256(abi.encodePacked(tokenId_, _randomWords[tokenId_][0])));
 
-        // uint256 _boxType = _getArtifactValue(_artifacts, 0, 8);
-        // (uint256 _itemId) = itemFactory.getRandomItem(
-        //     randomness_,
-        //     _boxType
-        // );
+        uint256[] memory _itemIds = new uint256[](boxTypes.length);
+        for(uint256 i = 0; i < boxTypes.length; i++) {
+            uint256 _itemId = itemFactory.getRandomItem(
+                _randomWords[tokenId_][i],
+                boxTypes[i]
+            );
+            _itemIds[i] = _itemId;
+            _artifacts = _addArtifactValue(_artifacts, i * 8, 8, _itemId); // add itemId
+        }
+        _artifacts = _addArtifactValue(_artifacts, boxTypes.length * 8, 16, itemFactory.getItemInitialLevel(boxTypes, _itemIds)); // add level
+        _artifacts = _addArtifactValue(_artifacts, boxTypes.length * 8 + 16, 16, itemFactory.getItemInitialExperience(boxTypes, _itemIds)); // add exeperience
 
-        // _itemNextIds[_itemId] = _itemNextIds[_itemId] + 1;
-        // _artifacts = _addArtifactValue(_artifacts, 8, 8, _itemType); // add itemType
-        // _artifacts = _addArtifactValue(_artifacts, 16, 16, _itemId); // add itemId
-        // _artifacts = _addArtifactValue(_artifacts, 32, 16, itemFactory.getItemInitialLevel(_itemType, _itemId)); // add level
-        // _artifacts = _addArtifactValue(_artifacts, 48, 16, itemFactory.getItemInitialExperience(_itemType, _itemId)); // add exeperience
-        // _artifacts = _addArtifactValue(_artifacts, 64, 24, _itemNextIds[_itemId]); // add item NextId, this is for pic image id
-
-        // uint256 _artifactsLength = itemFactory.artifactsLength(_itemType);
-
-        // for (uint256 i = 0; i < _artifactsLength; i++) {
-        //     // add artifact id
-        //     uint256 _artifactId = itemFactory.artifactIdAt(_itemType, i);
-
-        //     _artifacts = _addArtifactValue(
-        //         _artifacts,
-        //         88 + i * 24,
-        //         8,
-        //         _artifactId
-        //     );
-
-        //     // Randome seed for artifact, it'll be same if in the same block, same item type and same item id
-        //     uint256 _randomness = uint256(
-        //         keccak256(
-        //             abi.encodePacked(
-        //                 randomness_,
-        //                 block.number,
-        //                 // _itemType,
-        //                 _itemId,
-        //                 _artifactId,
-        //                 i
-        //             )
-        //         )
-        //     );
-
-        //     add artifact value
-        //     uint256 _artifactValue = itemFactory.getRandomArtifactValue(
-        //         _randomness,
-        //         _artifactId
-        //     );
-        //     _artifacts = _addArtifactValue(
-        //         _artifacts,
-        //         96 + i * 24,
-        //         16,
-        //         _artifactValue
-        //     );
-        // }
-
-        // delete _tokenIdToUnboxBlockNumber[tokenId_];
-        // _randomnesses[tokenId_] = randomness_;
-
-        // nftCore.updateTokenMetaData(tokenId_, _artifacts, _dna);
-        // emit TokenFulfilled(tokenId_);
-    }
-
-    // Box type and NFT metadata manager
-    function addBoxType(uint256 boxType_) external onlyRole(MANAGER_ROLE) {
-        require(boxType_ > 0 && boxType_ <= 100);
-        bool success = _supportedBoxTypes.add(boxType_);
-        require(success, "ChatPuppyNFTManager: box type is already supported");
-    }
-
-    function addComboType(uint256 comboType_) external onlyRole(MANAGER_ROLE) {
-        _addComboType(comboType_);
-    }
-
-    function boxTypesIncombo(uint256 comboType_) external view returns (uint256[] memory) {
-        return _comboToBoxes[comboType_];
-    }
-
-    function addBoxTypeToCombo(uint256 comboType_, uint256 boxType_) external onlyRole(MANAGER_ROLE) {
-        _addBoxTypeToCombo(comboType_, boxType_);
+        nftCore.updateTokenMetaData(tokenId_, _artifacts, _dna);
+        emit TokenFulfilled(tokenId_);
     }
 
     function supportedBoxTypes() external view returns (uint256[] memory) {
@@ -427,4 +361,18 @@ contract ChatPuppyNFTManager is
     function upgradeNFT(uint256 tokenId_, uint256 artifacts_) external onlyRole(NFT_UPGRADER) {
         nftCore.updateTokenMetaData(tokenId_, artifacts_);
     }
+
+    function updateFeeAccount(address feeAccount_) public onlyRole(MANAGER_ROLE) {
+        require(feeAccount_ != address(0), "ChatPuppyNFTManager: feeAccount can not be zero address");
+        feeAccount = feeAccount_;
+    }
+
+    function updateBoxTypes(uint256[] calldata boxTypes_) external onlyRole(MANAGER_ROLE) {
+        boxTypes = boxTypes_;
+    }
+
+    function updateTokenURI(uint256 tokenId_, string calldata uri_) external onlyRole(NFT_UPGRADER) {
+        nftCore.updateTokenURI(tokenId_, uri_);
+    }
+
 }

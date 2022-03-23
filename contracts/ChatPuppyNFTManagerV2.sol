@@ -337,7 +337,6 @@ contract ChatPuppyNFTManagerV2 is
             _artifacts = _addArtifactValue(_artifacts, i * 8, 8, _itemId); // add itemId
         }
         _artifacts = _addArtifactValue(_artifacts, boxTypes.length * 8, 16, itemFactory.getItemInitialLevel(boxTypes, _itemIds)); // add level
-        // 这里面有bug, 上面都OK
         _artifacts = _addArtifactValue(_artifacts, boxTypes.length * 8 + 16, 16, itemFactory.getItemInitialExperience(boxTypes, _itemIds)); // add exeperience
 
         _randomWords[tokenId_] = randomWords_;
