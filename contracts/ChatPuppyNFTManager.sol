@@ -5,11 +5,13 @@ import "./lib/AccessControlEnumerable.sol";
 import "./lib/RandomConsumerBase.sol";
 import "./lib/ItemFactoryManager.sol";
 import "./ChatPuppyNFTCore.sol";
+import "./lib/Bitmask.sol";
 
 contract ChatPuppyNFTManager is
     AccessControlEnumerable,
     RandomConsumerBase,
-    ItemFactoryManager
+    ItemFactoryManager,
+    Bitmask
 {
     using EnumerableSet for EnumerableSet.UintSet;
 
@@ -27,12 +29,12 @@ contract ChatPuppyNFTManager is
 
     // Mystery Box type
     EnumerableSet.UintSet private _supportedBoxTypes;
-    // mapping(uint256 => uint256) private _requestIds;
+    mapping(uint256 => uint256[]) private _requestIds;
     // mapping(uint256 => uint256) private _tokenIds;
     mapping(uint256 => uint256[]) private _randomWords;
     uint256[] public boxTypes = [2, 3, 4, 5, 6, 7]; // NFT Trait types
 
-    event UnboxToken(uint256 indexed tokenId);
+    event UnboxToken(uint256 indexed tokenId, uint256 requestId);
     event TokenFulfilled(uint256 indexed tokenId);
 
     constructor(
@@ -221,7 +223,7 @@ contract ChatPuppyNFTManager is
     function buyMintAndUnbox() public payable {
         require(msg.value >= boxPrice, "ChatPuppyNFTManager: payment is not enough");
         uint256 _tokenId = _mint(_msgSender());
-        unbox(_tokenId);
+        unbox(_tokenId, 6, false);
     }
 
     /**
@@ -265,12 +267,12 @@ contract ChatPuppyNFTManager is
         }
         return _places;
     }
-    function getRequestId(uint8 index, uint256 tokenId) internal pure returns (uint256 requestId_) {
-        requestId_ = index * 10**(places(tokenId)) + tokenId; 
+    function getRequestId(uint256 index, uint256 tokenId) internal pure returns (uint256 requestId_) {
+        requestId_ = uint256(index) * 10**(places(tokenId)) + tokenId;
     }
 
-    function getIndexTokenId(uint256 requestId_) internal pure returns(uint8 index_, uint256 tokenId_) {
-        index_ = uint8(requestId_ / 10**(places(requestId_) - 1));
+    function getIndexTokenId(uint256 requestId_) internal pure returns(uint256 index_, uint256 tokenId_) {
+        index_ = uint256(requestId_ / 10**(places(requestId_) - 1));
         tokenId_ = requestId_ % 10**(places(requestId_) - 1);
     }
 
@@ -278,7 +280,7 @@ contract ChatPuppyNFTManager is
      * @dev Unbox mystery box
      * This is a payable function
      */
-    function unbox(uint256 tokenId_) public payable 
+    function unbox(uint256 tokenId_, uint256 count_, bool test_) public payable 
         onlyExistedToken(tokenId_) 
         onlyTokenOwner(tokenId_) 
         onlyMysteryBox(tokenId_) 
@@ -288,16 +290,22 @@ contract ChatPuppyNFTManager is
        
         _takeRandomFee();
         
-        uint8 numWords_ = uint8(boxTypes.length); // maximum 6 traits
+        uint256 numWords_ = boxTypes.length; // maximum 6 traits
 
-        for(uint8 i = 1; i <= numWords_; i++)
-            randomGenerator.requestRandomNumber(getRequestId(i, tokenId_));
+        uint256[] memory _request = new uint256[](numWords_);
+        
+        uint256 i = 1;
+        uint256 requestId_ = 0;
+        while(i <= count_) {
+            requestId_ = getRequestId(i, tokenId_); // The requestId_ can not be multiple
+            randomGenerator.requestRandomNumber(requestId_);
+            if(test_) _request[i - 1] = requestId_; // 这条语句与requestRandomNumber不能一起用
+            emit UnboxToken(tokenId_, requestId_);
+            i++;
+        }
+        _requestIds[tokenId_] = _request;
+        _randomWords[tokenId_] = new uint256[](numWords_);
 
-        // _requestIds[tokenId_] = requestId_;
-        // _tokenIds[requestId_] = tokenId_;
-        _randomWords[tokenId_] = new uint256[](6);
-
-        emit UnboxToken(tokenId_);
     }
 
     /**
@@ -321,37 +329,37 @@ contract ChatPuppyNFTManager is
      * 
      */
     // ###### DEBUG
-    function randomWords(uint256 tokenId_) public view returns(uint256[] memory) {
-        return (_randomWords[tokenId_]);
+    function randomWords(uint256 tokenId_) public view returns(uint256[] memory, uint256[] memory) {
+        return (_requestIds[tokenId_], _randomWords[tokenId_]);
     }
 
     function fulfillRandomness(uint256 requestId_, uint256 randomness_) internal override(RandomConsumerBase) {
-        (uint8 index_, uint256 tokenId_) = getIndexTokenId(requestId_);
+        (uint256 index_, uint256 tokenId_) = getIndexTokenId(requestId_);
 
-        // Check if all 6 randomness is got
-        _randomWords[tokenId_][index_ - 1] = randomness_;
+        // // Check if all 6 randomness is got
+        // _randomWords[tokenId_][index_ - 1] = randomness_;
 
-        uint8 count = 0;
-        for(uint8 i = 0; i < uint8(boxTypes.length); i ++) if(_randomWords[tokenId_][i] > 0) count++;
-        if(count < uint8(boxTypes.length)) return; // Don't do anythin
+        // uint256 count = 0;
+        // for(uint256 i = 0; i < boxTypes.length; i ++) if(_randomWords[tokenId_][i] > 0) count++;
+        // if(count < boxTypes.length) return; // Don't do anythin
 
-        (bytes32 _dna, uint256 _artifacts, ) = nftCore.tokenMetaData(tokenId_);
-        _dna = bytes32(keccak256(abi.encodePacked(tokenId_, _randomWords[tokenId_][0])));
+        // (bytes32 _dna, uint256 _artifacts, ) = nftCore.tokenMetaData(tokenId_);
+        // _dna = bytes32(keccak256(abi.encodePacked(tokenId_, _randomWords[tokenId_][0])));
 
-        uint256[] memory _itemIds = new uint256[](boxTypes.length);
-        for(uint256 i = 0; i < boxTypes.length; i++) {
-            uint256 _itemId = itemFactory.getRandomItem(
-                _randomWords[tokenId_][i],
-                boxTypes[i]
-            );
-            _itemIds[i] = _itemId;
-            _artifacts = _addArtifactValue(_artifacts, i * 8, 8, _itemId); // add itemId
-        }
-        _artifacts = _addArtifactValue(_artifacts, boxTypes.length * 8, 16, itemFactory.getItemInitialLevel(boxTypes, _itemIds)); // add level
-        _artifacts = _addArtifactValue(_artifacts, boxTypes.length * 8 + 16, 16, itemFactory.getItemInitialExperience(boxTypes, _itemIds)); // add exeperience
+        // uint256[] memory _itemIds = new uint256[](boxTypes.length);
+        // for(uint256 i = 0; i < boxTypes.length; i++) {
+        //     uint256 _itemId = itemFactory.getRandomItem(
+        //         _randomWords[tokenId_][i],
+        //         boxTypes[i]
+        //     );
+        //     _itemIds[i] = _itemId;
+        //     _artifacts = _addArtifactValue(_artifacts, i * 8, 8, _itemId); // add itemId
+        // }
+        // _artifacts = _addArtifactValue(_artifacts, boxTypes.length * 8, 16, itemFactory.getItemInitialLevel(boxTypes, _itemIds)); // add level
+        // _artifacts = _addArtifactValue(_artifacts, boxTypes.length * 8 + 16, 16, itemFactory.getItemInitialExperience(boxTypes, _itemIds)); // add exeperience
 
-        nftCore.updateTokenMetaData(tokenId_, _artifacts, _dna);
-        emit TokenFulfilled(tokenId_);
+        // nftCore.updateTokenMetaData(tokenId_, _artifacts, _dna);
+        // emit TokenFulfilled(tokenId_);
     }
 
     function supportedBoxTypes() external view returns (uint256[] memory) {

@@ -16,16 +16,20 @@ const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
 // const nftManagerAddress = '0x0528E41841b8BEdD4293463FAa061DdFCC5E41bd'; // kovan
-const nftManagerAddress = '0xd3eE8844847403a3160A4b1a9322F5CdebDF7F4c'; // bscTestnet
+// const nftManagerAddress = '0xd3eE8844847403a3160A4b1a9322F5CdebDF7F4c'; // bscTestnet
+const nftManagerAddress = '0xD927b0D543019bF0EB958733C32A8aAb19cE9a2d'; // mumbai
+
 const nftManagerJson = require('../build/contracts/ChatPuppyNFTManager.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 
 const nftManager = new web3.eth.Contract(nftManagerJson.abi, nftManagerAddress);
 const user = '0x615b80388E3D3CaC6AA3a904803acfE7939f0399';
 
-const tokenId = 2;
+const tokenId = 9;
 nftManager.methods.boxStatus(tokenId).call().then((result) => console.log('boxStatus ' + result));
 nftManager.methods.boxPrice().call().then((result) => console.log('boxPrice ' + result));
+
+nftManager.methods.randomWords(tokenId).call().then((result) => console.log('randomWords', result));
 
 nftManager.methods.nftCore().call().then((nftAddress) => {
 	console.log('nft Address', nftAddress);
@@ -99,11 +103,13 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 
 	// Batch mint mystery box NFT
 	// BUG: Can only batch mint 3 nfts one time.
-	// let sendEncodeABI = nftManager.methods.mintBatch(user, 1, 3).encodeABI();
+	// let sendEncodeABI = nftManager.methods.mintBatch(user, 3).encodeABI();
 	
+	let sendEncodeABI = nftManager.methods.upgradeNFTCoreOwner('0xD927b0D543019bF0EB958733C32A8aAb19cE9a2d').encodeABI();
+
 	// Unbox mystery box
-	// let sendEncodeABI = nftManager.methods.unbox(1).encodeABI();
-	// callContract(sendEncodeABI, nftManagerAddress);
+	// let sendEncodeABI = nftManager.methods.unbox(tokenId, 3, false).encodeABI();
+	callContract(sendEncodeABI, nftManagerAddress);
 
 	// Batch buy and mint mystery box NFT
 	// let sendEncodeABI = nftManager.methods.buyAndMintBatch(1, 3).encodeABI();

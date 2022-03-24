@@ -4,7 +4,6 @@
 
 import {execContract} from './web3.js';
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
-import {getTokensOfOwner} from 'erc721-balance';
 import dotenv from 'dotenv';
 dotenv.config();
 const require = createRequire(import.meta.url); // construct the require method
@@ -15,12 +14,14 @@ const Web3 = require('web3');
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-const randomTestAddress = '0x4cc463c78E09C7EC45276D911c29688579E32818';
+const randomTestAddress = '0x8959B390602bA65704DD2Cfb6f32d7e4A9268c3c'; // mumbai
 const randomTestJson = require('../build/contracts/RandomTest.json');
 
 const randomTest = new web3.eth.Contract(randomTestJson.abi, randomTestAddress);
 
-randomTest.methods.randomNumber().call().then((number) => console.log('Random Number', number));
+// ===========================================================================
+const tokenId = 109;
+randomTest.methods.getData(tokenId).call().then((number) => console.log('Random Number', number));
 
 /**
  * ==== Following testing methods is Send Tx ====
@@ -31,5 +32,15 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 // TokenId is insteatd of RequestId, it can not be duplicated.
 // let sendEncodeABI = randomTest.methods.requestRandomness(4).encodeABI();
 
-// let sendEncodeABI = randomTest.methods.updateRandomFee(0).encodeABI();
+// let sendEncodeABI = randomTest.methods.getRandoms(tokenId).encodeABI();
 // callContract(sendEncodeABI, randomTestAddress);
+
+// 89886278219382825804356556120021526408645684544726589290238326514905869994371
+// 11000110101110011101010010100000
+// 01010110010111001111001010001110
+// 10000001010011111001110011001001
+// 10010011111011010101010100001100
+// 00010001100001110010011100100011
+// 10110111100110110101001101110011
+// 01011001000001011110110000000100
+// 11011111011110000100100110000011
