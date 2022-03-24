@@ -52,6 +52,7 @@
     "deploy-item-factory-mumbai": "truffle migrate --network mumbai -f 5 --to 5",
     "deploy-nft-manager-mumbai": "truffle migrate --network mumbai -f6 --to 6",
     "deploy-random-test-mumbai": "truffle migrate --network mumbai -f11 --to 11",
+    "deploy-marketplace-mumbai": "truffle migrate --network mumbai -f 7 --to 7",
 
     "deploy-cpt-rinkeby": "truffle migrate --network rinkeby -f 2 --to 2",
     "deploy-item-factory-rinkeby": "truffle migrate --network rinkeby -f 5 --to 5",

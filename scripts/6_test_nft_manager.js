@@ -17,7 +17,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
 // const nftManagerAddress = '0x0528E41841b8BEdD4293463FAa061DdFCC5E41bd'; // kovan
 // const nftManagerAddress = '0xd3eE8844847403a3160A4b1a9322F5CdebDF7F4c'; // bscTestnet
-const nftManagerAddress = '0xD927b0D543019bF0EB958733C32A8aAb19cE9a2d'; // mumbai
+const nftManagerAddress = '0xCCAcc7F68bC4498CeA4Ee4D71e0AC0d824ca4513'; // mumbai
 
 const nftManagerJson = require('../build/contracts/ChatPuppyNFTManager.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
@@ -25,7 +25,7 @@ const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 const nftManager = new web3.eth.Contract(nftManagerJson.abi, nftManagerAddress);
 const user = '0x615b80388E3D3CaC6AA3a904803acfE7939f0399';
 
-const tokenId = 9;
+const tokenId = 41;
 nftManager.methods.boxStatus(tokenId).call().then((result) => console.log('boxStatus ' + result));
 nftManager.methods.boxPrice().call().then((result) => console.log('boxPrice ' + result));
 
@@ -44,11 +44,6 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	nft.methods.ownerOf(tokenId).call().then((owner) => console.log('owner of nft ' + tokenId, owner));
 	nft.methods.tokenMetaData(tokenId).call().then((metaData) => console.log('metadata of nft ' + tokenId, metaData));
 
-	// TokenId 5: 0x26 07 001f 06 0017 05 0011 04 000f 03 0008 02 0000 01 000001 003c 0006 0005 01 01
-	// TokenId 4: 0x27 07 001e 06 0017 05 0011 04 000d 03 0009 02 0005 01 000002 003c 0006 0005 01 01
-	// TokenId 7: 0x23 07 001f 06 0017 05 0014 04 0010 03 0009 02 0002 01 000003 003c 0006 0005 01 01
-	// TokenId 8: 0x25 07 001e 06 0018 05 0011 04 000d 03 000a 02 0003 01 000004 003c 0006 0005 01 01
-	// TokenId 9: 0x26 07 0021 06 0017 05 0016 04 000c 03 0009 02 0001 01 000002 0046 0007 0004 01 01
 	/**
 	* ==== Following testing methods is Send Tx ====
 	*/
@@ -83,6 +78,8 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	 */
 	// let sendEncodeABI = nftManager.methods.upgradeContract('0x8d3fc53883d89f359dE81c90bb26A729a01FdE09').encodeABI();
 
+	// let sendEncodeABI = nftManager.methods.updateItemFactory('0x21C0Dd93f1c00c9741504D4640EDd5C4a8E3f128').encodeABI();
+
 	// Update projectId if meet: random number for token is already exist
 	// let sendEncodeABI = nftManager.methods.updateProjectId(120).encodeABI();
 
@@ -105,11 +102,11 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	// BUG: Can only batch mint 3 nfts one time.
 	// let sendEncodeABI = nftManager.methods.mintBatch(user, 3).encodeABI();
 	
-	let sendEncodeABI = nftManager.methods.upgradeNFTCoreOwner('0xD927b0D543019bF0EB958733C32A8aAb19cE9a2d').encodeABI();
+	// let sendEncodeABI = nftManager.methods.upgradeNFTCoreOwner('0xCCAcc7F68bC4498CeA4Ee4D71e0AC0d824ca4513').encodeABI();
 
 	// Unbox mystery box
-	// let sendEncodeABI = nftManager.methods.unbox(tokenId, 3, false).encodeABI();
-	callContract(sendEncodeABI, nftManagerAddress);
+	// let sendEncodeABI = nftManager.methods.unbox(tokenId).encodeABI();
+	// callContract(sendEncodeABI, nftManagerAddress);
 
 	// Batch buy and mint mystery box NFT
 	// let sendEncodeABI = nftManager.methods.buyAndMintBatch(1, 3).encodeABI();

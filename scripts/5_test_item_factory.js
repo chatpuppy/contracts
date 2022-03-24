@@ -16,20 +16,21 @@ const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
 // const itemFactoryAddress = '0x93E138E8B9E4f034A6c05C3380606109b8b58D5f'; // bscTestnet
-const itemFactoryAddress = '0xc251D7C3726AF2Cf20e86C17F1E59fC7042657b6'; // mumbai
+const itemFactoryAddress = '0x21C0Dd93f1c00c9741504D4640EDd5C4a8E3f128'; // mumbai
 const itemFactoryJson = require('../build/contracts/ItemFactory.json');
 
 const itemFactory = new web3.eth.Contract(itemFactoryJson.abi, itemFactoryAddress);
 
-const boxType = 5;
-const itemId = 11;
+const boxType = 7;
+const itemId = 4;
 const boxTypes = [2,3,4,5,6,7];
-itemFactory.methods.owner().call().then((owner) => console.log('owner of contract', owner));
-itemFactory.methods.supportedBoxTypes().call().then((types) => console.log('box types', types));
-itemFactory.methods.totalSupply(1).call().then((response) => console.log('total supply', response));
+// itemFactory.methods.owner().call().then((owner) => console.log('owner of contract', owner));
+// itemFactory.methods.supportedBoxTypes().call().then((types) => console.log('box types', types));
+// itemFactory.methods.totalSupply(1).call().then((response) => console.log('total supply', response));
 
-// itemFactory.methods.getItemRarity(boxType, itemId).call().then((response) => console.log('item rarity', response));
-// itemFactory.methods.getItemTotalRarity(boxType).call().then((response) => console.log('item total rarity', response));
+itemFactory.methods.getItemRarity(boxType, itemId).call().then((response) => console.log('item rarity', response));
+itemFactory.methods.getItemProperties(boxType, itemId).call().then((response) => console.log('item properties', response));
+itemFactory.methods.getItemTotalRarity(boxType).call().then((response) => console.log('item total rarity', response));
 
 // itemFactory.methods.getItemInitialLevel(boxTypes, [5,1,3,11,3,4]).call().then((response) => console.log('level', response));
 // itemFactory.methods.getItemInitialExperience(boxTypes, [5,1,3,11,3,4]).call().then((response) => console.log('experience', response));
@@ -41,19 +42,20 @@ itemFactory.methods.totalSupply(1).call().then((response) => console.log('total 
 // });
 
 // Testing getRandomItem, verifying the params of item is right or not.
-// const num = 1000;
-// let randomResult = [0,0,0,0,0,0,0,0,0,0,0,0];
-// let count = 0;
-// for(let r = 0; r < num; r++) {
-// 	const randomSeed = Math.floor(Math.random() * 10000000);
-// 	itemFactory.methods.getRandomItem(randomSeed, boxType).call().then((result) => {
-// 		randomResult[result] = randomResult[result] + 1;
-// 		count++;
-// 		if(num === count) {
-// 			console.log(randomResult);
-// 		}
-// 	});
-// }
+function checkItemData(num) {
+	let randomResult = [0,0,0,0,0,0,0,0,0,0,0,0];
+	let count = 0;
+	for(let r = 0; r < num; r++) {
+		const randomSeed = Math.floor(Math.random() * 10000000);
+		itemFactory.methods.getRandomItem(randomSeed, boxType).call().then((result) => {
+			randomResult[result] = randomResult[result] + 1;
+			count++;
+			if(num === count) {
+				console.log(randomResult);
+			}
+		});
+	}
+}
 
 /**
  * ==== Following testing methods is Send Tx ====
@@ -399,7 +401,7 @@ function addItems(id) {
 
 	callContract(sendEncodeABI, itemFactoryAddress, (confirmationNumber, receipt) => {
 		// onConfirmedFunc
-		console.log(`#${id} BoxType ${params.boxType}, item ${params.itemId} is done...`);
+		console.log(`#${id}/${itemParams.length} BoxType ${params.boxType}, item ${params.itemId} is done...`);
 		if(id + 1 < itemParams.length) addItems(id + 1);
 		else console.log(`All items are added...`);
 	}, (error) => {
@@ -410,4 +412,11 @@ function addItems(id) {
 	});
 }
 
-addItems(0);
+// After deploying the ItemFactory contract, you need to config the Item data.
+// Run the following function, it will automaticly update the Item data on chain.
+// If the operation is paused, check the latest Item Id, and restart from that.
+// If the transaction is fault, check the transactionHash in the explorer and get the reason.
+// addItems(32);
+
+// After config the item data, we highly suggest to use checkItemData to verify that the configuration is correct.
+checkItemData(30);

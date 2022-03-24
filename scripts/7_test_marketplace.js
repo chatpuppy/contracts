@@ -17,7 +17,8 @@ const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
 // const marketplaceAddress = '0xc60a6AE3a85838D3bAAf359219131B1e33103560'; // kovan
 // const marketplaceAddress = '0x29a1D6404aa907a53b07eFdf0F70cC2A8815EC60'; // bscTestnet
-const marketplaceAddress = '0x22e42fea04f12de858Ce807FE863227486dCE9c3'; // bscTestnet
+// const marketplaceAddress = '0x22e42fea04f12de858Ce807FE863227486dCE9c3'; // bscTestnet
+const marketplaceAddress = '0x206d806872E78e70Ef6ed7Df24983b6bB378eB87'; // mumbai
 const marketplaceJson = require('../build/contracts/ChatPuppyNFTMarketplace.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 
@@ -63,6 +64,8 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 
 	// let sendEncodeABI = marketplace.methods.updateNftCore('0x87Be7a62d608d29003ec1Ec292F65Df3913C8E34').encodeABI();
 
+	// let sendEncodeABI = marketplace.methods.updateFeeRecipient('0x0000000000000000000000000000000000000000').encodeABI();
+
 	const tokenId = 1;
 
 	// Approve marketplace to the NFT
@@ -84,7 +87,7 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 
 	// let sendEncodeABI = marketplace.methods.matchOrder(3, '15000000000000000000').encodeABI();
 
-	let sendEncodeABI = marketplace.methods.cancelAllOrders().encodeABI();
+	// let sendEncodeABI = marketplace.methods.cancelAllOrders().encodeABI();
 	// let sendEncodeABI = marketplace.methods.pause(false).encodeABI();
-	callContract(sendEncodeABI, marketplaceAddress);
+	// callContract(sendEncodeABI, marketplaceAddress);
 });

@@ -23993,14 +23993,121 @@
       "transactionHash": "0x927681a4e3d1eb6d77d4b7a62b2cd7c424e584794522cac7a64d7f4109aea3b0"
     },
     "80001": {
-      "events": {},
+      "events": {
+        "0x73c14e925a76b039b38e4acc0f38bb0170e1270303e12861ac348c8e7b42ec77": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "uint256",
+              "name": "boxType",
+              "type": "uint256"
+            },
+            {
+              "indexed": true,
+              "internalType": "uint256",
+              "name": "itemId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "rarity",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "itemInitialLevel",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "itemInitialExperience",
+              "type": "uint256"
+            }
+          ],
+          "name": "ItemAdded",
+          "type": "event"
+        },
+        "0xc03bcbe2c87898800821a0cbf4b1c65e324880c4463e18860229a8937c681238": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "uint256",
+              "name": "boxType",
+              "type": "uint256"
+            },
+            {
+              "indexed": true,
+              "internalType": "uint256",
+              "name": "itemId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "rarity",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "itemInitialLevel",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "itemInitialExperience",
+              "type": "uint256"
+            }
+          ],
+          "name": "ItemUpdated",
+          "type": "event"
+        },
+        "0x906a1c6bd7e3091ea86693dd029a831c19049ce77f1dce2ce0bab1cacbabce22": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "potentialOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnerNominated",
+          "type": "event"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        }
+      },
       "links": {},
-      "address": "0xc251D7C3726AF2Cf20e86C17F1E59fC7042657b6",
-      "transactionHash": "0xd1bb303cd3706ee3e5b777e2ce410fffaacb01224848bbc91c90724e662dc6a9"
+      "address": "0x21C0Dd93f1c00c9741504D4640EDd5C4a8E3f128",
+      "transactionHash": "0x9fd4a4e7d82e33e202fce06d148054e7704f9cdedc8e1f5e40ab67fc4793a962"
     }
   },
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-03-23T05:39:15.756Z",
+  "updatedAt": "2022-03-24T21:54:23.696Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

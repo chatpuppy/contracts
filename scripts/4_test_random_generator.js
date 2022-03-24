@@ -46,7 +46,7 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 
 // const NFTManager = '0x0528E41841b8BEdD4293463FAa061DdFCC5E41bd'; // kovan
 // const NFTManager = '0xd3eE8844847403a3160A4b1a9322F5CdebDF7F4c'; // bscTestnet
-const NFTManager = '0x8959B390602bA65704DD2Cfb6f32d7e4A9268c3c'; // mumbai
+const NFTManager = '0xCCAcc7F68bC4498CeA4Ee4D71e0AC0d824ca4513'; // mumbai
 let sendEncodeABI = randomGenerator.methods.grantRole(
 	'0x9d56108290ea0bc9c5c59c3ad357dca9d1b29ed7f3ae1443bef2fa2159bdf5e8', 
 	NFTManager).encodeABI();
