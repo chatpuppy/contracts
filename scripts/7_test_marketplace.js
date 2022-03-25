@@ -64,7 +64,7 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 
 	// let sendEncodeABI = marketplace.methods.updateNftCore('0x87Be7a62d608d29003ec1Ec292F65Df3913C8E34').encodeABI();
 
-	// let sendEncodeABI = marketplace.methods.updateFeeRecipient('0x0000000000000000000000000000000000000000').encodeABI();
+	let sendEncodeABI = marketplace.methods.updateFeeRecipient('0xF0Ab3FD4bf892BcB9b40B9c6B5a05e02f3afe833').encodeABI();
 
 	const tokenId = 1;
 
@@ -89,5 +89,5 @@ marketplace.methods.nftCore().call().then((nftAddress) => {
 
 	// let sendEncodeABI = marketplace.methods.cancelAllOrders().encodeABI();
 	// let sendEncodeABI = marketplace.methods.pause(false).encodeABI();
-	// callContract(sendEncodeABI, marketplaceAddress);
+	callContract(sendEncodeABI, marketplaceAddress);
 });

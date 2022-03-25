@@ -301,7 +301,7 @@ contract ChatPuppyNFTManager is
      * dna = bytes32(keccak256(abi.encodePacked(tokenId_, randomness_)));
      * 
      */
-    // ###### DEBUG
+
     function randomWords(uint256 tokenId_) public view returns(uint256, uint256[] memory) {
         return (_requestIds[tokenId_], _randomWords[tokenId_]);
     }

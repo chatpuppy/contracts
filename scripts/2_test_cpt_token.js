@@ -35,10 +35,13 @@ cptContract.methods.BURNER_ROLE().call().then((response) => console.log('BURNER_
  */
 const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
-let sendEncodeABI = cptContract.methods.mint(
-	'0x615b80388E3D3CaC6AA3a904803acfE7939f0399', 
-	'100000000000000000000000000').encodeABI(); 
-// let sendEncodeABI = dareContract.methods.transfer('0x3444E23231619b361c8350F4C83F82BCfAB36F65', '72000000000000000000').encodeABI();
+// let sendEncodeABI = cptContract.methods.mint(
+// 	'0xC4BFA07776D423711ead76CDfceDbE258e32474A', 
+// 	'100000000000000000000000000').encodeABI(); 
+
+	// let sendEncodeABI = dareContract.methods.transfer('0x3444E23231619b361c8350F4C83F82BCfAB36F65', '72000000000000000000').encodeABI();
+
+// let sendEncodeABI = cptContract.methods.transferOwnership('0x615b80388E3D3CaC6AA3a904803acfE7939f0399').encodeABI();
 
 // Grand TokenVesting contract as MINT_ROLE
 // const TokenVestingAddress = '0x76624c221287b1552a379e597166CA8fAA06dF9D'; // kovan
@@ -47,4 +50,4 @@ let sendEncodeABI = cptContract.methods.mint(
 // 	'0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6', 
 // 	TokenVestingAddress).encodeABI();
 
-callContract(sendEncodeABI, cptContractAddress);
+// callContract(sendEncodeABI, cptContractAddress);
