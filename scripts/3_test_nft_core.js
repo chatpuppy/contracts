@@ -18,7 +18,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 // const nftAddress = '0xAb50F84DC1c8Ef1464b6F29153E06280b38fA754'; // Issued by nft core
 // const nftAddress = '0x1BE54fdAF59d369f8d7bE296C227F208CF5FF7AF'; // bscTestnet
 // const nftAddress = '0x87Be7a62d608d29003ec1Ec292F65Df3913C8E34'; // bscTestnet
-const nftAddress = '0xC625F93d303A0DEd198601439F993a72D1421704'; // mumbai
+const nftAddress = '0xA28D90320005C8c043Ee79ae59e82fDd5f983f30'; // mumbai
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 
 const nft = new web3.eth.Contract(nftJson.abi, nftAddress);
@@ -57,5 +57,5 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 // let sendEncodeABI = nft.methods.safeTransferFrom('0xC4BFA07776D423711ead76CDfceDbE258e32474A', '0x3444E23231619b361c8350F4C83F82BCfAB36F65', 2).encodeABI();
 
 // ATTN. Update the owner of the NFTCore to NFTManager contract.
-let sendEncodeABI = nft.methods.transferOwnership('0x65223169C1B7064A80B71F82305aaeD296096A2D').encodeABI();
+let sendEncodeABI = nft.methods.transferOwnership('0xCCAcc7F68bC4498CeA4Ee4D71e0AC0d824ca4513').encodeABI();
 callContract(sendEncodeABI, nftAddress);

@@ -8,7 +8,6 @@ import "./lib/Token/ERC721.sol";
 import "./lib/Ownable.sol";
 import "./lib/Token/IERC721Enumerable.sol";
 import "./lib/Token/ERC721Burnable.sol";
-// import "./lib/EnumerableSet.sol";
 import "./lib/AccessControlEnumerable.sol";
 import "./lib/Token/ERC721Enumerable.sol";
 import "./lib/Token/ERC721Pausable.sol";
@@ -22,14 +21,10 @@ contract ChatPuppyNFTCore is
     ERC721Pausable
 {
     using Strings for uint256;
-    // using EnumerableSet for EnumerableSet.UintSet;
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdTracker;
-    // string private _baseTokenURI;
     uint256 private _cap;
-
-    // EnumerableSet.UintSet private _supportedBoxTypes;
 
     struct Item {
         bytes32 dna;
@@ -41,22 +36,18 @@ contract ChatPuppyNFTCore is
     mapping(uint256 => string) private _tokenURIs;
 
     event CapUpdated(uint256 cap);
+    event UpdateTokenURI(uint256 indexed tokenId, string tokenURI);
+    event UpdateMetadata(uint256 indexed tokenId, bytes32 dna, uint256 artifacts);
 
     constructor(
         string memory name_,
         string memory symbol_,
-        // string memory baseTokenURI_,
         uint256 initialCap_
     ) ERC721(name_, symbol_) {
         require(initialCap_ > 0, "ChatPuppyNFTCore: cap is 0");
         _updateCap(initialCap_);
-        // _baseTokenURI = baseTokenURI_;
         _tokenIdTracker.increment();
     }
-
-    // function _baseURI() internal view virtual override returns (string memory) {
-    //     return _baseTokenURI;
-    // }
 
     function _mint(address to_, uint256 tokenId_) internal virtual override {
         require(
@@ -93,10 +84,6 @@ contract ChatPuppyNFTCore is
         uint256 newCap = cap() + amount_;
         _updateCap(newCap);
     }
-
-    // function updateBaseTokenURI(string memory baseTokenURI_) public onlyOwner {
-    //     _baseTokenURI = baseTokenURI_;
-    // }
 
     function mint(address to_) public onlyOwner returns (uint256) {
         // We cannot just use balanceOf to create the new tokenId because tokens
@@ -180,6 +167,7 @@ contract ChatPuppyNFTCore is
         if (dna_ != 0 && _info.dna == 0) {
             _info.dna = dna_;
         }
+        emit UpdateMetadata(tokenId_, dna_, artifacts_);
     }
 
     function updateTokenURI(uint256 tokenId_, string calldata uri_) external {
@@ -187,6 +175,7 @@ contract ChatPuppyNFTCore is
         require((ownerOf(tokenId_) == _msgSender() && bytes(_tokenURIs[tokenId_]).length == 0)
             || _msgSender() == owner(), "ChatPuppyNFTCore: owner of nft can only set once, contract owner can set always");
         _tokenURIs[tokenId_] = uri_;
+        emit UpdateTokenURI(tokenId_, uri_);
     }
 
     function tokenMetaData(uint256 tokenId_) external view returns (bytes32 _dna, uint256 _artifacts, string memory _hexArtifacts) {

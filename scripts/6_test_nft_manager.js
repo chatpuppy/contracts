@@ -69,6 +69,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 
 	// let sendEncodeABI = nftManager.methods.updateBoxPrice('10000000000000000').encodeABI();//set price 0.01ETH
 
+	let sendEncodeABI = nftManager.methods.updateNFTCoreContract('0xA28D90320005C8c043Ee79ae59e82fDd5f983f30').encodeABI();
 	/**
 	 * Transfer nft manager contract address to super account as owner to nft token, to manager the NFT
 	 * This step is very important and sencitive !!!
@@ -106,7 +107,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 
 	// Unbox mystery box
 	// let sendEncodeABI = nftManager.methods.unbox(tokenId).encodeABI();
-	// callContract(sendEncodeABI, nftManagerAddress);
+	callContract(sendEncodeABI, nftManagerAddress);
 
 	// Batch buy and mint mystery box NFT
 	// let sendEncodeABI = nftManager.methods.buyAndMintBatch(1, 3).encodeABI();
