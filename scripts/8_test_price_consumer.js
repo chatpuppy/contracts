@@ -2,7 +2,7 @@
  * Testing Price Consumer
  */
 
-import {execContract} from './web3.js';
+import {execContract, execEIP1559Contract} from './web3.js';
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
 import {getTokensOfOwner} from 'erc721-balance';
 import dotenv from 'dotenv';

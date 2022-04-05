@@ -2,7 +2,7 @@
  * Testing Random Generator(ChainLink)
  */
 
-import {execContract} from './web3.js';
+import {execContract, execEIP1559Contract} from './web3.js';
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
 import dotenv from 'dotenv';
 dotenv.config();
@@ -17,7 +17,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 // 必须将一定数量的LINK打到RandomGenerator合约
 // const randomGeneratorAddress = '0x9961A816d34981f9556873bf006b99D6780B946F'; // bscTestnet
 // const randomGeneratorAddress = '0xA28D90320005C8c043Ee79ae59e82fDd5f983f30'; // kovan
-const randomGeneratorAddress = '0xa4DA62F388723DBC1764d1daC7971702A1D03a66'; // mumbai
+const randomGeneratorAddress = '0x20679a9a3c519e63f0cde838a050c3716838c796'; // mumbai
 
 const randomGeneratorJson = require('../build/contracts/ChainLinkRandomGenerator.json');
 
@@ -41,6 +41,7 @@ randomGenerator.methods.hasRole(
  * ==== Following testing methods is Send Tx ====
  */
 const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
+const callEIP1559Contract = (encodeABI, contractAddress, value) => execEIP1559Contract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
 // let sendEncodeABI = randomGenerator.methods.requestRandomNumber(1).encodeABI(); // 等待NFTManager合约部署完毕
 
@@ -50,4 +51,4 @@ const NFTManager = '0xCCAcc7F68bC4498CeA4Ee4D71e0AC0d824ca4513'; // mumbai
 let sendEncodeABI = randomGenerator.methods.grantRole(
 	'0x9d56108290ea0bc9c5c59c3ad357dca9d1b29ed7f3ae1443bef2fa2159bdf5e8', 
 	NFTManager).encodeABI();
-callContract(sendEncodeABI, randomGeneratorAddress);
+	callEIP1559Contract(sendEncodeABI, randomGeneratorAddress);

@@ -2,7 +2,7 @@
  * Testing TokenVesting
  */
 
-import {execContract} from './web3.js';
+import {execContract, execEIP1559Contract} from './web3.js';
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
 import {getTokensOfOwner} from 'erc721-balance';
 import dotenv from 'dotenv';
@@ -58,6 +58,7 @@ console.log('======================================================');
  * ==== Following testing methods is Send Tx ====
  */
 const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
+const callEIP1559Contract = (encodeABI, contractAddress, value) => execEIP1559Contract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
  /** transfer testing
 	* 																								 genesis 		totoalAmount							tgeAmount 							cliff		duration		participant		basis
@@ -168,8 +169,8 @@ const lowest =  '40000000000000000'; // lowest purchasing amount is 0.025 BNB/ET
 // let sendEncodeABI = tokensVesting.methods.redeem(2, '0x3444E23231619b361c8350F4C83F82BCfAB36F65').encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.setAllowRedeem(2, true).encodeABI();
-callContract(sendEncodeABI, tokensVestingAddress);
+callEIP1559Contract(sendEncodeABI, tokensVestingAddress);
 
 // let sendEncodeABI = tokensVesting.methods.crowdFunding(2).encodeABI();
-// callContract(sendEncodeABI, tokensVestingAddress, '31000000000000000');
+// callEIP1559Contract(sendEncodeABI, tokensVestingAddress, '31000000000000000');
 

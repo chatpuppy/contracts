@@ -6,7 +6,7 @@ module.exports = function (deployer) {
     //     Env.get('SUBSCRIPTION_ID'),
     //     Env.get('VRF_COORDINATOR_V2'),
     //     Env.get('VRF_HASH_KEY_V2'),
-    //     Env.get('LINK_ADDRESS_V2'),
+    //     Env.get('LINK_ADDRESS'),
     //     Env.get('CALLBACK_GAS')
     // )
     deployer.deploy(
@@ -14,7 +14,7 @@ module.exports = function (deployer) {
         Env.get('SUBSCRIPTION_ID'),
         Env.get('VRF_COORDINATOR_V2'),
         Env.get('VRF_HASH_KEY_V2'),
-        Env.get('LINK_ADDRESS_V2'),
+        Env.get('LINK_ADDRESS'),
         Env.get('CALLBACK_GAS')
     );
 };

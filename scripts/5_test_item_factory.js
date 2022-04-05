@@ -2,7 +2,7 @@
  * Testing Item Factory
  */
 
-import {execContract} from './web3.js';
+import {execContract, execEIP1559Contract} from './web3.js';
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
 import {getTokensOfOwner} from 'erc721-balance';
 import dotenv from 'dotenv';
@@ -16,20 +16,24 @@ const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
 // const itemFactoryAddress = '0x93E138E8B9E4f034A6c05C3380606109b8b58D5f'; // bscTestnet
-const itemFactoryAddress = '0x21C0Dd93f1c00c9741504D4640EDd5C4a8E3f128'; // mumbai
+// const itemFactoryAddress = '0x21C0Dd93f1c00c9741504D4640EDd5C4a8E3f128'; // mumbai
+// const itemFactoryAddress = '0x8b1f8a11aa2eefb671859130d2c7e4e0d3e7546e'; // rinkeby
+const itemFactoryAddress = '0x1706a1E254dB915C73ABDD6A8A7A6d8875a5b332'; // ethereum mainnet
 const itemFactoryJson = require('../build/contracts/ItemFactory.json');
 
 const itemFactory = new web3.eth.Contract(itemFactoryJson.abi, itemFactoryAddress);
 
 const boxType = 7;
-const itemId = 4;
+const itemId = 6;
 const boxTypes = [2,3,4,5,6,7];
 // itemFactory.methods.owner().call().then((owner) => console.log('owner of contract', owner));
 // itemFactory.methods.supportedBoxTypes().call().then((types) => console.log('box types', types));
 // itemFactory.methods.totalSupply(1).call().then((response) => console.log('total supply', response));
 
-itemFactory.methods.getItemRarity(boxType, itemId).call().then((response) => console.log('item rarity', response));
-itemFactory.methods.getItemProperties(boxType, itemId).call().then((response) => console.log('item properties', response));
+for(let i = 1; i <= itemId; i++) {
+	itemFactory.methods.getItemRarity(boxType, i).call().then((response) => console.log(`item #${i}rarity`, response));
+	itemFactory.methods.getItemProperties(boxType, i).call().then((response) => console.log(`item #${i} properties`, response));	
+}
 itemFactory.methods.getItemTotalRarity(boxType).call().then((response) => console.log('item total rarity', response));
 
 // itemFactory.methods.getItemInitialLevel(boxTypes, [5,1,3,11,3,4]).call().then((response) => console.log('level', response));
@@ -62,6 +66,8 @@ function checkItemData(num) {
  */
 const callContract = (encodeABI, contractAddress, onConfirmedFunc, onErrorFunc) => 
 	execContract(web3, chainId, priKey, encodeABI, 0, contractAddress, null, onConfirmedFunc, null, onErrorFunc);	
+const callEIP1559Contract = (encodeABI, contractAddress, onConfirmedFunc, onErrorFunc) => 
+	execEIP1559Contract(web3, chainId, priKey, encodeABI, 0, contractAddress, null, onConfirmedFunc, null, onErrorFunc);	
 
 /**
  * Chatpuppy rarity list
@@ -128,7 +134,7 @@ const callContract = (encodeABI, contractAddress, onConfirmedFunc, onErrorFunc) 
 // let sendEncodeABI = itemFactory.methods.addBoxType(7).encodeABI();
 
 // let sendEncodeABI = itemFactory.methods.updateItem(2, 1, 280000, 1, 1).encodeABI();
-// callContract(sendEncodeABI, itemFactoryAddress);
+// callEIP1559Contract(sendEncodeABI, itemFactoryAddress);
 
 const itemParams = [
 	{
@@ -399,7 +405,7 @@ function addItems(id) {
 		params.experience
 	).encodeABI();
 
-	callContract(sendEncodeABI, itemFactoryAddress, (confirmationNumber, receipt) => {
+	callEIP1559Contract(sendEncodeABI, itemFactoryAddress, (confirmationNumber, receipt) => {
 		// onConfirmedFunc
 		console.log(`#${id}/${itemParams.length} BoxType ${params.boxType}, item ${params.itemId} is done...`);
 		if(id + 1 < itemParams.length) addItems(id + 1);
@@ -416,7 +422,7 @@ function addItems(id) {
 // Run the following function, it will automaticly update the Item data on chain.
 // If the operation is paused, check the latest Item Id, and restart from that.
 // If the transaction is fault, check the transactionHash in the explorer and get the reason.
-// addItems(32);
+// addItems(0);
 
 // After config the item data, we highly suggest to use checkItemData to verify that the configuration is correct.
-checkItemData(30);
+// checkItemData(1000);

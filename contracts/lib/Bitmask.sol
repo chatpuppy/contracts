@@ -14,9 +14,7 @@ contract Bitmask {
 
     function getRandomnesses(uint256 randomness) public view returns(uint256[] memory) {
         uint256[] memory results = new uint256[](8);
-        for(uint i = 0; i < 8; i++) {
-		    results[i] = (randomness & mask[i]) >> 32 * i;
-        }
+        for(uint i = 0; i < 8; i++) results[i] = (randomness & mask[i]) >> 32 * i;
         return results;
     }
 }

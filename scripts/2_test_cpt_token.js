@@ -2,7 +2,7 @@
  * Testing CPT Token
  */
 
-import {execContract} from './web3.js';
+import {execContract, execEIP1559Contract} from './web3.js';
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
 import dotenv from 'dotenv';
 dotenv.config();
@@ -17,7 +17,8 @@ const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 // const cptContractAddress = '0x7C4b6E294Fd0ae77B6E1730CBEb1B8491859Ee24'; // kovan
 // const cptContractAddress = '0x014Eed0cb456FF95992A79D51ff7169ec44a5cFc'; // rinkeby
 // const cptContractAddress = '0x6adb30205dd2D2902f32E40e0f2CE15c728F9492'; // bscTestnet
-const cptContractAddress = '0x5F9d7Dc9e56f7d182f3eFb1b48874C0512b4c40d'; // mumbai
+// const cptContractAddress = '0x5F9d7Dc9e56f7d182f3eFb1b48874C0512b4c40d'; // mumbai
+const cptContractAddress = '0xa747Ba9BbF79E165Cd71c4376B72eBc06CA735CB'; // BSC Mainnet
 
 const cptContractJson = require('../build/contracts/CPTToken.json');
 
@@ -35,10 +36,11 @@ cptContract.methods.BURNER_ROLE().call().then((response) => console.log('BURNER_
  * ==== Following testing methods is Send Tx ====
  */
 const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
+const callEIP1559Contract = (encodeABI, contractAddress, value) => execEIP1559Contract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
 let sendEncodeABI = cptContract.methods.mint(
-	'0xC4BFA07776D423711ead76CDfceDbE258e32474A', 
-	'100000000000000000000000000').encodeABI(); 
+	'0x569f5199C35D569cb9C4B61Bf1b95152aD941960', 
+	'10000000000000000000').encodeABI(); 
 
 	// let sendEncodeABI = dareContract.methods.transfer('0x3444E23231619b361c8350F4C83F82BCfAB36F65', '72000000000000000000').encodeABI();
 

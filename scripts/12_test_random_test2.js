@@ -2,7 +2,7 @@
  * Testing Randomness
  */
 
-import {execContract} from './web3.js';
+import {execContract, execEIP1559Contract} from './web3.js';
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
 import {getTokensOfOwner} from 'erc721-balance';
 import dotenv from 'dotenv';
@@ -31,4 +31,4 @@ const callContract = (encodeABI, contractAddress, value) => execContract(web3, c
 // 必须将本合约地址添加到V2的consumer列表中，否则将执行失败
 
 // let sendEncodeABI = randomTest.methods.requestRandomness(20).encodeABI();
-// callContract(sendEncodeABI, randomTestAddress);
+// callEIP1559Contract(sendEncodeABI, randomTestAddress);

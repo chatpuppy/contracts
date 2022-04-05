@@ -2,7 +2,7 @@
  * Testing Randomness
  */
 
-import {execContract} from './web3.js';
+import {execContract, execEIP1559Contract} from './web3.js';
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
 import dotenv from 'dotenv';
 dotenv.config();
@@ -27,13 +27,14 @@ randomTest.methods.getData(tokenId).call().then((number) => console.log('Random 
  * ==== Following testing methods is Send Tx ====
  */
 const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
+const callEIP1559Contract = (encodeABI, contractAddress, value) => execEIP1559Contract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
 // 必须将本合约地址授权给ChainLinkRandomGenerator合约的CONSUMER_ROLE角色
 // TokenId is insteatd of RequestId, it can not be duplicated.
 // let sendEncodeABI = randomTest.methods.requestRandomness(4).encodeABI();
 
 // let sendEncodeABI = randomTest.methods.getRandoms(tokenId).encodeABI();
-// callContract(sendEncodeABI, randomTestAddress);
+// callEIP1559Contract(sendEncodeABI, randomTestAddress);
 
 // 89886278219382825804356556120021526408645684544726589290238326514905869994371
 // 11000110101110011101010010100000

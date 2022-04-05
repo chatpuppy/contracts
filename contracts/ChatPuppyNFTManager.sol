@@ -36,6 +36,9 @@ contract ChatPuppyNFTManager is
 
     uint256[] public boxTypes = [2, 3, 4, 5, 6, 7]; // NFT Trait types
 
+		bool public canBuyAndMint = false;
+		bool public canUnbox = false;
+
     event UnboxToken(uint256 indexed tokenId, uint256 requestId);
     event TokenFulfilled(uint256 indexed tokenId);
 
@@ -134,6 +137,20 @@ contract ChatPuppyNFTManager is
         nftCore.increaseCap(amount_);
     }
 
+		/**
+		* @dev Update status of buy and mint
+		*/
+		function setCanBuyAndMint(bool _status) external onlyRole(MANAGER_ROLE) {
+			canBuyAndMint = _status;
+		}
+
+	/**
+	 * @dev Update status of unbox
+	 */
+	function setCanUnbox(bool _status) external onlyRole(MANAGER_ROLE) {
+		canUnbox = _status;
+	}
+
     /**
      * @dev update project id, while fetching random data, the input will be `projectId + tokenId`
      * to avoid same tokenId can not be duplicated in ChainlinkRandomGenerator contract
@@ -203,29 +220,32 @@ contract ChatPuppyNFTManager is
      * Buy and mint
      */
     function buyAndMint() public payable {
-        require(msg.value >= boxPrice, "ChatPuppyNFTManager: payment is not enough");
-        _mint(_msgSender());
+			require(canBuyAndMint, "ChatPuppyNFTManager: not allowed to buy and mint");
+			require(msg.value >= boxPrice, "ChatPuppyNFTManager: payment is not enough");
+			_mint(_msgSender());
     }
 
     /**
      * Buy set of mystery box and mint
      */
     function buyAndMintBatch(uint256 amount_) public payable {
-        require(amount_ > 0, "ChatPuppyNFTManager: amount_ is 0");
-        require(msg.value >= boxPrice * amount_, "ChatPuppyNFTManager: Batch purchase payment is not enough");
-        
-        for (uint256 i = 0; i < amount_; i++) {
-            buyAndMint();
-        }
-    }
+			require(canBuyAndMint, "ChatPuppyNFTManager: not allowed to buy and mint");
+			require(amount_ > 0, "ChatPuppyNFTManager: amount_ is 0");
+			require(msg.value >= boxPrice * amount_, "ChatPuppyNFTManager: Batch purchase payment is not enough");
+			
+			for (uint256 i = 0; i < amount_; i++) {
+				buyAndMint();
+			}
+	}
 
     /**
      * Buy, mint and unbox
      */
     function buyMintAndUnbox() public payable {
-        require(msg.value >= boxPrice, "ChatPuppyNFTManager: payment is not enough");
-        uint256 _tokenId = _mint(_msgSender());
-        unbox(_tokenId);
+			require(canBuyAndMint, "ChatPuppyNFTManager: not allowed to buy and mint");
+			require(msg.value >= boxPrice, "ChatPuppyNFTManager: payment is not enough");
+			uint256 _tokenId = _mint(_msgSender());
+			unbox(_tokenId);
     }
 
     /**
@@ -266,6 +286,7 @@ contract ChatPuppyNFTManager is
         onlyTokenOwner(tokenId_) 
         onlyMysteryBox(tokenId_) 
     {
+				require(canUnbox, "ChatPuppyNFTManager: unbox is forbidden");
         require(boxStatus(tokenId_) == 0, "ChatPuppyNFTManager: token is unboxing or unboxed");
         require(boxTypes.length > 0, "ChatPuppyNFTManager: boxTypes is not set");        
        
@@ -276,7 +297,7 @@ contract ChatPuppyNFTManager is
         _requestIds[tokenId_] = requestId_;
         _tokenIds[requestId_] = tokenId_;
 
-		randomGenerator.requestRandomNumber(requestId_);
+				randomGenerator.requestRandomNumber(requestId_);
         emit UnboxToken(tokenId_, requestId_);
 
     }

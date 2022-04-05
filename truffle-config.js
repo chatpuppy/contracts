@@ -36,61 +36,82 @@ module.exports = {
      */
 
     networks: {
-        bscTestnet: {
-            provider: () =>new HDWalletProvider(
-                Env.get("MNEMONIC"), 
-                `https://data-seed-prebsc-1-s2.binance.org:8545`
-            ),
-            // networkCheckTimeout: 999999,
-            network_id: 97, // bsc test net's id
-            gas: 11500000, // Ropsten has a lower block limit than mainnet
-            confirmations: 0, // # of confs to wait between deployments. (default: 0)
-            timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
-            skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
-        },
-        bscMainnet: {
-            provider: () => new HDWalletProvider(
-                Env.get("MNEMONIC"),
-                `https://bsc-dataseed1.binance.org`
-            ),
-            network_id: 56, // bsc test net's id
-            gas: 5500000, // Ropsten has a lower block limit than mainnet
-            confirmations: 0, // # of confs to wait between deployments. (default: 0)
-            timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
-            skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
-        },
-        kovan: {
-            provider: () =>new HDWalletProvider(
-                Env.get("MNEMONIC"), 
-                `https://kovan.infura.io/v3/0847c4de5d134db1b97838ced14fcd4f`
-            ),
-            network_id: 42, // bsc test net's id
-            gas: 11500000, // Ropsten has a lower block limit than mainnet
-            confirmations: 0, // # of confs to wait between deployments. (default: 0)
-            timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
-            skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
-        },
-        rinkeby: {
-            provider: () =>new HDWalletProvider(
-                Env.get("MNEMONIC"), 
-                `https://rinkeby.infura.io/v3/0847c4de5d134db1b97838ced14fcd4f`
-            ),
-            network_id: 4, // bsc test net's id
-            gas: 11500000, // Ropsten has a lower block limit than mainnet
-            confirmations: 0, // # of confs to wait between deployments. (default: 0)
-            timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
-            skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
-        },
-        mumbai: {
-            provider: () => new HDWalletProvider(
-                Env.get("MNEMONIC"), 
-                `https://rpc-mumbai.maticvigil.com`
-            ),
-            network_id: 80001,
-            confirmations: 2,
-            timeoutBlocks: 200,
-            skipDryRun: true
-        },
+			ethMainnet: {
+				provider: () => new HDWalletProvider(
+					Env.get("PRI_KEY"),
+					`https://mainnet.infura.io/v3/0847c4de5d134db1b97838ced14fcd4f`
+				),
+				network_id: 1,
+				gas: 4500000,
+				confirmations: 1,
+				timeoutBlocks: 200,
+				skipDryRun: true,
+			},
+			bscTestnet: {
+					provider: () =>new HDWalletProvider(
+							Env.get("PRI_KEY"), 
+							`https://data-seed-prebsc-1-s2.binance.org:8545`
+					),
+					// networkCheckTimeout: 999999,
+					network_id: 97, // bsc test net's id
+					gas: 11500000, // Ropsten has a lower block limit than mainnet
+					confirmations: 0, // # of confs to wait between deployments. (default: 0)
+					timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+					skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+			},
+			bscMainnet: {
+					provider: () => new HDWalletProvider(
+							Env.get("PRI_KEY"),
+							`https://bsc-dataseed1.binance.org`
+					),
+					network_id: 56, // bsc test net's id
+					gas: 5500000, // Ropsten has a lower block limit than mainnet
+					confirmations: 0, // # of confs to wait between deployments. (default: 0)
+					timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+					skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+			},
+			kovan: {
+					provider: () =>new HDWalletProvider(
+							Env.get("PRI_KEY"), 
+							`https://kovan.infura.io/v3/0847c4de5d134db1b97838ced14fcd4f`
+					),
+					network_id: 42, // bsc test net's id
+					gas: 11500000, // Ropsten has a lower block limit than mainnet
+					confirmations: 0, // # of confs to wait between deployments. (default: 0)
+					timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+					skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+			},
+			rinkeby: {
+					provider: () =>new HDWalletProvider(
+							Env.get("PRI_KEY"), 
+							`https://rinkeby.infura.io/v3/0847c4de5d134db1b97838ced14fcd4f`
+					),
+					network_id: 4, // bsc test net's id
+					gas: 11500000, // Ropsten has a lower block limit than mainnet
+					confirmations: 0, // # of confs to wait between deployments. (default: 0)
+					timeoutBlocks: 400, // # of blocks before a deployment times out  (minimum/default: 50)
+					skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+			},
+			mumbai: {
+					provider: () => new HDWalletProvider(
+							Env.get("PRI_KEY"), 
+							`https://rpc-mumbai.maticvigil.com`
+					),
+					network_id: 80001,
+					confirmations: 2,
+					timeoutBlocks: 200,
+					skipDryRun: true
+			},
+			polygon: {
+					provider: () => new HDWalletProvider(
+							Env.get("PRI_KEY"),
+							`https://polygon-rpc.com/`
+					),
+					network_id: 137,
+					confirmation: 2,
+					timeoutBlocks: 200,
+					skipDryRun: true,
+			}
     },
 
     // Set default mocha options here, use special reporters etc.
@@ -108,7 +129,7 @@ module.exports = {
                     enabled: true,
                     runs: 200
                 },
-                evmVersion: "istanbul"
+                evmVersion: "london"
             }
         },
     },

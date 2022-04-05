@@ -38,6 +38,7 @@ contract ChatPuppyNFTCore is
     event CapUpdated(uint256 cap);
     event UpdateTokenURI(uint256 indexed tokenId, string tokenURI);
     event UpdateMetadata(uint256 indexed tokenId, bytes32 dna, uint256 artifacts);
+    event UpdateMetadata(uint256 indexed tokenId, uint256 artifacts);
 
     constructor(
         string memory name_,
@@ -77,7 +78,6 @@ contract ChatPuppyNFTCore is
     function cap() public view returns (uint256) {
         return _cap;
     }
-
     function increaseCap(uint256 amount_) public onlyOwner {
         require(amount_ > 0, "ChatPuppyNFTCore: amount is 0");
 
@@ -156,6 +156,7 @@ contract ChatPuppyNFTCore is
 
         Item storage _info = _items[tokenId_];
         _info.artifacts = artifacts_;
+        emit UpdateMetadata(tokenId_, artifacts_);
     }
 
     function updateTokenMetaData(uint256 tokenId_, uint256 artifacts_, bytes32 dna_) external onlyOwner {

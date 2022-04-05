@@ -2,7 +2,7 @@
  * Testing NFT Manager(Mystery box)
  */
 
-import {execContract} from './web3.js';
+import {execContract, execEIP1559Contract} from './web3.js';
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
 import dotenv from 'dotenv';
 dotenv.config();
@@ -15,7 +15,8 @@ const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
 // const nftManagerAddress = '0x2010f362A6378D75C7E4AaB521A882450BffB5A1'; // bscTestnet
-const nftManagerAddress = '0x2c192A66eB075Ae1D93C15e38eCD5a0673d32168'; // bscTestnet
+// const nftManagerAddress = '0x2c192A66eB075Ae1D93C15e38eCD5a0673d32168'; // bscTestnet
+const nftManagerAddress = '0x8563e3352cf9dc00559ba4f80c112ef083a26543'; // rinkeby
 
 const nftManagerJson = require('../build/contracts/ChatPuppyNFTManagerV2.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
@@ -23,7 +24,7 @@ const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
 const nftManager = new web3.eth.Contract(nftManagerJson.abi, nftManagerAddress);
 const user = '0x615b80388E3D3CaC6AA3a904803acfE7939f0399';
 
-const tokenId = 15; // can not be zero
+const tokenId = 0; // can not be zero
 if(tokenId > 0) {
 	nftManager.methods.boxStatus(tokenId).call().then((result) => console.log('boxStatus ' + result));
 	nftManager.methods.boxPrice().call().then((result) => console.log('boxPrice ' + result));
@@ -32,6 +33,7 @@ if(tokenId > 0) {
 		console.log(words);
 	});
 	nftManager.methods.boxTypes(5).call().then((result) => console.log('Box Types', result));
+	nftManager.methods.itemFactory().call().then((result) => console.log('ItemFactory', result));
 }
 
 nftManager.methods.nftCore().call().then((nftAddress) => {
@@ -65,9 +67,12 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	/**
 	* ==== Following testing methods is Send Tx ====
 	*/
+	
 	const callContract = (encodeABI, contractAddress, value) => execContract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
+	const callEIP1559Contract = (encodeABI, contractAddress, value) => execEIP1559Contract(web3, chainId, priKey, encodeABI, value === null ? 0:value, contractAddress, null, null, null, null);	
 
-	// let sendEncodeABI = nft.methods.increaseCap(1).encodeABI();
+	// let sendEncodeABI = nft.methods.increaseCap(30).encodeABI();
+
 	// let sendEncodeABI = nft.methods.updateBaseTokenURI("https://nft.chatpuppy.com/token/").encodeABI();
 	// let sendEncodeABI = nft.methods.mint(user).encodeABI();
 
@@ -83,9 +88,10 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	*/
 
 	// let sendEncodeABI = nft.methods.safeTransferFrom('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '0xC4BFA07776D423711ead76CDfceDbE258e32474A', 2).encodeABI();
-	// callContract(sendEncodeABI, nftAddress, 0)
+	// callEIP1559Contract(sendEncodeABI, nftAddress, 0)
 
 	// let sendEncodeABI = nftManager.methods.updateBoxPrice('10000000000000000').encodeABI();//set price 0.01ETH
+
 	/**
 	 * Transfer nft manager contract address to super account as owner to nft token, to manager the NFT
 	 * This step is very important and sencitive !!!
@@ -106,7 +112,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	// let sendEncodeABI = nftManager.methods.updateProjectId(120).encodeABI();
 
 	// Withdraw from contract
-	// const withdrawAmount = (0.008 * 1e18).toString();
+	// const withdrawAmount = (0.0015 * 1e18).toString();
 	// let sendEncodeABI = nftManager.methods.withdraw('0xC4BFA07776D423711ead76CDfceDbE258e32474A', withdrawAmount).encodeABI();
 
 	// Mint mystery box NFT
@@ -114,25 +120,35 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 
 	// Buy and mint mystery box NFT
 	// let sendEncodeABI = nftManager.methods.buyAndMint().encodeABI();
-	// callContract(sendEncodeABI, nftManagerAddress, '10000000000000000');
+	// callEIP1559Contract(sendEncodeABI, nftManagerAddress, '10000000000000000');
 
 	// Buy, mint and unbox mystery box NFT
 	// let sendEncodeABI = nftManager.methods.buyMintAndUnbox().encodeABI();
-	// callContract(sendEncodeABI, nftManagerAddress, '10000000000000000');
+	// callEIP1559Contract(sendEncodeABI, nftManagerAddress, '10000000000000000');
 
 	// Batch mint mystery box NFT
 	// BUG: Can only batch mint 3 nfts one time. BoxType 2
 	// let sendEncodeABI = nftManager.methods.mintBatch(user, 3).encodeABI();
 	
-	// let sendEncodeABI = nftManager.methods.updateCallbackGasLimit(700000).encodeABI();
+	// let sendEncodeABI = nftManager.methods.updateCallbackGasLimit(1000000).encodeABI();
+
+	// let sendEncodeABI = nftManager.methods.updateNFTCoreContract('0x18A1e002958EbAc355102ec84fCbc24C7957B001').encodeABI();
+
+	// let sendEncodeABI = nftManager.methods.setCanBuyAndMint(true).encodeABI();
+	// let sendEncodeABI = nftManager.methods.setCanUnbox(true).encodeABI();
+
+	// let sendEncodeABI = nftManager.methods.upgradeNFTCoreOwner('0x8563e3352cf9dc00559ba4f80c112ef083a26543').encodeABI();
 
 	// Unbox mystery box
 	// let sendEncodeABI = nftManager.methods.unbox(tokenId).encodeABI();
-	// callContract(sendEncodeABI, nftManagerAddress);
+
+	callEIP1559Contract(sendEncodeABI, nftManagerAddress);
+
+	// callEIP1559Contract(sendEncodeABI, nftManagerAddress);
 
 	// Batch buy and mint mystery box NFT
 	// let sendEncodeABI = nftManager.methods.buyAndMintBatch(1, 3).encodeABI();
-	// callContract(sendEncodeABI, nftManagerAddress, '30000000000000000');
+	// callEIP1559Contract(sendEncodeABI, nftManagerAddress, '30000000000000000');
 
 });
 
