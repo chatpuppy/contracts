@@ -15,10 +15,10 @@ const chainId = process.env.CHAIN_ID * 1;
 const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
-// const itemFactoryAddress = '0x93E138E8B9E4f034A6c05C3380606109b8b58D5f'; // bscTestnet
+const itemFactoryAddress = '0xda667485BBd5D72Ad60F286110Db24F34Afe9714'; // bscTestnet
 // const itemFactoryAddress = '0x21C0Dd93f1c00c9741504D4640EDd5C4a8E3f128'; // mumbai
 // const itemFactoryAddress = '0x8b1f8a11aa2eefb671859130d2c7e4e0d3e7546e'; // rinkeby
-const itemFactoryAddress = '0x1706a1E254dB915C73ABDD6A8A7A6d8875a5b332'; // ethereum mainnet
+// const itemFactoryAddress = '0x1706a1E254dB915C73ABDD6A8A7A6d8875a5b332'; // ethereum mainnet
 const itemFactoryJson = require('../build/contracts/ItemFactory.json');
 
 const itemFactory = new web3.eth.Contract(itemFactoryJson.abi, itemFactoryAddress);
@@ -425,4 +425,4 @@ function addItems(id) {
 // addItems(0);
 
 // After config the item data, we highly suggest to use checkItemData to verify that the configuration is correct.
-// checkItemData(1000);
+checkItemData(100);

@@ -7,6 +7,7 @@ import { createRequire } from "module"; // Bring in the ability to create the 'r
 import dotenv from 'dotenv';
 dotenv.config();
 const require = createRequire(import.meta.url); // construct the require method
+const BN = require('bn.js');
 
 const rpcUrl = process.env.RPC_URL;
 const chainId = process.env.CHAIN_ID * 1;
@@ -15,8 +16,10 @@ const priKey = process.env.PRI_KEY;
 const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
 
 // const nftManagerAddress = '0x2010f362A6378D75C7E4AaB521A882450BffB5A1'; // bscTestnet
-// const nftManagerAddress = '0x2c192A66eB075Ae1D93C15e38eCD5a0673d32168'; // bscTestnet
-const nftManagerAddress = '0x8563e3352cf9dc00559ba4f80c112ef083a26543'; // rinkeby
+// const nftManagerAddress = '0x042e3D4044b54C2FE5a9B4595E33876492E5887D'; // bscTestnet
+// const nftManagerAddress = '0x8563e3352cf9dc00559ba4f80c112ef083a26543'; // rinkeby
+const nftManagerAddress = '0xEfbB4693A3e7C978143D04E577184389C8F83B5D'; // Ethereum mainnet #1
+// const nftManagerAddress = '0x957E97a5b25f26DD5b3792F4d6d5cb492501B90e'; // Ethereum mainnet #2
 
 const nftManagerJson = require('../build/contracts/ChatPuppyNFTManagerV2.json');
 const nftJson = require('../build/contracts/ChatPuppyNFTCore.json');
@@ -90,7 +93,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	// let sendEncodeABI = nft.methods.safeTransferFrom('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '0xC4BFA07776D423711ead76CDfceDbE258e32474A', 2).encodeABI();
 	// callEIP1559Contract(sendEncodeABI, nftAddress, 0)
 
-	// let sendEncodeABI = nftManager.methods.updateBoxPrice('10000000000000000').encodeABI();//set price 0.01ETH
+	// let sendEncodeABI = nftManager.methods.updateBoxPrice('1000000000000000').encodeABI();//set price 0.01ETH
 
 	/**
 	 * Transfer nft manager contract address to super account as owner to nft token, to manager the NFT
@@ -101,7 +104,7 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	 */
 	// let sendEncodeABI = nftManager.methods.upgradeContract('0x2010f362A6378D75C7E4AaB521A882450BffB5A1').encodeABI();
 
-	// let sendEncodeABI = nftManager.methods.updateItemFactory('0x93E138E8B9E4f034A6c05C3380606109b8b58D5f').encodeABI();
+	// let sendEncodeABI = nftManager.methods.updateItemFactory('0xda667485BBd5D72Ad60F286110Db24F34Afe9714').encodeABI();
 
 	// Update boxTypes
 	// let sendEncodeABI = nftManager.methods.updateBoxTypes([2,3,4,5,6,7,8,9]).encodeABI();
@@ -137,14 +140,13 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 	// let sendEncodeABI = nftManager.methods.setCanBuyAndMint(true).encodeABI();
 	// let sendEncodeABI = nftManager.methods.setCanUnbox(true).encodeABI();
 
-	// let sendEncodeABI = nftManager.methods.upgradeNFTCoreOwner('0x8563e3352cf9dc00559ba4f80c112ef083a26543').encodeABI();
+	// let sendEncodeABI = nftManager.methods.upgradeNFTCoreOwner('0x042e3D4044b54C2FE5a9B4595E33876492E5887D').encodeABI();
 
 	// Unbox mystery box
 	// let sendEncodeABI = nftManager.methods.unbox(tokenId).encodeABI();
 
-	callEIP1559Contract(sendEncodeABI, nftManagerAddress);
-
-	// callEIP1559Contract(sendEncodeABI, nftManagerAddress);
+	// let sendEncodeABI = nftManager.methods.unboxV2(tokenId).encodeABI();
+	// callContract(sendEncodeABI, nftManagerAddress);
 
 	// Batch buy and mint mystery box NFT
 	// let sendEncodeABI = nftManager.methods.buyAndMintBatch(1, 3).encodeABI();
@@ -152,3 +154,35 @@ nftManager.methods.nftCore().call().then((nftAddress) => {
 
 });
 
+const testRandomnessV2 = async(num) => {
+	let height = 18350681;
+	let timestamp = 1649661499;
+	let results = [];
+	let counts = [0, 0,0,0,0,0,0, 0, 0, 0, 0, 0];
+	let count = 0;
+	const mod = 7;
+	for(let i = 0; i < num; i++) {
+		nftManager.methods.localRandomnessTest(timestamp + i * 20, height + i, i+1, mod).call().then((result) => {
+			count++;
+			results.push(result * 1);
+			counts[result * 1] = counts[result * 1] + 1;
+
+			nftManager.methods.expand(result, 6).call().then((result) => {
+				for(let j = 0; j < result.length; j++) {
+					const a = new BN(result[j]);
+					console.log('===', a)
+					const v = a.divmod(mod);
+					results.push(v);
+					counts[v] = counts[v] + 1;
+				}
+				if(count === num) {
+					console.log(results);
+					console.log(counts);
+					console.log(results.length);
+				}
+			});
+		});
+	}
+}
+
+// testRandomnessV2(100);

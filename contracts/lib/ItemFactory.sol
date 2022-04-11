@@ -107,10 +107,8 @@ contract ItemFactory is Ownable, IItemFactory {
             _itemsForSpecificType.itemIdToRarity[itemId_].rarity > uint256(0),
             "ItemFactory::updateItem itemId_ is not existed"
         );
-        
         // Update total rarity
-        _itemsForSpecificType.totalRarity =
-            _itemsForSpecificType.totalRarity - _itemsForSpecificType.itemIdToRarity[itemId_].rarity + rarity_;
+        _itemsForSpecificType.totalRarity = _itemsForSpecificType.totalRarity - _itemsForSpecificType.itemIdToRarity[itemId_].rarity + rarity_;
 
         // Update initial level and experience
         _itemsForSpecificType.itemInitialLevel[itemId_] = itemInitialLevel_;
@@ -178,6 +176,29 @@ contract ItemFactory is Ownable, IItemFactory {
         );
     }
 
+    // function getRandomItem(uint256 randomness_, uint256 boxType_) public view
+    //     onlySupportedBoxType(boxType_)
+    //     returns (uint256 _itemId) {
+    //     // Items storage _itemsForSpecificType = _items[boxType_];
+    //     require(
+    //         _items[boxType_].totalRarity > 0,
+    //         "ItemFactory: add items for this type before using function"
+    //     );
+
+    //     uint256 _randomNumber = randomness_ % _items[boxType_].totalRarity;
+
+    //     for (uint256 i = 0; i < _items[boxType_].itemIds.length; i++) {
+    //         // RarityInfo storage _rarityInfo = _items[boxType_].itemIdToRarity[_items[boxType_].itemIds[i]];
+
+    //         if (_items[boxType_].itemIdToRarity[_items[boxType_].itemIds[i]].zeroIndex <= _randomNumber &&
+		// 					_randomNumber < _items[boxType_].itemIdToRarity[_items[boxType_].itemIds[i]].zeroIndex +
+		// 					_items[boxType_].itemIdToRarity[_items[boxType_].itemIds[i]].rarity) {
+    //             _itemId = _items[boxType_].itemIds[i];
+    //             break;
+    //         }
+    //     }
+    // }
+
     function getRandomItem(uint256 randomness_, uint256 boxType_) public view
         onlySupportedBoxType(boxType_)
         returns (uint256 _itemId) {
@@ -190,8 +211,7 @@ contract ItemFactory is Ownable, IItemFactory {
         uint256 _randomNumber = randomness_ % _itemsForSpecificType.totalRarity;
 
         for (uint256 i = 0; i < _itemsForSpecificType.itemIds.length; i++) {
-            RarityInfo storage _rarityInfo = _itemsForSpecificType
-                .itemIdToRarity[_itemsForSpecificType.itemIds[i]];
+            RarityInfo storage _rarityInfo = _itemsForSpecificType.itemIdToRarity[_itemsForSpecificType.itemIds[i]];
 
             if (_rarityInfo.zeroIndex <= _randomNumber && _randomNumber < _rarityInfo.zeroIndex + _rarityInfo.rarity) {
                 _itemId = _itemsForSpecificType.itemIds[i];
