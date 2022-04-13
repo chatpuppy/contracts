@@ -88157,14 +88157,210 @@
       "transactionHash": "0x164efcbd56b0d5c84e795770c4c5c36fdbf5d22b4afa5a9e569bd0a6888cee87"
     },
     "97": {
-      "events": {},
+      "events": {
+        "0x726aa5eb6186306056605620631dbbafe589d304bfbdac37aeeb286dfd7f9838": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "index",
+              "type": "uint256"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "beneficiary",
+              "type": "address"
+            }
+          ],
+          "name": "BeneficiaryActivated",
+          "type": "event"
+        },
+        "0xe6b83177f11971ba30369bb38b914ffba97d5969a3c857b286fa8fdbb150b3ba": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "beneficiary",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "BeneficiaryAdded",
+          "type": "event"
+        },
+        "0xa0dc7f6983122300560bd89f8aa244c814fde91d0bdc497e9bee0f6f90cb8ecf": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "index",
+              "type": "uint256"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "beneficiary",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "BeneficiaryRevoked",
+          "type": "event"
+        },
+        "0x21b6cebf3dfd087ed5c333b4c1018f7c09dadbc67b5f1b265a721f5f67e9ffc6": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint8",
+              "name": "participant",
+              "type": "uint8"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "price",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "CrowdFundingAdded",
+          "type": "event"
+        },
+        "0x906a1c6bd7e3091ea86693dd029a831c19049ce77f1dce2ce0bab1cacbabce22": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "potentialOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnerNominated",
+          "type": "event"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0xfd23960ad64d756515d736fc98d5f473529ef08157d573f8a13c1723cc632fe9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint8",
+              "name": "participant",
+              "type": "uint8"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "revokeAmount",
+              "type": "uint256"
+            }
+          ],
+          "name": "Redeem",
+          "type": "event"
+        },
+        "0xc7798891864187665ac6dd119286e44ec13f014527aeeb2b8eb3fd413df93179": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "beneficiary",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "TokensReleased",
+          "type": "event"
+        },
+        "0x884edad9ce6fa2440d8a54cc123490eb96d2768479d49ff9c7366125a9424364": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "receiver",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "Withdraw",
+          "type": "event"
+        }
+      },
       "links": {},
-      "address": "0xF886e6336f752F7c4aA496c33A5F77079fcc7a0E",
-      "transactionHash": "0xbf4ca6385ffbf9255627831c348f8120ed17e3aa9a0b4a63faed2180c16cac93"
+      "address": "0xeF6eDD351a233B347abDc8d272222ae09EFdc491",
+      "transactionHash": "0xef372089341c6f40f231efd99169694d5dd54443f856cb83dafabc2137bedcdf"
     }
   },
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-03-10T16:27:42.534Z",
+  "updatedAt": "2022-04-13T14:40:26.118Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "Implementation of the {ITokenVesting} interface.",
