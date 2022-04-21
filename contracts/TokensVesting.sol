@@ -14,6 +14,7 @@ contract TokensVesting is Ownable, ITokensVesting {
     uint256 public revokedAmount = 0;
     uint256 public revokedAmountWithdrawn = 0;
     uint256 private _redeemFee = 500; // 500 means 500 / 10000 = 5%
+		uint256 private _redeemableTime = 48 * 3600; 
 
     enum Participant {
         Unknown,
@@ -435,7 +436,6 @@ contract TokensVesting is Ownable, ITokensVesting {
             info.status,
             info.eraBasis
         );
-
         return _releasable;
     }
 
@@ -524,19 +524,21 @@ contract TokensVesting is Ownable, ITokensVesting {
      * @dev Revoke and return back ETH/BNB to the token buyer from contract
       */
     function redeem(uint8 participant_) public {
-        require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
-            'TokensVesting: redeem participant should only be PrivateSale or PublicSale');
-        require(_crowdFundingParams[participant_].allowRedeem, 'TokensVesting: redeem not available');
+        // require((Participant(participant_) == Participant.PrivateSale || Participant(participant_) == Participant.PublicSale),
+        //     'TokensVesting: redeem participant should only be PrivateSale or PublicSale');
+        // require(_crowdFundingParams[participant_].allowRedeem, 'TokensVesting: redeem not available');
         
-        // get the public sale price
+        // // get the public sale price
         address to_ = _msgSender();
-        (bool has_, uint index_) = getIndex(participant_, to_);
-        require(has_, "TokensVesting: not beneficiary");
-        require(index_ >= 0 && index_ < _beneficiaries.length, "TokensVesting: index out of range!");
+        // (bool has_, uint index_) = getIndex(participant_, to_);
+        // require(has_, "TokensVesting: not beneficiary");
+        // require(index_ >= 0 && index_ < _beneficiaries.length, "TokensVesting: index out of range!");
 
-        VestingInfo memory info = getBeneficiary(index_);
-        uint256 price_ = info.price;
-        require(price_ > 0, "TokensVesting: price can not be zero");
+        // VestingInfo memory info = getBeneficiary(index_);
+        // uint256 price_ = info.price;
+        // require(price_ > 0, "TokensVesting: price can not be zero");
+				(bool redeemable_, string memory message, uint256 index_, VestingInfo memory info) = redeemable(participant_, to_);
+				require(redeemable_, message);
 
         // revoke and get revoke amoount
         uint256 oldRevokedAmount = revokedAmount;
@@ -544,6 +546,7 @@ contract TokensVesting is Ownable, ITokensVesting {
         uint256 revokeAmount_ = revokedAmount - oldRevokedAmount;
 
         // get redeem amount
+				uint256 price_ = info.price;
         uint256 redeemAmount_ = revokeAmount_  / price_ * (10000 - _redeemFee) / 10000;
         (bool sent, ) = to_.call{value: redeemAmount_}("");
         require(sent, "TokensVesting: Fail to redeem Ether");
@@ -551,14 +554,47 @@ contract TokensVesting is Ownable, ITokensVesting {
         emit Redeem(participant_, to_, redeemAmount_, revokeAmount_);
     }
 
+		/**
+		 * @dev 
+		 * @param
+		 * @return canRedeemable
+		 * @return errorMessage
+		 * @return index
+		 * @return vestingInfo
+		 */
+		function redeemable(uint8 participant_, address address_ ) public view returns(bool, string memory, uint256, VestingInfo memory) {
+			VestingInfo memory info;
+			if((Participant(participant_) != Participant.PrivateSale && Participant(participant_) != Participant.PublicSale)) 
+				return (false, 'TokensVesting: redeem participant should only be PrivateSale or PublicSale', 0, info);
+			if(!_crowdFundingParams[participant_].allowRedeem) return(false, 'TokensVesting: redeem not available', 0, info);
+
+			(bool has_, uint index_) = getIndex(participant_, address_);
+			if(!has_) return(false, 'TokensVesting: not beneficiary', index_, info);
+			if(index_ >= _beneficiaries.length) return(false, "TokensVesting: index out of range!", index_, info);
+
+			info = getBeneficiary(index_);
+			if(info.price == 0) return(false, 'TokensVesting: price can not be zero', index_, info);
+			if(block.timestamp > info.timestamp + _redeemableTime) return(false, 'TokensVesting: redeem is timeout', index_, info);
+
+			return (true, '', index_, info);
+		}
+
     function updateRedeemFee(uint256 fee_) public onlyOwner {
-        require(fee_ > 0 && fee_ <= 10000, "TokensVesting: fee can not be zero and bigger than 10000");
-        _redeemFee = fee_;
-    }
+			require(fee_ > 0 && fee_ <= 10000, "TokensVesting: fee can not be zero and bigger than 10000");
+			_redeemFee = fee_;
+		}
 
     function redeemFee() public view returns(uint256) {
-        return _redeemFee;
+			return _redeemFee;
     }
+
+		function updateRedeemableTime(uint256 seconds_) public onlyOwner {
+			_redeemableTime = seconds_;
+		}
+
+		function redeemableTime() public view returns(uint256) {
+			return _redeemableTime;
+		}
 
     function setAllowRedeem(uint8 participant_, bool status) public onlyOwner {
         require(

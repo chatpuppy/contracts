@@ -48,7 +48,7 @@ const callEIP1559Contract = (encodeABI, contractAddress, value) => execEIP1559Co
 
 // Grand TokenVesting contract as MINT_ROLE
 // const TokenVestingAddress = '0x76624c221287b1552a379e597166CA8fAA06dF9D'; // kovan
-const TokenVestingAddress = '0xeF6eDD351a233B347abDc8d272222ae09EFdc491'; // bscTestnet
+const TokenVestingAddress = '0xe070F6F21EE7DeDF06E4F4157F0057fDd30112f6'; // bscTestnet
 let sendEncodeABI = cptContract.methods.grantRole(
 	'0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6', 
 	TokenVestingAddress).encodeABI();
