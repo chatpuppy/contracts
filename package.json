@@ -10,6 +10,7 @@
     "merge-item-factory": "sol-merger \"./contracts/lib/ItemFactory.sol\" merged-contracts",
     "merge-nft-manager-v2": "sol-merger \"./contracts/ChatPuppyNFTManagerV2.sol\" merged-contracts",
     "merge-marketplace": "sol-merger \"./contracts/ChatPuppyNFTMarketplace.sol\" merged-contracts",
+		"merge-token-vesting": "sol-merger \"./contracts/TokensVesting.sol\" merged-contracts",
     "deploy-cpt-eth": "truffle migrate --network ethMainnet -f 2 --to 2",
     "deploy-nft-eth": "truffle migrate --network ethMainnet -f 3 --to 3",
     "deploy-item-factory-eth": "truffle migrate --network ethMainnet -f 5 --to 5",

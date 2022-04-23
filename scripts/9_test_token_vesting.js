@@ -205,7 +205,7 @@ const lowest =  '300000000000000000'; // lowest purchasing amount is 0.3 BNB/ETH
 // let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, 5, '2325000000000000000000000000', 1071674).encodeABI();
 // let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, 6, '3000000000000000000000000000', 1071674).encodeABI();
 
-// let sendEncodeABI = tokensVesting.methods.withdrawCoin('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '490000000000000000').encodeABI();
+// let sendEncodeABI = tokensVesting.methods.withdrawCoin('0x569f5199C35D569cb9C4B61Bf1b95152aD941960', '13000000000000000').encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.updateRedeemFee(500).encodeABI();
 // let sendEncodeABI = tokensVesting.methods.redeem(2).encodeABI();
