@@ -2,7 +2,7 @@
   "name": "chat-contract",
   "version": "1.0.0",
   "description": "ChatPuppy smart contracts",
-  "type": "module",
+	"type": "module",
   "scripts": {
     "compile": "truffle compile",
     "merge-cpt-contract": "sol-merger \"./contracts/CPTToken.sol\" merged-contracts",
@@ -42,6 +42,7 @@
     "deploy-nft-manager-bsc": "truffle migrate --network bscMainnet -f 6 --to 6",
     "deploy-marketplace-bsc": "truffle migrate --network bscMainnet -f 7 --to 7",
     "deploy-price-consumer-bsc": "truffle migrate --network bscMainnet -f 8 --to 8",
+		"deploy-token-vesting-bsc": "truffle migrate --network bscMainnet -f 9 --to 9",
     "deploy-cpt-kovan": "truffle migrate --network kovan -f 2 --to 2",
     "deploy-nft-kovan": "truffle migrate --network kovan -f 3 --to 3",
     "deploy-random-generator-kovan": "truffle migrate --network kovan -f 4 --to 4",

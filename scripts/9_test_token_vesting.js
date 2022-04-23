@@ -4,7 +4,6 @@
 
 import {execContract, execEIP1559Contract} from './web3.js';
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
-import {getTokensOfOwner} from 'erc721-balance';
 import dotenv from 'dotenv';
 dotenv.config();
 const require = createRequire(import.meta.url); // construct the require method
@@ -21,7 +20,8 @@ console.log('发起地址', senderAddress);
 // const tokensVestingAddress = '0x76624c221287b1552a379e597166CA8fAA06dF9D'; // kovan
 // const tokensVestingAddress = '0xF886e6336f752F7c4aA496c33A5F77079fcc7a0E'; // bscTestnet old
 // const tokensVestingAddress = '0xeF6eDD351a233B347abDc8d272222ae09EFdc491'; // bscTestnet
-const tokensVestingAddress = '0xe070F6F21EE7DeDF06E4F4157F0057fDd30112f6'; // bscTestnet add 48 hours after donation
+// const tokensVestingAddress = '0xe070F6F21EE7DeDF06E4F4157F0057fDd30112f6'; // bscTestnet add 48 hours after donation
+const tokensVestingAddress = '0x757F671d84560D4Bb5d39A66d6dC1b63D9504D65'; // bsc mainnet
 
 const tokensVestingJson = require('../build/contracts/TokensVesting.json');
 const tokensVesting = new web3.eth.Contract(tokensVestingJson.abi, tokensVestingAddress);
@@ -128,20 +128,20 @@ const callEIP1559Contract = (encodeABI, contractAddress, value) => execEIP1559Co
 const participantId = 2;
 const now = new Date().getTime();
 const tgeAmountRatio = 2000; // on genesisTimestamp 20% of total amount will be release
-const startTimestamp = 1650470400; // Math.floor(now / 1000) + 0.2 * 3600; // start when deploy the contract
-const endTimestamp = 1650513600; // Math.floor(now / 1000) +  0.5 * 3600; // sale will be over 2 days later
-const genesisTimestamp = 1650520800;// Math.floor(now / 1000) + 1 * 3600; // genesisTimestamp is 2.5 days after deploy
-const cliff = 2 * 3600; // 12 hours
-const duration = 20 * 3600; // Vesting tokens will be released during 90 days
-const basis = 1/60 * 3600; // The buyer can release the releasable tokens every 1 hour
-const highest = '500000000000000000'; // highest purchasing amount is 0.5 BNB/ETH
+const startTimestamp = 1650931200; // Math.floor(now / 1000) + 0.2 * 3600; // start when deploy the contract
+const endTimestamp = 1654473600; // Math.floor(now / 1000) +  0.5 * 3600; // sale will be over 2 days later
+const genesisTimestamp = 1654819200;// Math.floor(now / 1000) + 1 * 3600; // genesisTimestamp is 2.5 days after deploy
+const cliff = 0 * 3600; // 12 hours
+const duration = 365 * 24 * 3600; // Vesting tokens will be released during 90 days
+const basis = 24 * 3600; // The buyer can release the releasable tokens every 1 hour
+const highest = '600000000000000000'; // highest purchasing amount is 0.5 BNB/ETH
 const lowest =  '300000000000000000'; // lowest purchasing amount is 0.3 BNB/ETH
 
 // ================================
 // setCrowdFundingParams
 // ================================
 // let sendEncodeABI = tokensVesting.methods.setCrowdFundingParams(
-// 	participantId
+// 	participantId,
 // 	genesisTimestamp, 
 // 	tgeAmountRatio,
 // 	cliff, 
@@ -158,47 +158,54 @@ const lowest =  '300000000000000000'; // lowest purchasing amount is 0.3 BNB/ETH
 // ================================
 // Manual add beneficiary
 // ================================
-const beneficiaryAddress = '0x29b1D23b5E0Da32B8490b2Fa6C78FE9d1eba1C3A';
-const donateAmount = '500000000000000000';
-const price = '26666666';
-const totalAmount = (new BN(donateAmount)).mul(new BN(price));
-const tgeAmount = totalAmount.mul(new BN(tgeAmountRatio.toString())).div(new BN('10000'));
-// const options = [
-// 	beneficiaryAddress,
-// 	genesisTimestamp.toString(),
-// 	totalAmount.toString(),
-// 	tgeAmount.toString(),
-// 	cliff.toString(),
-// 	duration.toString(),
-// 	participantId,
-// 	basis.toString(),
-// 	price	
-// ];
-// console.log(options);
-// let sendEncodeABI = tokensVesting.methods.addBeneficiary(
-// 	beneficiaryAddress,
-// 	genesisTimestamp,
-// 	totalAmount.toString(),
-// 	tgeAmount.toString(),
-// 	cliff.toString(),
-// 	duration.toString(),
-// 	participantId,
-// 	basis.toString(),
-// 	price
-// ).encodeABI();
+// const beneficiaryAddress = '0x94929D0Ca7A4666F21b0125c625A361aB74878F0';
+// const donateAmount = '60000000000000000000';
+// tokensVesting.methods.getPriceForAmount(participantId, donateAmount).call({from: senderAddress}).then((price) => {
+// 	const totalAmount = (new BN(donateAmount)).mul(new BN(price[0]));
+// 	const tgeAmount = totalAmount.mul(new BN(tgeAmountRatio.toString())).div(new BN('10000'));
+// 	const options = [
+// 		beneficiaryAddress,
+// 		genesisTimestamp.toString(),
+// 		totalAmount.toString(),
+// 		tgeAmount.toString(),
+// 		cliff.toString(),
+// 		duration.toString(),
+// 		participantId,
+// 		basis.toString(),
+// 		price[0]
+// 	];
+// 	console.log(options);
+// 	let sendEncodeABI = tokensVesting.methods.addBeneficiary(
+// 		beneficiaryAddress,
+// 		genesisTimestamp,
+// 		totalAmount.toString(),
+// 		tgeAmount.toString(),
+// 		cliff.toString(),
+// 		duration.toString(),
+// 		participantId,
+// 		basis.toString(),
+// 		price[0]
+// 	).encodeABI();
+// 	callContract(sendEncodeABI, tokensVestingAddress);
+// });
 
-
-// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, 0, 26666666).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '1000000000000000000000000000', 17777777).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '2000000000000000000000000000', 11851851).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '3000000000000000000000000000', 11851851).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, 0, 2666666).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '315000000000000000000000000', 2222222).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '705000000000000000000000000', 1851852).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '1170000000000000000000000000', 1543210).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '1710000000000000000000000000', 1286008).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '2325000000000000000000000000', 1071674).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.setPriceRange(2, '3000000000000000000000000000', 1071674).encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, 0, 0, 26666666).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, 1, '1000000000000000000000000000', 17777777).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, 2, '2000000000000000000000000000', 11851851).encodeABI();
-// let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, 3, '3000000000000000000000000000', 11851851).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, 1, '315000000000000000000000000', 2222222).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, 2, '705000000000000000000000000', 1851852).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, 3, '1170000000000000000000000000', 1543210).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, 4, '1710000000000000000000000000', 1286008).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, 5, '2325000000000000000000000000', 1071674).encodeABI();
+// let sendEncodeABI = tokensVesting.methods.updatePriceRange(2, 6, '3000000000000000000000000000', 1071674).encodeABI();
 
-// let sendEncodeABI = tokensVesting.methods.withdrawCoin('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '4490000000000000000').encodeABI();
+// let sendEncodeABI = tokensVesting.methods.withdrawCoin('0x615b80388E3D3CaC6AA3a904803acfE7939f0399', '490000000000000000').encodeABI();
 
 // let sendEncodeABI = tokensVesting.methods.updateRedeemFee(500).encodeABI();
 // let sendEncodeABI = tokensVesting.methods.redeem(2).encodeABI();
@@ -209,6 +216,6 @@ const tgeAmount = totalAmount.mul(new BN(tgeAmountRatio.toString())).div(new BN(
 // let sendEncodeABI = tokensVesting.methods.crowdFunding(2).encodeABI();
 // callEIP1559Contract(sendEncodeABI, tokensVestingAddress, '31000000000000000');
 
-// let sendEncodeABI = tokensVesting.methods.updateRedeemableTime(3600).encodeABI();
-// callContract(sendEncodeABI, tokensVestingAddress);
+// let sendEncodeABI = tokensVesting.methods.updateRedeemableTime(0).encodeABI();
+callContract(sendEncodeABI, tokensVestingAddress);
 
