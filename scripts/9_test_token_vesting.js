@@ -47,12 +47,12 @@ tokensVesting.methods.redeemable(participant, senderAddress).call().then((respon
 })
 
 // tokensVesting.methods.getAllBeneficiaries().call({from: senderAddress}).then((all) => console.log('所有受益人', all));
-tokensVesting.methods.getTotalAmountByParticipant(participant).call({from: senderAddress}).then((all) => console.log('类型总金额', all/1e18));
+// tokensVesting.methods.getTotalAmountByParticipant(participant).call({from: senderAddress}).then((all) => console.log('类型总金额', all/1e18));
 
-tokensVesting.methods.participantReleased(participant).call({from: senderAddress}).then((all) => console.log('类型已提现', all/1e18));
+// tokensVesting.methods.participantReleased(participant).call({from: senderAddress}).then((all) => console.log('类型已提现', all/1e18));
 // tokensVesting.methods.getBeneficiary(0).call({from: senderAddress}).then((all) => console.log('getBeneficiary', all/1e18));
-tokensVesting.methods.revokedAmount().call({from: senderAddress}).then((all) => console.log('revokedAmount', all / 1e18));
-tokensVesting.methods.revokedAmountWithdrawn().call({from: senderAddress}).then((all) => console.log('revokedAmountWithdrawn', all/1e18));
+// tokensVesting.methods.revokedAmount().call({from: senderAddress}).then((all) => console.log('revokedAmount', all / 1e18));
+// tokensVesting.methods.revokedAmountWithdrawn().call({from: senderAddress}).then((all) => console.log('revokedAmountWithdrawn', all/1e18));
 
 console.log('======================================================');
 // tokensVesting.methods.crowdFundingParams(participant).call({from: senderAddress}).then((res) => console.log('crowdFundingParams', res));
@@ -158,6 +158,60 @@ const lowest =  '300000000000000000'; // lowest purchasing amount is 0.3 BNB/ETH
 // ================================
 // Manual add beneficiary
 // ================================
+const beneficiaries = [{
+	address: '0x94929D0Ca7A4666F21b0125c625A361aB74878F0',
+	amount: '500000000000000000',
+}, {
+	address: '0x615b80388E3D3CaC6AA3a904803acfE7939f0399',
+	amount: '500000000000000000',
+}, {
+	address: '0xC4BFA07776D423711ead76CDfceDbE258e32474A',
+	amount: '500000000000000000',
+}];
+
+const addBeneficiary = async (id) => {
+	const params = beneficiaries[id];
+	tokensVesting.methods.getPriceForAmount(participantId, params.amount).call({from: senderAddress}).then((price) => {
+		const totalAmount = (new BN(params.amount)).mul(new BN(price[0]));
+		const tgeAmount = totalAmount.mul(new BN(tgeAmountRatio.toString())).div(new BN('10000'));
+		// const options = [
+		// 	params.address,
+		// 	genesisTimestamp.toString(),
+		// 	totalAmount.toString(),
+		// 	tgeAmount.toString(),
+		// 	cliff.toString(),
+		// 	duration.toString(),
+		// 	participantId,
+		// 	basis.toString(),
+		// 	price[0]
+		// ];
+		// console.log(options);
+		// if(id + 1 < beneficiaries.length) addBeneficiary(id + 1);
+		// else console.log('Done...')
+		let sendEncodeABI = tokensVesting.methods.addBeneficiary(
+			params.address,
+			genesisTimestamp,
+			totalAmount.toString(),
+			tgeAmount.toString(),
+			cliff.toString(),
+			duration.toString(),
+			participantId,
+			basis.toString(),
+			price[0]
+		).encodeABI();
+		callContract(sendEncodeABI, tokensVestingAddress, (confirmationNumber, receipt) => {
+			console.log(`#${id}/${beneficiaries.length} address ${params.address} amount ${params.amount} is done`);
+			if(id + 1 < beneficiaries.length) addBeneficiary(id + 1);
+			else console.log('All beneficiaries have been added...');
+		}, (error) => {
+			console.log(`#${id} Error`);
+			console.log(error);
+		});
+	});
+}
+
+addBeneficiary(0);
+
 // const beneficiaryAddress = '0x94929D0Ca7A4666F21b0125c625A361aB74878F0';
 // const donateAmount = '60000000000000000000';
 // tokensVesting.methods.getPriceForAmount(participantId, donateAmount).call({from: senderAddress}).then((price) => {
@@ -217,5 +271,5 @@ const lowest =  '300000000000000000'; // lowest purchasing amount is 0.3 BNB/ETH
 // callEIP1559Contract(sendEncodeABI, tokensVestingAddress, '31000000000000000');
 
 // let sendEncodeABI = tokensVesting.methods.updateRedeemableTime(0).encodeABI();
-callContract(sendEncodeABI, tokensVestingAddress);
+// callContract(sendEncodeABI, tokensVestingAddress);
 
